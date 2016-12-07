@@ -4,7 +4,7 @@ public class upperflag extends Flag{
 
 	public upperflag(double threshold) {
 		
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	

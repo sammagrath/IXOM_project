@@ -2,8 +2,8 @@ package Threshold;
 
 public abstract class Flag {
 
-	private double startTime;
-	private double endTime;
+	private double startTime=-1;
+	private double endTime=-1;
 	private String message;
 	private boolean triggered=false;
 	private double threshold;
@@ -11,27 +11,24 @@ public abstract class Flag {
 	
 	
 	
-	public void run(double val){
+	public void run(double time, double soil, double temperature, double conductivity){
 		
-		if(this.isConditionMet(val) && !triggered){
-			// all is well
+		boolean Cond = this.isConditionMet(time, soil, temperature,  conductivity);
+		
+		if (Cond && triggered){
+			this.endTime=time;
 			
 		}
-		else if (this.isConditionMet(val) && triggered){
-			// assign the end time stamp
-			
+		else if ( !(Cond) && !triggered){
+			this.startTime = time;
+			triggered = true;
 		}
-		else if ( !(this.isConditionMet(val)) && !triggered){
-			// starting
-		}
-		else if (!(this.isConditionMet(val)) && triggered) {
-			// continue, but is triggered
-		}
+
 		
 		
 	}
 	
-	abstract boolean isConditionMet(double val);
+	abstract boolean isConditionMet(double time, double soil, double temperature, double conductivity);
 	
 	
 	
