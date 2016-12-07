@@ -8,6 +8,8 @@ public class phase {
 	private int sequenceNumber;
 	private ArrayList<Flag> possibleFlags = new ArrayList<Flag>();
 	private ArrayList<flagEvent> flagEvents = new ArrayList<flagEvent>();
+	private double phaseEndTime;
+	private double phaseStartTime;
 	
 	public phase(String name, int sequenceNumber, ArrayList<Flag> possibleFlags){
 		this.name=name;
@@ -21,9 +23,15 @@ public class phase {
 			
 			f.run(time, soil, temperature, conductivity);
 			
-			if (f.getEndTime()!=-1){
+			if (f.getEndTime()!=-1 ){
 				//we know it has ended
 				flagEvents.add(new flagEvent(f.getStartTime(), f.getEndTime(), f.getMessage()));
+				f.setEndTime(-1);
+				f.setStartTime(-1);
+				f.setTriggered(false);
+			}
+			else if(time == phaseEndTime){ // here we have an average measurin flag
+				flagEvents.add(new flagEvent(phaseStartTime, phaseEndTime, f.getMessage()));
 				f.setEndTime(-1);
 				f.setStartTime(-1);
 				f.setTriggered(false);

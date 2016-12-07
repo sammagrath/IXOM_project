@@ -4,9 +4,11 @@ public abstract class Flag{
 
 	private double startTime=-1;
 	private double endTime=-1;
-	private String message;
+	private String message1;
+	private String message2;
 	private boolean triggered=false;
 	private double[] threshold;
+	private String type;
 	
 	
 	
@@ -56,17 +58,25 @@ public abstract class Flag{
 
 
 
-	public String getMessage() {
-		return message;
+	public String getMessage1() {
+		return message1;
 	}
 
 
 
-	public void setMessage(String message) {
-		this.message = message;
+	public void setMessage1(String message) {
+		this.message1 = message;
 	}
 
 
+
+	public String getMessage2() {
+		return message2;
+	}
+
+	public void setMessage2(String message2) {
+		this.message2 = message2;
+	}
 
 	public boolean isTriggered() {
 		return triggered;
@@ -88,6 +98,14 @@ public abstract class Flag{
 
 	public void setThreshold(double[] threshold) {
 		this.threshold = threshold;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 
