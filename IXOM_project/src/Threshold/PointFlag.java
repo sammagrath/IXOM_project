@@ -1,8 +1,8 @@
 package Threshold;
 
-public class upperflag extends Flag{
+public class PointFlag extends Flag{
 
-	public upperflag(double threshold) {
+	public PointFlag(double threshold) {
 		
 		
 	}

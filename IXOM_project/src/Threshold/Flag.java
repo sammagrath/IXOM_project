@@ -1,12 +1,12 @@
 package Threshold;
 
-public abstract class Flag {
+public abstract class Flag{
 
 	private double startTime=-1;
 	private double endTime=-1;
 	private String message;
 	private boolean triggered=false;
-	private double threshold;
+	private double[] threshold;
 	
 	
 	
@@ -80,13 +80,13 @@ public abstract class Flag {
 
 
 
-	public double getThreshold() {
+	public double[] getThreshold() {
 		return threshold;
 	}
 
 
 
-	public void setThreshold(double threshold) {
+	public void setThreshold(double[] threshold) {
 		this.threshold = threshold;
 	}
 
