@@ -8,10 +8,6 @@ public abstract class Flag {
 	private boolean triggered=false;
 	private double threshold;
 	
-	public Flag(double threshold){
-		this.threshold=threshold;
-		
-	}
 	
 	
 	
@@ -35,7 +31,7 @@ public abstract class Flag {
 		
 	}
 	
-	private boolean isConditionMet(double val){return true;}
+	abstract boolean isConditionMet(double val);
 	
 	
 	
