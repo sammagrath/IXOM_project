@@ -7,12 +7,9 @@ public class upperflag extends Flag{
 		
 	}
 
-	
-
-
 
 	@Override
-	boolean isConditionMet(double val) {
+	boolean isConditionMet(double time, double soil, double temperature, double conductivity) {
 		// TODO Auto-generated method stub
 		return false;
 	}

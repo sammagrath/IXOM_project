@@ -7,7 +7,7 @@ public class phase {
 	private String name;
 	private int sequenceNumber;
 	private ArrayList<Flag> possibleFlags = new ArrayList<Flag>();
-	private ArrayList<Flag> flagEvents = new ArrayList<Flag>();
+	private ArrayList<flagEvent> flagEvents = new ArrayList<flagEvent>();
 	
 	public phase(String name, int sequenceNumber, ArrayList<Flag> possibleFlags){
 		
@@ -21,7 +21,10 @@ public class phase {
 			
 			if (f.getEndTime()!=-1){
 				//we know it has ended
-				
+				flagEvents.add(new flagEvent(f.getStartTime(), f.getEndTime(), f.getMessage()));
+				f.setEndTime(-1);
+				f.setStartTime(-1);
+				f.setTriggered(false);
 			}
 			
 		}
