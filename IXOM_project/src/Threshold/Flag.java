@@ -1,6 +1,6 @@
 package Threshold;
 
-public class Flag {
+public abstract class Flag {
 
 	private double startTime;
 	private double endTime;
@@ -17,25 +17,26 @@ public class Flag {
 	
 	public void run(double val){
 		
-		if(this.isInRange(val) && !triggered){
+		if(this.isConditionMet(val) && !triggered){
 			// all is well
 			
 		}
-		else if (this.isInRange(val) && triggered){
+		else if (this.isConditionMet(val) && triggered){
 			// assign the end time stamp
 			
 		}
-		else if ( !(this.isInRange(val)) && !triggered){
+		else if ( !(this.isConditionMet(val)) && !triggered){
 			// starting
 		}
-		else if (!(this.isInRange(val)) && triggered) {
+		else if (!(this.isConditionMet(val)) && triggered) {
 			// continue, but is triggered
 		}
 		
 		
 	}
 	
-	private boolean isInRange(double val){return true;}
+	private boolean isConditionMet(double val){return true;}
+	
 	
 	
 	public double getStartTime() {
