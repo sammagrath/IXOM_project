@@ -10,7 +10,9 @@ public class phase {
 	private ArrayList<flagEvent> flagEvents = new ArrayList<flagEvent>();
 	
 	public phase(String name, int sequenceNumber, ArrayList<Flag> possibleFlags){
-		
+		this.name=name;
+		this.sequenceNumber=sequenceNumber;
+		this.possibleFlags=possibleFlags;
 	}
 	
 	public void checkPoint(double time, double soil, double temperature, double conductivity){
