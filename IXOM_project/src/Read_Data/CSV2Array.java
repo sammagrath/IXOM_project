@@ -7,6 +7,8 @@ import java.util.ArrayList;
 
 import java.util.Scanner;
 
+import csvcleaner.CSVCleaner;
+
 /*
  * 
  * author: Patrick Smith
