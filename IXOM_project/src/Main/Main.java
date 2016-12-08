@@ -78,7 +78,17 @@ public class Main extends Application {
 				public void handle(ActionEvent arg0){
 					FileChooser fileChooser = new FileChooser();
 					fileChooser.setTitle("Open Resource File");
-					fileChooser.showOpenDialog(stage);
+					
+					//this String contains the file path of the file that you choose with the fileChooser
+					String name = fileChooser.showOpenDialog(stage).toString();
+					
+					//this is a placeholder way of notifying you which file you selected, I will change this later
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Information Dialog");
+					alert.setHeaderText("(placeholder, will make a more professional way of displaying file path soon)");
+					alert.setContentText("Filepath: " + name);
+
+					alert.showAndWait();
 				}
 				
 			});
