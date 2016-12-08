@@ -32,7 +32,7 @@ public class TimeConverter {
 			second++;
 		}
 		
-		if(hour >=0 && hour < 24){
+		if(hour >=0.0 && hour < 24){
 			if (hour < 10){
 				hourString = "0"+hour;
 			} else {
@@ -53,7 +53,7 @@ public class TimeConverter {
 		}
 		
 		if(second >=0 && second < 60){
-			if (min < 10){
+			if (second < 10){
 				secString = "0"+second;
 			} else {
 				secString = ""+second;
@@ -87,7 +87,7 @@ public class TimeConverter {
 			} else if (Character.isDigit(current)){
 				if(unit == 0){
 					hourString += current;
-				}else if(unit == 3){
+				}else if(unit == 1){
 					minString += current;
 				}else if(unit == 2){
 					secondString += current;
@@ -105,7 +105,7 @@ public class TimeConverter {
 			if(!secondString.equals("")){
 				second = Integer.parseInt(secondString);
 				
-				decimalTime = ((3600*hour) + (60*min) + second)/86400;
+				decimalTime = ((3600*hour) + (60*min) + second)/86400.0;
 			}
 		}
 		
