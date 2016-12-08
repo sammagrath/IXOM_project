@@ -1,0 +1,119 @@
+package Main;
+
+import java.io.File;
+
+import javafx.*;
+import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import javafx.scene.text.Text;
+
+
+
+public class Main extends Application {
+
+	@Override
+	public void start(Stage stage) throws Exception {
+		
+		//Wrapping everything in this StackPane called 'root' was necessary to centre the grid later
+		StackPane root = new StackPane();
+		
+		Scene scene = new Scene(root, 450, 250);
+		
+		stage.setTitle("IXOM Analysis Tool");
+		
+		
+		//This is the run button and contains the click event for when you click it
+		
+		Button btnRun = new Button();
+		btnRun.setText("Run Analysis Tool");
+		
+		btnRun.setOnAction(new EventHandler<ActionEvent>(){
+		
+			
+			@Override
+			public void handle(ActionEvent arg0){
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Information Dialog");
+				alert.setHeaderText("Flags");
+				alert.setContentText("Dead body in tank\nEctoplasm in filter\nResidual temporal activity");
+
+				alert.showAndWait();
+			}
+			
+		});
+		
+		
+		
+      
+	        
+	        //The following is a button and when clicked it launches a file chooser
+	        
+	    	Button btnFileChooser = new Button();
+	    	btnFileChooser.setText("Choose file");
+			
+	    	
+	    	
+	    	btnFileChooser.setOnAction(new EventHandler<ActionEvent>(){
+			
+				
+				@Override
+				public void handle(ActionEvent arg0){
+					FileChooser fileChooser = new FileChooser();
+					fileChooser.setTitle("Open Resource File");
+					fileChooser.showOpenDialog(stage);
+				}
+				
+			});
+		
+		
+	    	//This is the grid, which is contained within a 
+	    	
+	        GridPane grid = new GridPane();
+	        grid.setAlignment(Pos.CENTER);
+	        grid.setVgap(10);
+	        grid.setHgap(10);
+	        grid.setPadding(new Insets(5, 5, 5, 5));
+	       
+	        
+	        grid.add(new Label("Select a data file to analyse: "), 0, 0);
+	        grid.add(btnFileChooser, 0, 1);
+	        grid.add(btnRun, 0, 2);
+	      
+	       
+		
+	        root.getChildren().add(grid);
+	        stage.setScene(scene);
+	        stage.setScene(scene);
+	        
+	        
+
+		stage.show();
+	}
+	
+	
+	
+	
+	public static void main(String args[]) {
+		launch(args);
+	}
+	
+	
+}
