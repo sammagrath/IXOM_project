@@ -5,6 +5,7 @@ package timeconverter;
  * author: Jacob Hoffland
  * email: jacob.hoffland@gmail.com
  * 
+ * 
  */
 
 public class TimeConverter {

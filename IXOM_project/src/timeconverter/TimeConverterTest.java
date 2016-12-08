@@ -6,6 +6,7 @@ import org.junit.Test;
 
 public class TimeConverterTest {
 
+	//testing that midnight converts correctly
 	@Test
 	public void testMidnightDec2HSM() {
 		TimeConverter tc = new TimeConverter();
@@ -23,6 +24,7 @@ public class TimeConverterTest {
 		assertTrue(dec == value);
 	}
 	
+	//testing that 1sec to midnight converts properly
 	@Test
 	public void testEndDec2HSM() {
 		TimeConverter tc = new TimeConverter();
