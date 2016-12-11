@@ -81,14 +81,6 @@ public class metricTaker {
 			effectivePeriods.put(counter, effectiveTime);
 			effectiveTime.clear();
 			counter++;
-			
-			
-//			effectivePeriods.put(dp1.getZone(), new effectivePeriod(timeconv.HMSToDec(dp1.getTime())+7/86400, timeconv.HMSToDec(dp2.getTime()))); 
-//			System.out.println("boundary "+dp1.getZone()+": "+dp1.getTime() +" + 7 mins,   " +dp2.getTime());
-			
-			
-			
-			
 		}
 		
 	}
