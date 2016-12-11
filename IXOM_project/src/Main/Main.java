@@ -1,6 +1,8 @@
 package Main;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 import javafx.*;
 import javafx.application.Application;
@@ -24,13 +26,28 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.scene.text.Text;
-
-
+import Read_Data.CSV2Array;
+import Read_Data.ExceltoCSV;
+import Read_Data.dataPoint;
 
 public class Main extends Application {
-
+	
+	//!!!PATS ADDITION!!!//
+	private File excelFile;
+	private File dirtyCSVFile;
+	private String filename;
+	private ExceltoCSV convertor;
+	private CSV2Array populator;
+	private ArrayList<dataPoint> data;
+	
 	@Override
 	public void start(Stage stage) throws Exception {
+		
+		
+		//!!!PATS ADDITION!!!//
+		convertor = new ExceltoCSV();
+		populator = new CSV2Array();
+		
 		
 		//Wrapping everything in this StackPane called 'root' was necessary to centre the grid later
 		StackPane root = new StackPane();
@@ -53,7 +70,7 @@ public class Main extends Application {
 				Alert alert = new Alert(AlertType.INFORMATION);
 				alert.setTitle("Information Dialog");
 				alert.setHeaderText("Flags");
-				alert.setContentText("Dead body in tank\nEctoplasm in filter\nResidual temporal activity");
+				alert.setContentText(printAll(data));
 
 				alert.showAndWait();
 			}
@@ -80,15 +97,39 @@ public class Main extends Application {
 					fileChooser.setTitle("Open Resource File");
 					
 					//this String contains the file path of the file that you choose with the fileChooser
-					String name = fileChooser.showOpenDialog(stage).toString();
+					filename = fileChooser.showOpenDialog(stage).toString();
 					
-					//this is a placeholder way of notifying you which file you selected, I will change this later
-					Alert alert = new Alert(AlertType.INFORMATION);
-					alert.setTitle("Information Dialog");
-					alert.setHeaderText("(placeholder, will make a more professional way of displaying file path soon)");
-					alert.setContentText("Filepath: " + name);
-
-					alert.showAndWait();
+					
+					
+					
+					
+					//!!!! PATS ADDITION !!!!////
+					//Calls csv convertor//
+					excelFile = new File(filename);
+					dirtyCSVFile = new File("C:/CIPtest/cleanfile.csv");
+					//convertor.xls(excelFile, dirtyCSVFile);
+					
+					try {
+						
+						//!!!PATS ADDITION!!!//
+						data = populator.populateData(dirtyCSVFile, data);
+						
+						//this is a placeholder way of notifying you which file you selected, I will change this later
+						Alert alert = new Alert(AlertType.INFORMATION);
+						alert.setTitle("Success");
+						alert.setHeaderText("(Your File was added successfully)");
+						alert.setContentText("Filepath: " + filename);
+						alert.showAndWait();
+						
+					} catch (FileNotFoundException e) {
+						Alert alert = new Alert(AlertType.INFORMATION);
+						alert.setTitle("ERROR");
+						alert.setHeaderText("(There was an error in the retrieval process)");
+						alert.setContentText("Filepath: " + filename);
+						alert.showAndWait();
+						e.printStackTrace();
+					}
+					
 				}
 				
 			});
@@ -118,6 +159,20 @@ public class Main extends Application {
 		stage.show();
 	}
 	
+	
+	//!!!PATS ADDITION!!!//
+	public String printAll(ArrayList<dataPoint> data){
+		
+		String output;
+		output = "|   Date   |   Time   | turb | cond | soil | temp | zone | \n" ;
+		
+		for(dataPoint d: data){
+			output = output + d.print();
+		}
+		
+		return output;
+
+	}
 	
 	
 	

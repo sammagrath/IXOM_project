@@ -6,6 +6,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class metricTaker {
+	
+	
+	/*
+	 * 
+	 * 
+	 * Author: Henry Coulson 
+	 * email: h.coulson@outlook.com
+	 * 
+	 * 
+	 */
+	
 
 	private ArrayList<dataPoint> data = new ArrayList<dataPoint>();
 	private ArrayList<Integer> boundaryIndices = new ArrayList<Integer>();
@@ -16,8 +27,12 @@ public class metricTaker {
 	private HashMap<Integer,Double> condAverages = new HashMap<Integer,Double>();
 	private HashMap<Integer,Double> soilAverages = new HashMap<Integer,Double>();
 	
-	public metricTaker(){
-		getData();
+	
+	
+	
+	
+	public metricTaker(ArrayList<dataPoint> data){
+		this.data=data;
 		findAverageSampleRate();
 		minutesToIncrements(7);
 		assignBoundaryIndices();
@@ -96,10 +111,7 @@ public class metricTaker {
 		
 	}
 
-	private void getData() {
-		//there needs to be a method to get this
-		this.data = CSV2Array.getData();
-	}
+	
 	
 	private void findAverageSampleRate(){
 		TimeConverter tc = new TimeConverter();
@@ -108,6 +120,38 @@ public class metricTaker {
 		sampleRate = (tc.HMSToDec(data.get(data.size()-1).getTime())  -  tc.HMSToDec(data.get(0).getTime()))/data.size();
 		System.out.println("sample rate: " + sampleRate);
 		
+	}
+
+	public HashMap<Integer, ArrayList<dataPoint>> getEffectivePeriods() {
+		return effectivePeriods;
+	}
+
+	public void setEffectivePeriods(HashMap<Integer, ArrayList<dataPoint>> effectivePeriods) {
+		this.effectivePeriods = effectivePeriods;
+	}
+
+	public HashMap<Integer, Double> getTempAverages() {
+		return tempAverages;
+	}
+
+	public void setTempAverages(HashMap<Integer, Double> tempAverages) {
+		this.tempAverages = tempAverages;
+	}
+
+	public HashMap<Integer, Double> getCondAverages() {
+		return condAverages;
+	}
+
+	public void setCondAverages(HashMap<Integer, Double> condAverages) {
+		this.condAverages = condAverages;
+	}
+
+	public HashMap<Integer, Double> getSoilAverages() {
+		return soilAverages;
+	}
+
+	public void setSoilAverages(HashMap<Integer, Double> soilAverages) {
+		this.soilAverages = soilAverages;
 	}
 	
 	
