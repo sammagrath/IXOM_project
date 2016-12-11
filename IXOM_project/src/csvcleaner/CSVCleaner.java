@@ -9,20 +9,13 @@ package csvcleaner;
 
 
 public class CSVCleaner {
-
-	public static void main(String[] args) {
-		
-		CSVCleaner c = new CSVCleaner();
-		System.out.println(c.lineCleaner("15/06/12,12:51:11,4,0,0,85.3,0,0,0.133333333,0"));
-		
-	}
 	
 	public String lineCleaner(String dirtyLine){
 		
 		String cleanLine = "";
 		int lineLength = dirtyLine.length();
-		String input = "", previousStep = "";
-		int stage = 0, currentStep = -1;
+		String input = "";
+		int stage = 0, currentStep = 0;
 		String date = "", time = "", turb = "", cond = "", soil = "", temp = "", step = "";
 		
 		for(int i = 0; i < lineLength; i++){
@@ -34,16 +27,20 @@ public class CSVCleaner {
 				} else if (stage == 1){
 					time = dateTimeCleaner(removeSpaces(input));
 					
-				} else if ((stage == 2) || (stage == 3) || (stage == 4) || (stage == 5)){
+				} else if (stage == 2){
 					turb = decimalCleaner(removeSpaces(input));
 					
-				} else if (stage == 6){
-					step = stepCleaner(removeSpaces(input));
+				} else if(stage == 3) {
+					cond = decimalCleaner(removeSpaces(input));
 					
-					if(!step.equals(previousStep)){
-						previousStep = step;
-						currentStep++;
-					}
+				} else if(stage == 4) {
+					soil = decimalCleaner(removeSpaces(input));
+					
+				} else if(stage == 5) {
+					temp = decimalCleaner(removeSpaces(input));
+					
+				} else if (stage == 6){
+					step = decimalCleaner(removeSpaces(input));
 				}
 				
 				input = "";
@@ -56,7 +53,7 @@ public class CSVCleaner {
 		
 		// !!!PAT ADDED LAST COMMA!!
 		
-		cleanLine = date+", "+time+", "+turb+", "+cond+", "+soil+", "+temp+", "+currentStep+", ";
+		cleanLine = date+", "+time+", "+turb+", "+cond+", "+soil+", "+temp+", "+step+", ";
 		
 		return cleanLine;
 	}
@@ -147,6 +144,9 @@ public class CSVCleaner {
 				
 				if(dec == 0){
 					cleanDec += "0.";
+					dot++;
+				} else {
+					cleanDec += ".";
 					dot++;
 				}
 			} else{
