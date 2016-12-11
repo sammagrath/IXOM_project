@@ -14,7 +14,7 @@ public class CSVCleaner {
 		
 		String cleanLine = "";
 		int lineLength = dirtyLine.length();
-		String input = "", previousStep = "";
+		String input = "";
 		int stage = 0, currentStep = 0;
 		String date = "", time = "", turb = "", cond = "", soil = "", temp = "", step = "";
 		
@@ -40,12 +40,7 @@ public class CSVCleaner {
 					temp = decimalCleaner(removeSpaces(input));
 					
 				} else if (stage == 6){
-					step = stepCleaner(removeSpaces(input));
-					
-					if(!step.equals(previousStep)){
-						previousStep = step;
-						currentStep++;
-					}
+					step = decimalCleaner(removeSpaces(input));
 				}
 				
 				input = "";
@@ -58,7 +53,7 @@ public class CSVCleaner {
 		
 		// !!!PAT ADDED LAST COMMA!!
 		
-		cleanLine = date+", "+time+", "+turb+", "+cond+", "+soil+", "+temp+", "+currentStep+", ";
+		cleanLine = date+", "+time+", "+turb+", "+cond+", "+soil+", "+temp+", "+step+", ";
 		
 		return cleanLine;
 	}
