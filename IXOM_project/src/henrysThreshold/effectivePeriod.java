@@ -1,6 +1,15 @@
 package henrysThreshold;
 
 public class effectivePeriod {
+	
+	/*
+	 * defunct code 
+	 * 
+	 * Author: Henry Coulson 
+	 * email: h.coulson@outlook.com
+	 * 
+	 * 
+	 */
 
 	private String startTimeString;
 	private String endTimeString;
