@@ -9,13 +9,6 @@ package csvcleaner;
 
 
 public class CSVCleaner {
-
-	public static void main(String[] args) {
-		
-		CSVCleaner c = new CSVCleaner();
-		System.out.println(c.lineCleaner("15/06/12,12:51:11,4,0,0,85.3,0,0,0.133333333,0"));
-		
-	}
 	
 	public String lineCleaner(String dirtyLine){
 		
