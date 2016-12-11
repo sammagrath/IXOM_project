@@ -31,8 +31,8 @@ public class metricTaker {
 	
 	
 	
-	public metricTaker(){
-		getData();
+	public metricTaker(ArrayList<dataPoint> data){
+		this.data=data;
 		findAverageSampleRate();
 		minutesToIncrements(7);
 		assignBoundaryIndices();
@@ -111,10 +111,7 @@ public class metricTaker {
 		
 	}
 
-	private void getData() {
-		//there needs to be a method to get this
-		this.data = CSV2Array.getData();
-	}
+	
 	
 	private void findAverageSampleRate(){
 		TimeConverter tc = new TimeConverter();
