@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import csvcleaner.CSVCleaner;
-//ewfweef
+
 /*
  * 
  * author: Patrick Smith
@@ -18,11 +18,9 @@ import csvcleaner.CSVCleaner;
 
 public class CSV2Array {
 
-	private static ArrayList<dataPoint> data;
+	public ArrayList<dataPoint> populateData(File dirtyCSVFile, ArrayList<dataPoint> data) throws FileNotFoundException {
 
-	public static void populateData(String filename) throws FileNotFoundException {
-
-		Scanner linescanner = new Scanner(new File(filename));
+		Scanner linescanner = new Scanner(dirtyCSVFile);
 
 		data = new ArrayList<dataPoint>();
 
@@ -30,9 +28,7 @@ public class CSV2Array {
 		
 		while (linescanner.hasNextLine()) {
 
-			
-			
-			String line = c.lineCleaner(linescanner.nextLine());
+			String line = linescanner.nextLine();
 
 			Scanner scanner = new Scanner(line);
 			scanner.useDelimiter(",");
@@ -45,6 +41,7 @@ public class CSV2Array {
 		}
 
 		linescanner.close();
+		return data;
 
 	}
 

@@ -63,9 +63,9 @@ public class dataPoint {
 	public void setZone(int zone) {
 		this.zone = zone;
 	}
-	public void print(){
-	System.out.println("|   Date   |   Time   | turb | cond | soil | temp | zone | ");	
-	System.out.println( "| " + date + " | " + time + " | " + turbidity + " | " + conductivity + " | " + soil + " | " + temp + " | " +  zone + " |"); 
+	public String print(){
+		
+	return "| " + date + " | " + time + " | " + turbidity + " | " + conductivity + " | " + soil + " | " + temp + " | " +  zone + " | \n"; 
 	
 	}
 	

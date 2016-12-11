@@ -20,9 +20,9 @@ import org.apache.poi.ss.usermodel.Cell;
 
 import org.apache.poi.ss.usermodel.Row;
 
-class ExceltoCSV {
+public class ExceltoCSV {
 
-	static void xls(File inputFile, File outputFile) {
+	public void xls(File inputFile, File outputFile) {
 
 		StringBuffer data = new StringBuffer();
 		try {
@@ -76,9 +76,4 @@ class ExceltoCSV {
 		}
 	}
 
-	public static void main(String[] args) {
-		File inputFile = new File("C:/CIPtest/example2.xls");
-		File outputFile = new File("C:/CIPtest/output5.csv");
-		xls(inputFile, outputFile);
-	}
 }
