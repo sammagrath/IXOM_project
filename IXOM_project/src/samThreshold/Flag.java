@@ -27,8 +27,8 @@ public class Flag {
 		this.startTime = startTime;
 		this.endTime = endTime;
 		this.zone = zone;
-		this.phase = "Phase: " + phase;
-		this.message = "Reason: " + message;
+		this.phase = phase;
+		this.message = message;
 		this.target = target;
 		this.actual = actual;
 	}

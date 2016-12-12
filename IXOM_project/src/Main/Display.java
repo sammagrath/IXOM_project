@@ -59,7 +59,7 @@ public class Display extends Application {
 		//Wrapping everything in this StackPane called 'root' was necessary to centre the grid later
 		StackPane root = new StackPane();
 		
-		Scene scene = new Scene(root, 450, 250);
+		Scene scene = new Scene(root, 450, 450);
 		
 		stage.setTitle("IXOM Analysis Tool");
 		
@@ -197,7 +197,7 @@ public class Display extends Application {
 		
 		String output;
 		
-		output = "|  Start Time  |  End Time  |  Phase  |  Message  |  Target  |  Actual  | \n";
+		output = "| Start Time | End Time | Phase | Message | Target | Actual | \n";
 		
 		for (Flag flag : flagList) {
 			
