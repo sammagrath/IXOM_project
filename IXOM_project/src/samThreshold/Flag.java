@@ -30,7 +30,7 @@ public class Flag {
 		this.phase = phase;
 		this.message = message;
 		this.target = target;
-		this.actual = actual;
+		this.actual = Math.round(actual*100.0)/100.0;
 	}
 
 	public String print() {
