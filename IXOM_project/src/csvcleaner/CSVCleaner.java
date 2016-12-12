@@ -1,5 +1,7 @@
 package csvcleaner;
 
+import timeconverter.TimeConverter;
+
 /*
  * 
  * author: Jacob Hoffland
@@ -25,7 +27,10 @@ public class CSVCleaner {
 					date = dateTimeCleaner(removeSpaces(input));
 					
 				} else if (stage == 1){
-					time = dateTimeCleaner(removeSpaces(input));
+			
+					double timedec = Double.parseDouble(removeSpaces(input));
+					TimeConverter t = new TimeConverter();
+					time = dateTimeCleaner(t.decToHMS(timedec));
 					
 				} else if (stage == 2){
 					turb = decimalCleaner(removeSpaces(input));

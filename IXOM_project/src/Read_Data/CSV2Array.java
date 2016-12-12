@@ -26,18 +26,28 @@ public class CSV2Array {
 
 		CSVCleaner c = new CSVCleaner(); 
 		
+		linescanner.nextLine();
+		linescanner.nextLine();
+		
 		while (linescanner.hasNextLine()) {
 
-			String line = linescanner.nextLine();
+			
+			
+			String line = c.lineCleaner(linescanner.nextLine());
+			
+			if(!line.contains("null")){
 
-			Scanner scanner = new Scanner(line);
-			scanner.useDelimiter(",");
+				System.out.println(line);
+				
+				Scanner scanner = new Scanner(line);
+				scanner.useDelimiter(", ");
 
-			dataPoint d = new dataPoint(scanner.next(), scanner.next(), scanner.nextDouble(), scanner.nextDouble(),
-					scanner.nextDouble(), scanner.nextDouble(), scanner.nextInt());
-			data.add(d);
-			scanner.close();
-
+				dataPoint d = new dataPoint(scanner.next(), scanner.next(), scanner.nextDouble(), scanner.nextDouble(),
+						scanner.nextDouble(), scanner.nextDouble(), (int) scanner.nextDouble());
+				data.add(d);
+				scanner.close();
+			}
+			
 		}
 
 		linescanner.close();

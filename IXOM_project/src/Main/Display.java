@@ -106,8 +106,8 @@ public class Display extends Application {
 					//!!!! PATS ADDITION !!!!////
 					//Calls csv convertor//
 					excelFile = new File(filename);
-					dirtyCSVFile = new File("/home/coulsohenr/git/IXOM_project/cleanfile.csv");
-					//convertor.xls(excelFile, dirtyCSVFile);
+					dirtyCSVFile = new File("C:/CIPtest/cleanfile3.csv");
+					convertor.xls(excelFile, dirtyCSVFile);
 					
 					try {
 						
