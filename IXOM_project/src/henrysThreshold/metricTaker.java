@@ -8,7 +8,7 @@ import java.util.HashMap;
 public class metricTaker {
 	
 	
-	/*
+	/**
 	 * 
 	 * 
 	 * Author: Henry Coulson 
