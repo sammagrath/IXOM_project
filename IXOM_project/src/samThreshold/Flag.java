@@ -7,6 +7,8 @@ public class Flag {
 	private int zone;
 	private String phase;
 	private String message;
+	private double target;
+	private double actual;
 	
 	public Flag() {
 		
@@ -15,19 +17,24 @@ public class Flag {
 		zone = 0;
 		phase = "";
 		message = "";
+		target = 0.0;
+		actual = 0.0;
 	}
 	
-	public Flag(String startTime, String endTime, int zone, String phase, String message) {
+	public Flag(String startTime, String endTime, int zone, String phase, String message, double target, double actual) {
 		this.startTime = startTime;
 		this.endTime = endTime;
 		this.zone = zone;
 		this.phase = "Phase: " + phase;
 		this.message = "Reason: " + message;
+		this.target = target;
+		this.actual = actual;
 	}
 
 	public String print() {
-		return "| " + startTime + " | " + endTime + " | " + phase + " | " + message + " | \n"; 
+		return "| " + startTime + " | " + endTime + " | " + phase + " | " + message + " | " + "Target: " + target + " | " + "Actual: " + actual + " |\n"; 
 	}
+
 	public String getStartTime() {
 		return startTime;
 	}
@@ -68,6 +75,20 @@ public class Flag {
 		this.message = message;
 	}
 	
-	
+	public double getTarget() {
+		return target;
+	}
+
+	public void setTarget(double target) {
+		this.target = target;
+	}
+
+	public double getActual() {
+		return actual;
+	}
+
+	public void setActual(double actual) {
+		this.actual = actual;
+	}
 	
 }
