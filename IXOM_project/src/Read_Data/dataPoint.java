@@ -64,7 +64,7 @@ public class dataPoint {
 		this.zone = zone;
 	}
 	public String print(){
-		
+	
 	return "| " + date + " | " + time + " | " + turbidity + " | " + conductivity + " | " + soil + " | " + temp + " | " +  zone + " | \n"; 
 	
 	}

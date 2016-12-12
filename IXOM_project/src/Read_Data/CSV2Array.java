@@ -18,6 +18,8 @@ import csvcleaner.CSVCleaner;
 
 public class CSV2Array {
 
+	
+	
 	public ArrayList<dataPoint> populateData(File dirtyCSVFile, ArrayList<dataPoint> data) throws FileNotFoundException {
 
 		Scanner linescanner = new Scanner(dirtyCSVFile);
@@ -29,6 +31,8 @@ public class CSV2Array {
 		linescanner.nextLine();
 		linescanner.nextLine();
 		
+		int step = 1, previousStep = 0;
+		
 		while (linescanner.hasNextLine()) {
 
 			
@@ -37,15 +41,27 @@ public class CSV2Array {
 			
 			if(!line.contains("null")){
 
-				System.out.println(line);
+				
 				
 				Scanner scanner = new Scanner(line);
 				scanner.useDelimiter(", ");
 
 				dataPoint d = new dataPoint(scanner.next(), scanner.next(), scanner.nextDouble(), scanner.nextDouble(),
 						scanner.nextDouble(), scanner.nextDouble(), (int) scanner.nextDouble());
+				
+				if(d.getZone() != previousStep){
+					
+					step++;
+					previousStep = 1-previousStep;
+					
+					
+				}
+				d.setZone(step);
+				System.out.println(step);
+				
 				data.add(d);
 				scanner.close();
+				
 			}
 			
 		}
