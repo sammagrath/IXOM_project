@@ -35,7 +35,7 @@ public class CSV2Array {
 		
 		while (linescanner.hasNextLine()) {
 
-			
+			//
 			
 			String line = c.lineCleaner(linescanner.nextLine());
 			
