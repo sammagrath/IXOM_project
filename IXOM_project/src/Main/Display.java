@@ -20,6 +20,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -39,6 +40,9 @@ public class Display extends Application {
 	private ExceltoCSV convertor;
 	private CSV2Array populator;
 	private ArrayList<dataPoint> data;
+	
+	//**The textfield which displays file path**//
+	private TextField textField = new TextField ();
 	
 	@Override
 	public void start(Stage stage) throws Exception {
@@ -67,12 +71,44 @@ public class Display extends Application {
 			
 			@Override
 			public void handle(ActionEvent arg0){
-				Alert alert = new Alert(AlertType.INFORMATION);
-				alert.setTitle("Information Dialog");
-				alert.setHeaderText("Flags");
-				alert.setContentText(printAll(data));
-				System.out.println(printAll(data));
-				alert.showAndWait();
+				String filename = textField.getText();
+				
+				
+				
+				//!!!! PATS ADDITION !!!!////
+				//Calls csv convertor//
+				excelFile = new File(filename);
+				dirtyCSVFile = new File(excelFile.getParent(), "output.csv");
+				convertor.xls(excelFile, dirtyCSVFile);
+				
+				try {
+					
+					//!!!PATS ADDITION!!!//
+					data = populator.populateData(dirtyCSVFile, data);
+					
+					
+					
+
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Information Dialog");
+					alert.setHeaderText("Flags");
+					alert.setContentText(printAll(data));
+	System.out.println(printAll(data));
+					alert.showAndWait();
+					
+					
+				} catch (Exception e) {
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("ERROR");
+					alert.setHeaderText("(There was an error in the retrieval process)");
+					alert.setContentText("Please restart the application and try again. Make sure you have selected a valid data file to analyse");
+					alert.showAndWait();
+					e.printStackTrace();
+				}
+				
+				
+				
+				
 			}
 			
 		});
@@ -97,38 +133,12 @@ public class Display extends Application {
 					fileChooser.setTitle("Open Resource File");
 					
 					//this String contains the file path of the file that you choose with the fileChooser
-					filename = fileChooser.showOpenDialog(stage).toString();
+					String name = fileChooser.showOpenDialog(stage).toString();
 					
 					
+					textField.setText(name);
 					
-					
-					
-					//!!!! PATS ADDITION !!!!//
-					//Calls csv convertor//
-					excelFile = new File(filename);
-					dirtyCSVFile = new File(excelFile.getParent(), "output.csv");
-					convertor.xls(excelFile, dirtyCSVFile);
-					
-					try {
-						
-						//!!!PATS ADDITION!!!//
-						data = populator.populateData(dirtyCSVFile, data);
-						
-						//this is a placeholder way of notifying you which file you selected, I will change this later
-						Alert alert = new Alert(AlertType.INFORMATION);
-						alert.setTitle("Success");
-						alert.setHeaderText("(Your File was added successfully)");
-						alert.setContentText("Filepath: " + filename);
-						alert.showAndWait();
-						
-					} catch (FileNotFoundException e) {
-						Alert alert = new Alert(AlertType.INFORMATION);
-						alert.setTitle("ERROR");
-						alert.setHeaderText("(There was an error in the retrieval process)");
-						alert.setContentText("Filepath: " + filename);
-						alert.showAndWait();
-						e.printStackTrace();
-					}
+				
 					
 				}
 				
@@ -145,7 +155,8 @@ public class Display extends Application {
 	       
 	        
 	        grid.add(new Label("Select a data file to analyse: "), 0, 0);
-	        grid.add(btnFileChooser, 0, 1);
+	        grid.add(textField, 0, 1);
+	        grid.add(btnFileChooser, 1, 1);
 	        grid.add(btnRun, 0, 2);
 	      
 	       
@@ -174,8 +185,11 @@ public class Display extends Application {
 
 	}
 	
+	
+	
 	public static void main(String args[]) {
 		launch(args);
 	}
+	
 	
 }
