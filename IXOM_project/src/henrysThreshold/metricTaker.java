@@ -39,11 +39,11 @@ public class metricTaker {
 		createEffectivePeriods();
 		CalculateAverage();
 		
+		
 	}
 
 	private void minutesToIncrements(int i) {
-		countsToEffectivePeriod=(int)(((i*60)/86400)/(sampleRate));
-		
+		countsToEffectivePeriod=(int)((((double)i*60)/86400)/(sampleRate));
 		System.out.println("number of counts until "+i+" minutes: " + countsToEffectivePeriod);
 		
 	}
@@ -65,7 +65,9 @@ public class metricTaker {
 			tempAverages.put(key, temptot/counts);
 			condAverages.put(key, condtot/counts);
 			soilAverages.put(key, soiltot/counts);
+			
 		}
+		
 	}
 
 	private void createEffectivePeriods() {
@@ -92,7 +94,7 @@ public class metricTaker {
 		for(int i=1;i<data.size();i++){
 			dataPoint p = data.get(i);
 			dataPoint q = data.get(i-1);
-			if(p.getZone()==(q.getZone()+1)){
+			if(p.getZone()!=(q.getZone())){
 				boundaryIndices.add(i);
 				System.out.println("boundary time "+counter +": "+ p.getTime()+" at index: "+i);
 				counter++;
