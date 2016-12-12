@@ -1,5 +1,7 @@
 package samThreshold;
 
+import java.util.ArrayList;
+
 public class Flag {
 
 	private String startTime;
@@ -32,9 +34,9 @@ public class Flag {
 	}
 
 	public String print() {
-		return "| " + startTime + " | " + endTime + " | " + phase + " | " + message + " | " + "Target: " + target + " | " + "Actual: " + actual + " |\n"; 
+		return "| " + startTime + " | " + endTime + " | " + phase + " | " + message + " | " + target + " | " + actual + " |\n"; 
 	}
-
+	
 	public String getStartTime() {
 		return startTime;
 	}

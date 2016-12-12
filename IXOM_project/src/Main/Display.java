@@ -26,6 +26,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import samThreshold.Flag;
+import samThreshold.FlagGeneration;
 import javafx.scene.text.Text;
 import Read_Data.CSV2Array;
 import Read_Data.ExceltoCSV;
@@ -40,6 +42,7 @@ public class Display extends Application {
 	private ExceltoCSV convertor;
 	private CSV2Array populator;
 	private ArrayList<dataPoint> data;
+	private ArrayList<Flag> flagList;
 	
 	//**The textfield which displays file path**//
 	private TextField textField = new TextField ();
@@ -85,14 +88,19 @@ public class Display extends Application {
 					
 					//!!!PATS ADDITION!!!//
 					data = populator.populateData(dirtyCSVFile, data);
-					
-					
+					//!!!SAM'S TAINT!!!//
+					flagList = new ArrayList<Flag>();
+					FlagGeneration f = new FlagGeneration(data);
+					f.condThresholds(flagList);
+					System.out.println(flagList.size());
 					
 
 					Alert alert = new Alert(AlertType.INFORMATION);
 					alert.setTitle("Information Dialog");
 					alert.setHeaderText("Flags");
-					alert.setContentText(printAll(data));
+//					alert.setContentText(printAll(data));
+					alert.setContentText(printFlags(flagList));
+					
 	System.out.println(printAll(data));
 					alert.showAndWait();
 					
@@ -185,7 +193,19 @@ public class Display extends Application {
 
 	}
 	
-	
+	public String printFlags(ArrayList<Flag> flagList) {
+		
+		String output;
+		
+		output = "|  Start Time  |  End Time  |  Phase  |  Message  |  Target  |  Actual  | \n";
+		
+		for (Flag flag : flagList) {
+			
+			output = output + flag.print();
+		}
+		
+		return output;
+	}
 	
 	public static void main(String args[]) {
 		launch(args);
