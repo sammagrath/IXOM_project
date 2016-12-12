@@ -71,7 +71,7 @@ public class Display extends Application {
 				alert.setTitle("Information Dialog");
 				alert.setHeaderText("Flags");
 				alert.setContentText(printAll(data));
-System.out.println(printAll(data));
+				System.out.println(printAll(data));
 				alert.showAndWait();
 			}
 			
@@ -103,10 +103,10 @@ System.out.println(printAll(data));
 					
 					
 					
-					//!!!! PATS ADDITION !!!!////
+					//!!!! PATS ADDITION !!!!//
 					//Calls csv convertor//
 					excelFile = new File(filename);
-					dirtyCSVFile = new File("C:/CIPtest/cleanfile5.csv");
+					dirtyCSVFile = new File(excelFile.getParent(), "output.csv");
 					convertor.xls(excelFile, dirtyCSVFile);
 					
 					try {
@@ -174,11 +174,8 @@ System.out.println(printAll(data));
 
 	}
 	
-	
-	
 	public static void main(String args[]) {
 		launch(args);
 	}
-	
 	
 }
