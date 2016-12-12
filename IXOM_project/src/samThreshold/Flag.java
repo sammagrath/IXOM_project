@@ -2,42 +2,54 @@ package samThreshold;
 
 public class Flag {
 
-	private Double startTime;
-	private Double endTime;
-	private char type;
+	private String startTime;
+	private String endTime;
+	private int zone;
 	private String phase;
 	private String message;
 	
 	public Flag() {
 		
-		startTime = 0.0;
-		endTime = 0.0;
+		startTime = "";
+		endTime = "";
+		zone = 0;
 		phase = "";
 		message = "";
 	}
+	
+	public Flag(String startTime, String endTime, int zone, String phase, String message) {
+		this.startTime = startTime;
+		this.endTime = endTime;
+		this.zone = zone;
+		this.phase = "Phase: " + phase;
+		this.message = "Reason: " + message;
+	}
 
-	public Double getStartTime() {
+	public String print() {
+		return "| " + startTime + " | " + endTime + " | " + phase + " | " + message + " | \n"; 
+	}
+	public String getStartTime() {
 		return startTime;
 	}
 
-	public void setStartTime(Double startTime) {
+	public void setStartTime(String startTime) {
 		this.startTime = startTime;
 	}
 
-	public Double getEndTime() {
+	public String getEndTime() {
 		return endTime;
 	}
 
-	public void setEndTime(Double endTime) {
+	public void setEndTime(String endTime) {
 		this.endTime = endTime;
 	}
-
-	public char getType() {
-		return type;
+	
+	public int getZone() {
+		return zone;
 	}
 
-	public void setType(char type) {
-		this.type = type;
+	public void setZone(int zone) {
+		this.zone = zone;
 	}
 
 	public String getPhase() {

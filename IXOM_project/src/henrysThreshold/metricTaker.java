@@ -53,16 +53,22 @@ public class metricTaker {
 		double condtot=0;
 		double soiltot=0;
 		int counts=0;
+		
+		//System.out.println(effectivePeriods.size());
+		
 		for(Integer key: effectivePeriods.keySet()){
 			ArrayList<dataPoint> pointsOfData = effectivePeriods.get(key);
+//			System.out.println("pod size: " + pointsOfData.size());
 			for (dataPoint dp : pointsOfData){
 				temptot+=dp.getTemp();
 				condtot+=dp.getConductivity();
 				soiltot+=dp.getSoil();
 				counts++;
+//				System.out.println("condot: ");
 			}
 			
 			tempAverages.put(key, temptot/counts);
+//			System.out.println("averageCond: " + condtot/counts);
 			condAverages.put(key, condtot/counts);
 			soilAverages.put(key, soiltot/counts);
 			
@@ -72,20 +78,24 @@ public class metricTaker {
 
 	private void createEffectivePeriods() {
 		int counter = 1;
-		ArrayList<dataPoint> effectiveTime = new ArrayList<dataPoint>();
 		
 		for (int i=0;i<boundaryIndices.size()-1;i++){
 			
+			ArrayList<dataPoint> effectiveTime = new ArrayList<dataPoint>();
+			
 			// need to start at the beginning of the effective period
 			for (int j=boundaryIndices.get(i)+countsToEffectivePeriod;j<boundaryIndices.get(i+1);j++){
+//				System.out.println("data: " + data.get(j));
 				effectiveTime.add(data.get(j));
 			}
+			//System.out.println(effectiveTime.size());
 			effectivePeriods.put(counter, effectiveTime);
-			effectiveTime.clear();
+			//System.out.println(effectivePeriods.get(counter).size());
 			counter++;
 		}
 		
 	}
+
 
 	private void assignBoundaryIndices() {
 		//this needs to be modified
@@ -148,7 +158,29 @@ public class metricTaker {
 		this.soilAverages = soilAverages;
 	}
 	
-	
+	public ArrayList<Integer> getBoundaryIndices() {
+		return boundaryIndices;
+	}
+
+	public void setBoundaryIndices(ArrayList<Integer> boundaryIndices) {
+		this.boundaryIndices = boundaryIndices;
+	}
+
+	public double getSampleRate() {
+		return sampleRate;
+	}
+
+	public void setSampleRate(double sampleRate) {
+		this.sampleRate = sampleRate;
+	}
+
+	public int getCountsToEffectivePeriod() {
+		return countsToEffectivePeriod;
+	}
+
+	public void setCountsToEffectivePeriod(int countsToEffectivePeriod) {
+		this.countsToEffectivePeriod = countsToEffectivePeriod;
+	}
 	
 	
 }
