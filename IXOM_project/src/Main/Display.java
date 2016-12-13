@@ -99,11 +99,12 @@ public class Display extends Application {
 					System.out.println(flagList.size());
 					
 
+
 					Alert alert = new Alert(AlertType.INFORMATION);
 DialogPane dialogPane = alert.getDialogPane();
 					
 					alert.setTitle("Information Dialog");
-					alert.setHeaderText("Flags:");
+					alert.setHeaderText("Flags for " + excelFile.getName() +":");
 //					alert.setContentText(printAll(data));
 					
 			
@@ -114,7 +115,7 @@ DialogPane dialogPane = alert.getDialogPane();
 					   dialogGrid.setHgap(10);
 					   dialogGrid.setPadding(new Insets(5, 5, 5, 5));
 					  				        
-					  
+					   if(flagList.size() > 0){
 					   
 					   dialogGrid.add(new Label("| Start Time |"), 0, 0);
 					   dialogGrid.add(new Label("| End Time |"), 1, 0);
@@ -140,6 +141,12 @@ DialogPane dialogPane = alert.getDialogPane();
 							counter++;
 
 						}
+			}
+			
+			else {
+				dialogGrid.add(new Label("No flags to display"), 0, 0);
+				dialogPane.setContent(dialogGrid);
+			}
 			        
 
 					
