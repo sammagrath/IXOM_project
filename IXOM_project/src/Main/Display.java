@@ -19,6 +19,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
@@ -96,15 +97,51 @@ public class Display extends Application {
 					
 
 					Alert alert = new Alert(AlertType.INFORMATION);
+DialogPane dialogPane = alert.getDialogPane();
+					
 					alert.setTitle("Information Dialog");
-					alert.setHeaderText("Flags");
-					//swapping data Array for flagList in final output
-					alert.setContentText(printFlags(flagList));
+					alert.setHeaderText("Flags:");
 //					alert.setContentText(printAll(data));
 					
-	System.out.println(printAll(data));
-					alert.showAndWait();
+			
+				
+					GridPane dialogGrid = new GridPane();
+					dialogGrid.setAlignment(Pos.CENTER);
+					   dialogGrid.setVgap(10);
+					   dialogGrid.setHgap(10);
+					   dialogGrid.setPadding(new Insets(5, 5, 5, 5));
+					  				        
+					  
+					   
+					   dialogGrid.add(new Label("| Start Time |"), 0, 0);
+					   dialogGrid.add(new Label("| End Time |"), 1, 0);
+					   dialogGrid.add(new Label("| Phase |"), 2, 0);
+					   dialogGrid.add(new Label("| Message |"), 3, 0);
+					   dialogGrid.add(new Label("| Target |"), 4, 0);
+					   dialogGrid.add(new Label("| Actual |"), 5, 0);
+				        
+					   dialogPane.setContent(dialogGrid);
+					   
+					  int counter = 1;
+						for (Flag flag : flagList) {
+							
+							dialogGrid.add(new Label(flag.getStartTime()), 0, counter);
+							dialogGrid.add(new Label(flag.getEndTime()), 1, counter);
+							dialogGrid.add(new Label(flag.getPhase()), 2, counter);
+							dialogGrid.add(new Label(flag.getMessage()), 3, counter);
+							dialogGrid.add(new Label(String.valueOf(flag.getTarget())), 4, counter);
+							dialogGrid.add(new Label(String.valueOf(flag.getActual())), 5, counter);
+				
+							
+							
+							counter++;
+
+						}
+			        
+
 					
+	// System.out.println(printAll(data));
+					alert.showAndWait();
 					
 				} catch (Exception e) {
 					Alert alert = new Alert(AlertType.INFORMATION);
@@ -194,6 +231,8 @@ public class Display extends Application {
 
 	}
 	
+	
+	//SAMS CODE // ANDREW SAYS: I had to abandon this particular method when using the gridpane, but I'm keeping it here in case we need it again
 	public String printFlags(ArrayList<Flag> flagList) {
 		
 		String output;
