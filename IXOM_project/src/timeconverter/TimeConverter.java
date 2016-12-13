@@ -78,12 +78,8 @@ public class TimeConverter {
 		double decimalTime = 2.0;
 		int datelength = hourMinSec.length();
 		int unit = 0;
-		String hourString = "";
-		String minString = "";
-		String secondString = "";
-		int hour = 0;
-		int min = 0;
-		int second = 0;
+		String hourString = "", minString = "", secondString = "";
+		int hour = 0, min = 0, second = 0;
 		
 		for(int i = 0; i < datelength; i++){
 			char current = hourMinSec.charAt(i);

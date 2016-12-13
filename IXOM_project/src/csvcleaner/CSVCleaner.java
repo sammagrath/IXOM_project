@@ -17,7 +17,7 @@ public class CSVCleaner {
 		String cleanLine = "";
 		int lineLength = dirtyLine.length();
 		String input = "";
-		int stage = 0, currentStep = 0;
+		int stage = 0;
 		String date = "", time = "", turb = "", cond = "", soil = "", temp = "", step = "";
 		
 		for(int i = 0; i < lineLength; i++){
@@ -95,7 +95,7 @@ public class CSVCleaner {
 		} else if (dirtyDateTime.contains(":")){
 			dateTime = false;
 		} else {
-			return null;
+			return "";
 		}
 		
 		for(int i = 0; i < length; i++){
@@ -127,7 +127,7 @@ public class CSVCleaner {
 			return cleanDateTime;
 		}
 		
-		return null;
+		return "";
 	}
 	
 	
@@ -160,27 +160,6 @@ public class CSVCleaner {
 		}
 		
 		return cleanDec;
-	}
-	
-	
-	//input string for step and removes the .0 from the end or returns null if wrong input
-	public String stepCleaner(String dirtyStep){
-		
-		String cleanStep = "";
-		char current;
-		int length = dirtyStep.length();
-		
-		for(int i = 0; i < length; i++){
-			current = dirtyStep.charAt(i);
-			if(Character.isDigit(current)){
-				cleanStep += current;
-			} else if(current == '.'){
-				break;
-			} else {
-				return null;
-			}
-		}
-		return cleanStep;
 	}
 	
 }
