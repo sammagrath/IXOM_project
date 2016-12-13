@@ -4,6 +4,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
+import org.apache.poi.EncryptedDocumentException;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+
 import javafx.*;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -83,7 +86,15 @@ public class Display extends Application {
 				//Calls csv convertor//
 				excelFile = new File(filename);
 				dirtyCSVFile = new File(excelFile.getParent(), "output.csv");
-				convertor.xls(excelFile, dirtyCSVFile);
+				try {
+					convertor.xls(excelFile, dirtyCSVFile);
+				} catch (EncryptedDocumentException e1) {
+					
+					e1.printStackTrace();
+				} catch (InvalidFormatException e1) {
+					
+					e1.printStackTrace();
+				}
 				
 				try {
 					

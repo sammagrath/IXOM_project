@@ -12,25 +12,29 @@ import java.io.IOException;
 
 import java.util.Iterator;
 
+import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 //
 public class ExceltoCSV {
 
-	public void xls(File inputFile, File outputFile) {
+	public void xls(File inputFile, File outputFile) throws EncryptedDocumentException, InvalidFormatException {
 
 		StringBuffer data = new StringBuffer();
 		try {
 			FileOutputStream fos = new FileOutputStream(outputFile);
 
-			HSSFWorkbook workbook = new HSSFWorkbook(new FileInputStream(inputFile));
+			Workbook workbook = WorkbookFactory.create(inputFile);
 
-			HSSFSheet sheet = workbook.getSheetAt(0);
+			Sheet sheet = workbook.getSheetAt(0);
 			Cell cell;
 			Row row;
 
