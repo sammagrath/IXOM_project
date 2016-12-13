@@ -57,7 +57,7 @@ public class CSV2Array {
 					
 				}
 				d.setZone(step);
-				System.out.println(step);
+				
 				
 				data.add(d);
 				scanner.close();
