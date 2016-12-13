@@ -93,6 +93,9 @@ public class Display extends Application {
 					flagList = new ArrayList<Flag>();
 					FlagGeneration f = new FlagGeneration(data);
 					f.condThresholds(flagList);
+					f.tempThresholds();
+					f.endRinseCond();
+					
 					System.out.println(flagList.size());
 					
 
