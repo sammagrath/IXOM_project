@@ -10,11 +10,15 @@ package timeconverter;
 
 public class TimeConverter {
 
-	//input a decimal between 0 and 1 and return a String for a date in the form hh:mm:ss
+	//input a double within the range [0, 1) and return a String for the time in the form hh:mm:ss.
 	public String decToHMS(double decimalTime){
 		String hourMinSec = "";
 		int hour = 0, min = 0, second = 0;
 		String hourString = "", minString = "", secString = "";
+		
+		if(decimalTime < 0 || decimalTime >= 1){
+			return null;
+		}
 		
 		decimalTime = decimalTime*86400;
 		
@@ -33,7 +37,7 @@ public class TimeConverter {
 			second++;
 		}
 		
-		if(hour >=0.0 && hour < 24){
+		if(hour < 24){
 			if (hour < 10){
 				hourString = "0"+hour;
 			} else {
@@ -43,7 +47,7 @@ public class TimeConverter {
 			return null;
 		}
 		
-		if(min >=0 && min < 60){
+		if(min < 60){
 			if (min < 10){
 				minString = "0"+min;
 			} else {
@@ -53,7 +57,7 @@ public class TimeConverter {
 			return null;
 		}
 		
-		if(second >=0 && second < 60){
+		if(second < 60){
 			if (second < 10){
 				secString = "0"+second;
 			} else {
@@ -69,7 +73,7 @@ public class TimeConverter {
 	}
 	
 	
-	//input a date in the form hh:mm:ss and return a decimal value between 0 and 1.
+	//input time as a String in the form hh:mm:ss and return a double in the range [0, 1).
 	public double HMSToDec(String hourMinSec){
 		double decimalTime = 2.0;
 		int datelength = hourMinSec.length();
