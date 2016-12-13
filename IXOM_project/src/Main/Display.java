@@ -101,6 +101,8 @@ public class Display extends Application {
 
 
 					Alert alert = new Alert(AlertType.INFORMATION);
+					
+					//this line allows the alert box to accept a gridpane for displaying the flags
 DialogPane dialogPane = alert.getDialogPane();
 					
 					alert.setTitle("Information Dialog");
@@ -108,13 +110,15 @@ DialogPane dialogPane = alert.getDialogPane();
 //					alert.setContentText(printAll(data));
 					
 			
-				
+				//gridpane is set up here
 					GridPane dialogGrid = new GridPane();
 					dialogGrid.setAlignment(Pos.CENTER);
 					   dialogGrid.setVgap(10);
 					   dialogGrid.setHgap(10);
 					   dialogGrid.setPadding(new Insets(5, 5, 5, 5));
-					  				        
+					  			
+					   
+					   //if there are any flags in the flag array they are printed with the below code, if not the else is triggered and will say there are no flags
 					   if(flagList.size() > 0){
 					   
 					   dialogGrid.add(new Label("| Start Time |"), 0, 0);
@@ -124,6 +128,7 @@ DialogPane dialogPane = alert.getDialogPane();
 					   dialogGrid.add(new Label("| Target |"), 4, 0);
 					   dialogGrid.add(new Label("| Actual |"), 5, 0);
 				        
+					   //this line sets the content of the dialogpane (which is inside the alert box) to be the gridpane (which contains all flag information)
 					   dialogPane.setContent(dialogGrid);
 					   
 					  int counter = 1;
