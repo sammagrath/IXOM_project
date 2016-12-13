@@ -34,7 +34,7 @@ public class Flag {
 	}
 
 	public String print() {
-		return "| " + startTime + " | " + endTime + " | " + phase + " | " + message + " | " + target + " | " + actual + " |\n"; 
+		return "| " + startTime + " | " + endTime + " | " + phase + " | " + message + " | " + target + " | " + actual + " | \n"; 
 	}
 	
 	public String getStartTime() {

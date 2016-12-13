@@ -98,8 +98,9 @@ public class Display extends Application {
 					Alert alert = new Alert(AlertType.INFORMATION);
 					alert.setTitle("Information Dialog");
 					alert.setHeaderText("Flags");
-//					alert.setContentText(printAll(data));
+					//swapping data Array for flagList in final output
 					alert.setContentText(printFlags(flagList));
+//					alert.setContentText(printAll(data));
 					
 	System.out.println(printAll(data));
 					alert.showAndWait();
@@ -197,7 +198,7 @@ public class Display extends Application {
 		
 		String output;
 		
-		output = "| Start Time | End Time | Phase | Message | Target | Actual | \n";
+		output = "| Start Time | End Time | Phase | Message | Target | Actual  | \n";
 		
 		for (Flag flag : flagList) {
 			

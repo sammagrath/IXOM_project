@@ -51,36 +51,89 @@ public class FlagGeneration {
 		
 		if (condAverages.get(1) < 0.5) {
 			
-//			System.out.println("Pre-rinse: Caustic strength too low" + data.get(10).getTime() + "-" + data.get(metric.getBoundaryIndices().get(1)).getTime());
 			Flag flag = new Flag(data.get(metric.getCountsToEffectivePeriod()).getTime(), data.get(metric.getBoundaryIndices().get(1)).getTime(), 1, "Pre-Rinse", "Caustic strength too low", 0.5, condAverages.get(1));
 			flagList.add(flag);
+			flag.print();
 		}
 		
 		if (condAverages.get(1) > 0.8) {
-			
-//			System.out.println("Pre-rinse: Caustic strength too high" + data.get(10).getTime() + "-" + data.get(metric.getBoundaryIndices().get(1)).getTime());
+		
 			Flag flag = new Flag(data.get(metric.getCountsToEffectivePeriod()).getTime(), data.get(metric.getBoundaryIndices().get(1)).getTime(), 1, "Pre-Rinse", "Caustic strength too high", 0.8, condAverages.get(1));
 			flagList.add(flag);
+			flag.print();
 		}
 		
 		if (condAverages.get(2) < 1.0) {
 			
-			System.out.println();
-			System.out.println(data.get(metric.getBoundaryIndices().get(1) + metric.getCountsToEffectivePeriod()).getTime() + "-" + data.get(metric.getBoundaryIndices().get(2)).getTime() + "\n Caustic-recirculation: Caustic strength too low");
 			Flag flag = new Flag(data.get(metric.getBoundaryIndices().get(1) + metric.getCountsToEffectivePeriod()).getTime(), data.get(metric.getBoundaryIndices().get(2)).getTime(), 2, "Caustic-Recirculation", "Caustic strength too low", 1.0, condAverages.get(2));
 			flagList.add(flag);
+			flag.print();
 		}
 		
 		if (condAverages.get(2) > 1.2) {
 			
-			System.out.println();
-			System.out.println(data.get(metric.getBoundaryIndices().get(1) + metric.getCountsToEffectivePeriod()).getTime() + "-" + data.get(metric.getBoundaryIndices().get(2)).getTime() + "\n Caustic-recirculation: Caustic strength too high");
 			Flag flag = new Flag(data.get(metric.getBoundaryIndices().get(1) + metric.getCountsToEffectivePeriod()).getTime(), data.get(metric.getBoundaryIndices().get(2)).getTime(), 2, "Caustic-Recirculation", "Caustic strength too high", 1.2, condAverages.get(2));
 			flagList.add(flag);
+			flag.print();
+		}
+		
+		if (condAverages.get(4) < 0.8) {
+			
+			Flag flag = new Flag(data.get(metric.getBoundaryIndices().get(3) + metric.getCountsToEffectivePeriod()).getTime(), data.get(metric.getBoundaryIndices().get(4)).getTime(), 2, "Acid-Recirculation", "Acidic strength too low", 0.8, condAverages.get(4));
+			flagList.add(flag);
+			flag.print();
+		}
+		
+		if (condAverages.get(4) > 1.0) {
+			
+			Flag flag = new Flag(data.get(metric.getBoundaryIndices().get(3) + metric.getCountsToEffectivePeriod()).getTime(), data.get(metric.getBoundaryIndices().get(4)).getTime(), 2, "Acid-Recirculation", "Acidic strength too high", 1.0, condAverages.get(4));
+			flagList.add(flag);
+			flag.print();
+		}
+	}
+	
+	public void endRinseCond() {
+		
+		double endIntRinseVal;
+		double endFinalRinseVal;
+		int i = 0;
+		int j = 0;
+		
+		i = metric.getBoundaryIndices().get(3);
+		j = data.size();
+		endIntRinseVal = data.get(metric.getBoundaryIndices().get(3)).getConductivity();
+		endFinalRinseVal = data.get(data.size()-1).getConductivity();
+		
+//		System.out.println("b index: " + i);
+//		System.out.println("b index final: " + j);
+//		System.out.println("Int Rinse End: " + endIntRinseVal);
+//		System.out.println("Final Rinse End: " + endFinalRinseVal);
+		
+		if (endIntRinseVal == 0.0) {
+			
+			Flag flag = new Flag(data.get(metric.getBoundaryIndices().get(2) + metric.getCountsToEffectivePeriod()).getTime(), data.get(metric.getBoundaryIndices().get(3)).getTime(), 5, "Intermediate Rinse", "Conductivity Non-Zero at Rinse End", 0.0, endIntRinseVal);
+			flagList.add(flag);
+			flag.print();
+			
+		}
+		
+		if (endFinalRinseVal == 0.0) {
+			
+			Flag flag = new Flag(data.get(metric.getBoundaryIndices().get(4) + metric.getCountsToEffectivePeriod()).getTime(), data.get(data.size()-1).getTime(), 2, "Final Rinse", "Conductivity Non-Zero at Rinse End", 0.0, endFinalRinseVal);
+			flagList.add(flag);
+			flag.print();
+			
 		}
 		
 	}
-
+	
+	public void tempThresholds() {
+		
+		
+		
+		
+	}
+	
 	public static void main(String[] args) throws FileNotFoundException {
 		
 		input = new File("/home/magratsam/git/cleanfile5.csv");
@@ -89,7 +142,8 @@ public class FlagGeneration {
 		data = c.populateData(input, data);
 		
 		FlagGeneration f = new FlagGeneration(data);
-		f.condThresholds(flagList);
+//		f.condThresholds(flagList);
+		f.endRinseCond();
 		
 		for(Flag flag: flagList) {
 			System.out.println();
