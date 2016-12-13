@@ -34,10 +34,11 @@ public class CSV2Array {
 		int step = 1, previousStep = 0;
 		
 		while (linescanner.hasNextLine()) {
-
-			//
+			//System.out.println(linescanner.nextLine());
 			
 			String line = c.lineCleaner(linescanner.nextLine());
+	
+			System.out.println(line);
 			
 			if(!line.contains("null")){
 

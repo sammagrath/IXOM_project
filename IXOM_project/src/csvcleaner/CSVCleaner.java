@@ -95,7 +95,7 @@ public class CSVCleaner {
 		} else if (dirtyDateTime.contains(":")){
 			dateTime = false;
 		} else {
-			return "";
+			return " incorrect format";
 		}
 		
 		for(int i = 0; i < length; i++){
@@ -127,7 +127,7 @@ public class CSVCleaner {
 			return cleanDateTime;
 		}
 		
-		return "";
+		return "incorrect format";
 	}
 	
 	
