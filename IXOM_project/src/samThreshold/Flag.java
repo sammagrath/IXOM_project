@@ -9,7 +9,7 @@ public class Flag {
 	private int zone;
 	private String phase;
 	private String message;
-	private double target;
+	private String target;
 	private double actual;
 	
 	public Flag() {
@@ -19,11 +19,11 @@ public class Flag {
 		zone = 0;
 		phase = "";
 		message = "";
-		target = 0.0;
+		target = "";
 		actual = 0.0;
 	}
 	
-	public Flag(String startTime, String endTime, int zone, String phase, String message, double target, double actual) {
+	public Flag(String startTime, String endTime, int zone, String phase, String message,String target, double actual) {
 		this.startTime = startTime;
 		this.endTime = endTime;
 		this.zone = zone;
@@ -77,11 +77,11 @@ public class Flag {
 		this.message = message;
 	}
 	
-	public double getTarget() {
+	public String getTarget() {
 		return target;
 	}
 
-	public void setTarget(double target) {
+	public void setTarget(String target) {
 		this.target = target;
 	}
 
