@@ -37,8 +37,14 @@ public class FlagGeneration {
 		CSV2Array c = new CSV2Array();
 		data = c.populateData(input, data);
 		
+		condThresholds(flagList);
+		endRinseCond(flagList);
+		tempThresholds(flagList);
+		
+		
 	}
 	
+	//measure of conductivity levels across wash phases
 	public void condThresholds(ArrayList<Flag> flagList) {
 		
 		HashMap<Integer,Double> condAverages = new HashMap<Integer,Double>();
@@ -81,7 +87,8 @@ public class FlagGeneration {
 		}
 	}
 	
-	public void endRinseCond() {
+	//Method measures residual conductivity and end of rinse cycles - if non-zero, flag is thrown 
+	public void endRinseCond(ArrayList<Flag> flagList) {
 		
 		double endIntRinseVal;
 		double endFinalRinseVal;
@@ -103,7 +110,8 @@ public class FlagGeneration {
 		
 	}
 	
-	public void tempThresholds() {
+	//Average temperature threshold tests
+	public void tempThresholds(ArrayList<Flag> flagList) {
 		
 		HashMap<Integer,Double> tempAverages = new HashMap<Integer,Double>();
 		tempAverages = metric.getTempAverages();
@@ -135,6 +143,7 @@ public class FlagGeneration {
 		
 	}
 	
+	//local main for testing flag methods
 	public static void main(String[] args) throws FileNotFoundException {
 		
 		input = new File("/home/magratsam/git/cleanfile5.csv");
@@ -144,13 +153,14 @@ public class FlagGeneration {
 		
 		FlagGeneration f = new FlagGeneration(data);
 		f.condThresholds(flagList);
-		f.endRinseCond();
-		f.tempThresholds();
+		f.endRinseCond(flagList);
+		f.tempThresholds(flagList);
 		
-		for(Flag flag: flagList) {
-			System.out.println();
-			System.out.println(flag.print());
-		}
+		//Console print of flags
+//		for(Flag flag: flagList) {
+//			System.out.println();
+//			System.out.println(flag.print());
+//		}
 		
 	}
 	

@@ -44,7 +44,7 @@ public class metricTaker {
 
 	private void minutesToIncrements(int i) {
 		countsToEffectivePeriod=(int)((((double)i*60)/86400)/(sampleRate));
-		System.out.println("number of counts until "+i+" minutes: " + countsToEffectivePeriod);
+//		System.out.println("number of counts until "+i+" minutes: " + countsToEffectivePeriod);
 		
 	}
 
@@ -106,7 +106,7 @@ public class metricTaker {
 			dataPoint q = data.get(i-1);
 			if(p.getZone()!=(q.getZone())){
 				boundaryIndices.add(i);
-				System.out.println("boundary time "+counter +": "+ p.getTime()+" at index: "+i);
+//				System.out.println("boundary time "+counter +": "+ p.getTime()+" at index: "+i);
 				counter++;
 				
 			}
@@ -122,7 +122,7 @@ public class metricTaker {
 		
 		
 		sampleRate = (tc.HMSToDec(data.get(data.size()-1).getTime())  -  tc.HMSToDec(data.get(0).getTime()))/data.size();
-		System.out.println("sample rate: " + sampleRate);
+//		System.out.println("sample rate: " + sampleRate);
 		
 	}
 
