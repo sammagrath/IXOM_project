@@ -140,7 +140,32 @@ public class FlagGeneration {
 			flagList.add(flag);
 		}
 		
+	}
+	
+	public void applyPhase(ArrayList<dataPoint> data) {
 		
+		for (dataPoint d: data) {
+			
+			if (d.getZone() == 1) {
+				d.setPhase("Pre-Flush");			
+			}
+			
+			else if (d.getZone() == 2) {
+				d.setPhase("Caustic Recirculation");
+			}
+			
+			else if (d.getZone() == 3) {
+				d.setPhase("Intermediate Wash");
+			}
+			
+			else if (d.getZone() == 4) {
+				d.setPhase("Acid Recirculation");
+			}
+			
+			else if (d.getZone() == 5) {
+				d.setPhase("Final Rinse");
+			}
+		}
 	}
 	
 	//local main for testing flag methods
@@ -157,12 +182,18 @@ public class FlagGeneration {
 		f.endRinseCond(flagList);
 		f.tempThresholds(flagList);
 		
+		f.applyPhase(data);
+		
 		//Console print of flags
 		for(Flag flag: flagList) {
 			System.out.println();
 			System.out.println(flag.print());
 		}
 		
+		//console print of data
+		for (dataPoint d : data) {
+			System.out.println(d.getPhase());
+		}
 	}
 	
 }

@@ -3,7 +3,8 @@ package samThreshold;
 import java.util.ArrayList;
 
 public class Flag {
-
+	
+	private String date;
 	private String startTime;
 	private String endTime;
 	private int zone;
@@ -11,9 +12,14 @@ public class Flag {
 	private String message;
 	private String target;
 	private double actual;
+	private double lowerThreshold;
+	private double upperThreshold;
 	
+
+
 	public Flag() {
 		
+		date = "";
 		startTime = "";
 		endTime = "";
 		zone = 0;
@@ -21,6 +27,8 @@ public class Flag {
 		message = "";
 		target = "";
 		actual = 0.0;
+		lowerThreshold = 0;
+		upperThreshold = 0;
 	}
 	
 	public Flag(String startTime, String endTime, int zone, String phase, String message,String target, double actual) {
@@ -91,6 +99,30 @@ public class Flag {
 
 	public void setActual(double actual) {
 		this.actual = actual;
+	}
+	
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
+	}
+
+	public double getLowerThreshold() {
+		return lowerThreshold;
+	}
+
+	public void setLowerThreshold(double lowerThreshold) {
+		this.lowerThreshold = lowerThreshold;
+	}
+
+	public double getUpperThreshold() {
+		return upperThreshold;
+	}
+
+	public void setUpperThreshold(double upperThreshold) {
+		this.upperThreshold = upperThreshold;
 	}
 	
 }
