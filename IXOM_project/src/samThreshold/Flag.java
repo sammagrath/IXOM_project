@@ -12,8 +12,10 @@ public class Flag {
 	private String message;
 	private String target;
 	private double actual;
-	private double lowerThreshold;
-	private double upperThreshold;
+	private double condLower;
+	private double condUpper;
+	private double tempLower;
+	private double tempUpper;
 	
 
 
@@ -27,11 +29,26 @@ public class Flag {
 		message = "";
 		target = "";
 		actual = 0.0;
-		lowerThreshold = 0;
-		upperThreshold = 0;
+		tempUpper = 0.0;
+		tempLower = 0.0;
+		condUpper = 0.0;
+		condLower = 0.0;
+		
 	}
 	
+
+
 	public Flag(String startTime, String endTime, int zone, String phase, String message,String target, double actual) {
+		this.startTime = startTime;
+		this.endTime = endTime;
+		this.zone = zone;
+		this.phase = phase;
+		this.message = message;
+		this.target = target;
+		this.actual = Math.round(actual*100.0)/100.0;
+	}
+	
+	public Flag(String startTime, String endTime, int zone, String phase, String message, double condLower, double condUpper, double tempLower, double tempUpper, String target, double actual) {
 		this.startTime = startTime;
 		this.endTime = endTime;
 		this.zone = zone;
@@ -108,21 +125,37 @@ public class Flag {
 	public void setDate(String date) {
 		this.date = date;
 	}
-
-	public double getLowerThreshold() {
-		return lowerThreshold;
+	
+	public double getTempUpper() {
+		return tempUpper;
 	}
 
-	public void setLowerThreshold(double lowerThreshold) {
-		this.lowerThreshold = lowerThreshold;
+	public void setTempUpper(double tempUpper) {
+		this.tempUpper = tempUpper;
 	}
 
-	public double getUpperThreshold() {
-		return upperThreshold;
+	public double getTempLower() {
+		return tempLower;
 	}
 
-	public void setUpperThreshold(double upperThreshold) {
-		this.upperThreshold = upperThreshold;
+	public void setTempLower(double tempLower) {
+		this.tempLower = tempLower;
+	}
+
+	public double getCondUpper() {
+		return condUpper;
+	}
+
+	public void setCondUpper(double condUpper) {
+		this.condUpper = condUpper;
+	}
+
+	public double getCondLower() {
+		return condLower;
+	}
+
+	public void setCondLower(double condLower) {
+		this.condLower = condLower;
 	}
 	
 }
