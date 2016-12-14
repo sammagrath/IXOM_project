@@ -96,14 +96,14 @@ public class FlagGeneration {
 		endIntRinseVal = data.get(metric.getBoundaryIndices().get(3)).getConductivity();
 		endFinalRinseVal = data.get(data.size()-1).getConductivity();
 
-		if (endIntRinseVal == 0.0) {
+		if (endIntRinseVal != 0.0) {
 			
 			Flag flag = new Flag(data.get(metric.getBoundaryIndices().get(2) + metric.getCountsToEffectivePeriod()).getTime(), data.get(metric.getBoundaryIndices().get(3)).getTime(), 3, "Intermediate Rinse", "Conductivity Non-Zero at Rinse End", "0.0", endIntRinseVal);
 			flagList.add(flag);
 		}
 		
-		if (endFinalRinseVal == 0.0) {
-			
+		if (endFinalRinseVal != 0.0) {
+		
 			Flag flag = new Flag(data.get(metric.getBoundaryIndices().get(4) + metric.getCountsToEffectivePeriod()).getTime(), data.get(data.size()-1).getTime(), 5, "Final Rinse", "Conductivity Non-Zero at Rinse End", "0.0", endFinalRinseVal);
 			flagList.add(flag);			
 		}
@@ -146,6 +146,7 @@ public class FlagGeneration {
 	//local main for testing flag methods
 	public static void main(String[] args) throws FileNotFoundException {
 		
+		//User must change directory to local in order to test
 		input = new File("/home/magratsam/git/cleanfile5.csv");
 		CSV2Array c = new CSV2Array();
 		
@@ -157,10 +158,10 @@ public class FlagGeneration {
 		f.tempThresholds(flagList);
 		
 		//Console print of flags
-//		for(Flag flag: flagList) {
-//			System.out.println();
-//			System.out.println(flag.print());
-//		}
+		for(Flag flag: flagList) {
+			System.out.println();
+			System.out.println(flag.print());
+		}
 		
 	}
 	

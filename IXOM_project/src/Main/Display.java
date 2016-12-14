@@ -100,14 +100,18 @@ public class Display extends Application {
 					
 					//!!!PATS ADDITION!!!//
 					data = populator.populateData(dirtyCSVFile, data);
-					//!!!SAM'S TAINT!!!//
+					//!!!SAM'S ADDITION!!!//
+					/*
+					 * instantiates Flag Array, Flag Generation object - it is passed data array and contains metricTaker object for performing flag tests
+					 * thrown flags are added to array and then passed to the application
+					 */
 					flagList = new ArrayList<Flag>();
 					FlagGeneration f = new FlagGeneration(data);
 					f.condThresholds(flagList);
 					f.tempThresholds(flagList);
 					f.endRinseCond(flagList);
 					
-					System.out.println(flagList.size());
+//					System.out.println(flagList.size());
 					
 
 

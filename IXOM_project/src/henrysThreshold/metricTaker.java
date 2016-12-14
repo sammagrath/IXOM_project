@@ -19,6 +19,7 @@ public class metricTaker {
 	private ArrayList<Integer> boundaryIndices = new ArrayList<Integer>();
 	private HashMap<Integer, ArrayList<dataPoint>> effectivePeriods = new HashMap<Integer, ArrayList<dataPoint>>();
 	private double sampleRate;
+	private int minsIncrement;
 	private int countsToEffectivePeriod;
 	private HashMap<Integer, Double> tempAverages = new HashMap<Integer, Double>();
 	private HashMap<Integer, Double> condAverages = new HashMap<Integer, Double>();
@@ -42,21 +43,21 @@ public class metricTaker {
 		 * 
 		 */
 		findAverageSampleRate();
-		/*edited minutes to increments by passing fraction of sample rate rather than fixed value
-		*in order to resolve conflicts in shorter processes, though would require further discussion
-		*for best course of action for determining start of recording
+		/*edited minutes to increments by passing fraction of CIP duration rather than fixed value
+		*in order to resolve conflicts in shorter processes. Declared minsIncrememnt field and instantiated it
+		*in findAverageSampleRate method
 		*
 		*- Sam
 		*/
 		
-		minutesToIncrements((sampleRate*0.039));
+		minutesToIncrements(minsIncrement);
 		assignBoundaryIndices();
 		createEffectivePeriods();
 		CalculateAverage();
 
 	}
 
-	private void minutesToIncrements(double i) {
+	private void minutesToIncrements(int i) {
 		// the sample rate might change on the wizard, so this is just to find
 		// out what it will be in any case
 		countsToEffectivePeriod = (int) ((((double) i * 60) / 86400) / (sampleRate));
@@ -140,13 +141,21 @@ public class metricTaker {
 	
 	/**
 	 * finds the average sample rate
+	 * 
+	 * also instantiates minsIncrement, converting fraction of total CIP duration from HMS to decimal and then rounding and converting to int 
+	 * for use in minsToIncrement method - Sam
 	 */
 
 	private void findAverageSampleRate() {
 		TimeConverter tc = new TimeConverter();
-
+	
 		sampleRate = (tc.HMSToDec(data.get(data.size() - 1).getTime()) - tc.HMSToDec(data.get(0).getTime()))
 				/ data.size();
+		
+		//SAM'S ADDITION
+		double CIPduration = (tc.HMSToDec(data.get(data.size() - 1).getTime()) - tc.HMSToDec(data.get(0).getTime()));
+		CIPduration = (CIPduration*0.04) * 1440;
+		minsIncrement = (int) Math.round(CIPduration);
 
 	}
 
