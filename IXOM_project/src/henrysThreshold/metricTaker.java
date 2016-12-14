@@ -42,14 +42,17 @@ public class metricTaker {
 		 * 
 		 */
 		findAverageSampleRate();
-		minutesToIncrements(7);
+		//edited minutes to increments by passing fraction of sample rate rather than fixed value
+		//in order to resolve conflicts in shorter processes, though would require further discussion
+		//for best course of action for determining start of recording
+		minutesToIncrements((sampleRate*0.039));
 		assignBoundaryIndices();
 		createEffectivePeriods();
 		CalculateAverage();
 
 	}
 
-	private void minutesToIncrements(int i) {
+	private void minutesToIncrements(double i) {
 		// the sample rate might change on the wizard, so this is just to find
 		// out what it will be in any case
 		countsToEffectivePeriod = (int) ((((double) i * 60) / 86400) / (sampleRate));
