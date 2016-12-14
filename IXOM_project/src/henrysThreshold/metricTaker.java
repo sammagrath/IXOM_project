@@ -6,124 +6,141 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class metricTaker {
-	
-	
+
 	/**
 	 * 
 	 * 
-	 * Author: Henry Coulson 
-	 * email: h.coulson@outlook.com
+	 * Author: Henry Coulson email: h.coulson@outlook.com
 	 * 
 	 * 
 	 */
-	
 
 	private ArrayList<dataPoint> data = new ArrayList<dataPoint>();
 	private ArrayList<Integer> boundaryIndices = new ArrayList<Integer>();
-	private HashMap<Integer,ArrayList<dataPoint>> effectivePeriods = new HashMap<Integer,ArrayList<dataPoint>>();
+	private HashMap<Integer, ArrayList<dataPoint>> effectivePeriods = new HashMap<Integer, ArrayList<dataPoint>>();
 	private double sampleRate;
 	private int countsToEffectivePeriod;
-	private HashMap<Integer,Double> tempAverages = new HashMap<Integer,Double>();
-	private HashMap<Integer,Double> condAverages = new HashMap<Integer,Double>();
-	private HashMap<Integer,Double> soilAverages = new HashMap<Integer,Double>();
-	
-	
-	
-	
-	
-	public metricTaker(ArrayList<dataPoint> data){
-		this.data=data;
+	private HashMap<Integer, Double> tempAverages = new HashMap<Integer, Double>();
+	private HashMap<Integer, Double> condAverages = new HashMap<Integer, Double>();
+	private HashMap<Integer, Double> soilAverages = new HashMap<Integer, Double>();
+
+	/**
+	 * this object generates the relevant metrics for a set of data. this is
+	 * where most of the data processing will be
+	 * 
+	 * @param data
+	 */
+
+	public metricTaker(ArrayList<dataPoint> data) {
+		// assigns the data to the field
+		this.data = data;
+		/*
+		 * these methods are fairly self explanatory. However, worth noting is
+		 * that fact that the effective periods were taken to be 7 minutes in
+		 * from the start of a new boundary, to enable the new conditions to
+		 * take effect.
+		 * 
+		 */
 		findAverageSampleRate();
 		minutesToIncrements(7);
 		assignBoundaryIndices();
 		createEffectivePeriods();
 		CalculateAverage();
-		
-		
+
 	}
 
 	private void minutesToIncrements(int i) {
-		countsToEffectivePeriod=(int)((((double)i*60)/86400)/(sampleRate));
-//		System.out.println("number of counts until "+i+" minutes: " + countsToEffectivePeriod);
-		
+		// the sample rate might change on the wizard, so this is just to find
+		// out what it will be in any case
+		countsToEffectivePeriod = (int) ((((double) i * 60) / 86400) / (sampleRate));
 	}
 
+	/**
+	 * goes through the array of effective periods, and calculates some
+	 * averages.
+	 */
 	private void CalculateAverage() {
-		double temptot=0;
-		double condtot=0;
-		double soiltot=0;
-		int counts=0;
-		
-		//System.out.println(effectivePeriods.size());
-		
-		for(Integer key: effectivePeriods.keySet()){
+		double temptot = 0;
+		double condtot = 0;
+		double soiltot = 0;
+		int counts = 0;
+
+		for (Integer key : effectivePeriods.keySet()) {
 			ArrayList<dataPoint> pointsOfData = effectivePeriods.get(key);
-//			System.out.println("pod size: " + pointsOfData.size());
-			for (dataPoint dp : pointsOfData){
-				temptot+=dp.getTemp();
-				condtot+=dp.getConductivity();
-				soiltot+=dp.getSoil();
+
+			for (dataPoint dp : pointsOfData) {
+				temptot += dp.getTemp();
+				condtot += dp.getConductivity();
+				soiltot += dp.getSoil();
 				counts++;
-//				System.out.println("condot: ");
+
 			}
-			
-			tempAverages.put(key, temptot/counts);
-//			System.out.println("averageCond: " + condtot/counts);
-			condAverages.put(key, condtot/counts);
-			soilAverages.put(key, soiltot/counts);
-			
+
+			tempAverages.put(key, temptot / counts);
+
+			condAverages.put(key, condtot / counts);
+			soilAverages.put(key, soiltot / counts);
+
 		}
-		
+
 	}
+
+	/**
+	 * this is a complicated method. for each member of each phase, it adds the
+	 * data points from 7 minutes in, onward, to the end.
+	 */
 
 	private void createEffectivePeriods() {
 		int counter = 1;
-		
-		for (int i=0;i<boundaryIndices.size()-1;i++){
-			
+
+		for (int i = 0; i < boundaryIndices.size() - 1; i++) {
+
 			ArrayList<dataPoint> effectiveTime = new ArrayList<dataPoint>();
-			
+
 			// need to start at the beginning of the effective period
-			for (int j=boundaryIndices.get(i)+countsToEffectivePeriod;j<boundaryIndices.get(i+1);j++){
-//				System.out.println("data: " + data.get(j));
+			for (int j = boundaryIndices.get(i) + countsToEffectivePeriod; j < boundaryIndices.get(i + 1); j++) {
+
 				effectiveTime.add(data.get(j));
 			}
-			//System.out.println(effectiveTime.size());
+
 			effectivePeriods.put(counter, effectiveTime);
-			//System.out.println(effectivePeriods.get(counter).size());
+
 			counter++;
 		}
-		
+
 	}
 
+	/**
+	 * toggles through, and finds the indices where the boundaries of the phases
+	 * are
+	 * 
+	 */
 
 	private void assignBoundaryIndices() {
-		
-		boundaryIndices.add(0);
-		int counter = 1;
-		for(int i=1;i<data.size();i++){
-			dataPoint p = data.get(i);
-			dataPoint q = data.get(i-1);
-			if(p.getZone()!=(q.getZone())){
-				boundaryIndices.add(i);
-//				System.out.println("boundary time "+counter +": "+ p.getTime()+" at index: "+i);
-				counter++;
-				
-			}
-			
-		}
-		
-	}
 
+		boundaryIndices.add(0);
+
+		for (int i = 1; i < data.size(); i++) {
+			dataPoint p = data.get(i);
+			dataPoint q = data.get(i - 1);
+			if (p.getZone() != (q.getZone())) {
+				boundaryIndices.add(i);
+			}
+
+		}
+
+	}
 	
-	
-	private void findAverageSampleRate(){
+	/**
+	 * finds the average sample rate
+	 */
+
+	private void findAverageSampleRate() {
 		TimeConverter tc = new TimeConverter();
-		
-		
-		sampleRate = (tc.HMSToDec(data.get(data.size()-1).getTime())  -  tc.HMSToDec(data.get(0).getTime()))/data.size();
-//		System.out.println("sample rate: " + sampleRate);
-		
+
+		sampleRate = (tc.HMSToDec(data.get(data.size() - 1).getTime()) - tc.HMSToDec(data.get(0).getTime()))
+				/ data.size();
+
 	}
 
 	public HashMap<Integer, ArrayList<dataPoint>> getEffectivePeriods() {
@@ -157,7 +174,7 @@ public class metricTaker {
 	public void setSoilAverages(HashMap<Integer, Double> soilAverages) {
 		this.soilAverages = soilAverages;
 	}
-	
+
 	public ArrayList<Integer> getBoundaryIndices() {
 		return boundaryIndices;
 	}
@@ -181,6 +198,5 @@ public class metricTaker {
 	public void setCountsToEffectivePeriod(int countsToEffectivePeriod) {
 		this.countsToEffectivePeriod = countsToEffectivePeriod;
 	}
-	
-	
+
 }
