@@ -98,7 +98,7 @@ public class metricTaker {
 
 
 	private void assignBoundaryIndices() {
-		//this needs to be modified
+		
 		boundaryIndices.add(0);
 		int counter = 1;
 		for(int i=1;i<data.size();i++){
