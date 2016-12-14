@@ -42,9 +42,13 @@ public class metricTaker {
 		 * 
 		 */
 		findAverageSampleRate();
-		//edited minutes to increments by passing fraction of sample rate rather than fixed value
-		//in order to resolve conflicts in shorter processes, though would require further discussion
-		//for best course of action for determining start of recording
+		/*edited minutes to increments by passing fraction of sample rate rather than fixed value
+		*in order to resolve conflicts in shorter processes, though would require further discussion
+		*for best course of action for determining start of recording
+		*
+		*- Sam
+		*/
+		
 		minutesToIncrements((sampleRate*0.039));
 		assignBoundaryIndices();
 		createEffectivePeriods();
