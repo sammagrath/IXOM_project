@@ -47,7 +47,7 @@ public class metricTaker {
 		*in order to resolve conflicts in shorter processes. Declared minsIncrememnt field and instantiated it
 		*in findAverageSampleRate method
 		*
-		*- Sam
+		* - Sam
 		*/
 		
 		minutesToIncrements(minsIncrement);
