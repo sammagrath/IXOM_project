@@ -1,5 +1,13 @@
 package timeconverter;
 
+/*
+ * 
+ * author: Jacob Hoffland
+ * email: jacob.hoffland@gmail.com
+ * 
+ * 
+ */
+
 import static org.junit.Assert.*;
 
 import org.junit.Test;
