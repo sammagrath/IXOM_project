@@ -7,6 +7,7 @@ public class dataPoint {
 	private double turbidity;
 	private double conductivity;
 	private double soil;
+	private String phase;
 	private double temp;
 	private int zone;
 	
@@ -63,6 +64,14 @@ public class dataPoint {
 	public void setZone(int zone) {
 		this.zone = zone;
 	}
+	
+	public String getPhase() {
+		return phase;
+	}
+	public void setPhase(String phase) {
+		this.phase = phase;
+	}
+	
 	public String print(){
 	
 	return "| " + date + " | " + time + " | " + turbidity + " | " + conductivity + " | " + soil + " | " + temp + " | " +  zone + " | \n"; 

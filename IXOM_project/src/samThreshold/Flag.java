@@ -3,7 +3,8 @@ package samThreshold;
 import java.util.ArrayList;
 
 public class Flag {
-
+	
+	private String date;
 	private String startTime;
 	private String endTime;
 	private int zone;
@@ -11,9 +12,16 @@ public class Flag {
 	private String message;
 	private String target;
 	private double actual;
+	private double condLower;
+	private double condUpper;
+	private double tempLower;
+	private double tempUpper;
 	
+
+
 	public Flag() {
 		
+		date = "";
 		startTime = "";
 		endTime = "";
 		zone = 0;
@@ -21,9 +29,26 @@ public class Flag {
 		message = "";
 		target = "";
 		actual = 0.0;
+		tempUpper = 0.0;
+		tempLower = 0.0;
+		condUpper = 0.0;
+		condLower = 0.0;
+		
 	}
 	
+
+
 	public Flag(String startTime, String endTime, int zone, String phase, String message,String target, double actual) {
+		this.startTime = startTime;
+		this.endTime = endTime;
+		this.zone = zone;
+		this.phase = phase;
+		this.message = message;
+		this.target = target;
+		this.actual = Math.round(actual*100.0)/100.0;
+	}
+	
+	public Flag(String startTime, String endTime, int zone, String phase, String message, double condLower, double condUpper, double tempLower, double tempUpper, String target, double actual) {
 		this.startTime = startTime;
 		this.endTime = endTime;
 		this.zone = zone;
@@ -91,6 +116,46 @@ public class Flag {
 
 	public void setActual(double actual) {
 		this.actual = actual;
+	}
+	
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
+	}
+	
+	public double getTempUpper() {
+		return tempUpper;
+	}
+
+	public void setTempUpper(double tempUpper) {
+		this.tempUpper = tempUpper;
+	}
+
+	public double getTempLower() {
+		return tempLower;
+	}
+
+	public void setTempLower(double tempLower) {
+		this.tempLower = tempLower;
+	}
+
+	public double getCondUpper() {
+		return condUpper;
+	}
+
+	public void setCondUpper(double condUpper) {
+		this.condUpper = condUpper;
+	}
+
+	public double getCondLower() {
+		return condLower;
+	}
+
+	public void setCondLower(double condLower) {
+		this.condLower = condLower;
 	}
 	
 }
