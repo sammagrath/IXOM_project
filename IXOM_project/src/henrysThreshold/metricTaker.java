@@ -46,7 +46,7 @@ public class metricTaker {
 		*in order to resolve conflicts in shorter processes, though would require further discussion
 		*for best course of action for determining start of recording
 		*
-		*- Sam
+		* - Sam
 		*/
 		
 		minutesToIncrements((sampleRate*0.039));
