@@ -166,7 +166,7 @@ DialogPane dialogPane = alert.getDialogPane();
 						
 						Button print = new Button();
 						print.setText("Export to File");
-						
+					
 						dialogGrid.add(print, 5, counter);
 						
 						print.setOnAction(new EventHandler<ActionEvent>(){
@@ -177,18 +177,32 @@ DialogPane dialogPane = alert.getDialogPane();
 								
 								FileChooser fileChooser = new FileChooser();
 					            fileChooser.setTitle(" Save/Export Flag Summary");
-					           
+					           fileChooser.setInitialFileName("Flag Summary - " + excelFile.getName().substring(0, excelFile.getName().lastIndexOf(".")) + ".txt");
 					            File file = fileChooser.showSaveDialog(stage);
 					            
 					            if (file != null) {
 					                try {
 					                	PrintWriter writer = new PrintWriter(file, "UTF-8");
 					                	
-					                	writer.println("| Start Time |" + "\t" + "| End Time |" + "\t" + "| Phase |" + "\t"+ "\t" + "| Message |" + "\t"+ "\t" + "\t" + "\t"+ "| Target |" + "\t" + "| Actual |");
+					                	//writer.println("| Start Time |" + "\t" + "| End Time |" + "\t" + "| Phase |" + "\t"+ "\t" + "| Message |" + "\t"+ "\t" + "\t" + "\t"+ "| Target |" + "\t" + "| Actual |");
+					                	
+					                	writer.println();
+					                	writer.println("Flag Summary: " + excelFile.getName().substring(0, excelFile.getName().lastIndexOf(".")));              	
+					                	writer.println("Date: " + (String)data.get(4).getDate());
+					                	
 					                	
 					                	for (Flag flag : flagList) {
 					                		
-					                		writer.println(flag.getStartTime() + "\t" + flag.getEndTime() + "\t" + flag.getPhase() + "\t" + flag.getMessage() + "\t"+ "\t" + String.valueOf(flag.getTarget()) + "\t" + String.valueOf(flag.getActual()));
+					                		writer.println();
+					                		
+					                		writer.println("Flag: " + flag.getMessage());
+					                		writer.println("Phase: " + flag.getPhase());
+					                		writer.println("Start: " + flag.getStartTime());
+					                		writer.println("End: " + flag.getEndTime());
+					                		writer.println("Threshold: " + flag.getTarget());
+					                		writer.println("Actual: " + flag.getActual());
+					                	
+					                		//writer.println(flag.getStartTime() + "\t" + flag.getEndTime() + "\t" + flag.getPhase() + "\t" + flag.getMessage() + "\t"+ "\t" + String.valueOf(flag.getTarget()) + "\t" + String.valueOf(flag.getActual()));
 					                		
 					                	}
 					                	
