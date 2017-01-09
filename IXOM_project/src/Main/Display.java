@@ -2,6 +2,8 @@ package Main;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import org.apache.poi.EncryptedDocumentException;
@@ -161,6 +163,58 @@ DialogPane dialogPane = alert.getDialogPane();
 							counter++;
 
 						}
+						
+						Button print = new Button();
+						print.setText("Export to File");
+						
+						dialogGrid.add(print, 5, counter);
+						
+						print.setOnAction(new EventHandler<ActionEvent>(){
+							
+							
+							@Override
+							public void handle(ActionEvent arg0){
+								
+								FileChooser fileChooser = new FileChooser();
+					            fileChooser.setTitle(" Save/Export Flag Summary");
+					           
+					            File file = fileChooser.showSaveDialog(stage);
+					            
+					            if (file != null) {
+					                try {
+					                	PrintWriter writer = new PrintWriter(file, "UTF-8");
+					                	
+					                	writer.println("| Start Time |" + "\t" + "| End Time |" + "\t" + "| Phase |" + "\t"+ "\t" + "| Message |" + "\t"+ "\t" + "\t" + "\t"+ "| Target |" + "\t" + "| Actual |");
+					                	
+					                	for (Flag flag : flagList) {
+					                		
+					                		writer.println(flag.getStartTime() + "\t" + flag.getEndTime() + "\t" + flag.getPhase() + "\t" + flag.getMessage() + "\t"+ "\t" + String.valueOf(flag.getTarget()) + "\t" + String.valueOf(flag.getActual()));
+					                		
+					                	}
+					                	
+					                	
+					                    writer.close();
+					                    
+					                    Alert success = new Alert(AlertType.INFORMATION);
+										
+										//this line allows the alert box to accept a gridpane for displaying the flags
+					                	
+										
+					                	success.setTitle("Information Dialog");
+					                	success.setHeaderText("Flags Exported Successfully");
+					                	success.showAndWait();
+					                    
+					                } catch (IOException ex) {
+					                    System.out.println(ex.getMessage());
+					                }
+					            }
+								
+								
+							}
+						
+						
+					   });
+								
 			}
 			
 			else {
@@ -169,8 +223,7 @@ DialogPane dialogPane = alert.getDialogPane();
 			}
 			        
 
-					
-	// System.out.println(printAll(data));
+
 					alert.showAndWait();
 					
 				} catch (Exception e) {
