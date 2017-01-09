@@ -184,7 +184,7 @@ DialogPane dialogPane = alert.getDialogPane();
 					                try {
 					                	PrintWriter writer = new PrintWriter(file, "UTF-8");
 					                	
-					                	//writer.println("| Start Time |" + "\t" + "| End Time |" + "\t" + "| Phase |" + "\t"+ "\t" + "| Message |" + "\t"+ "\t" + "\t" + "\t"+ "| Target |" + "\t" + "| Actual |");
+					             
 					                	
 					                	writer.println();
 					                	writer.println("Flag Summary: " + excelFile.getName().substring(0, excelFile.getName().lastIndexOf(".")));              	
@@ -202,7 +202,7 @@ DialogPane dialogPane = alert.getDialogPane();
 					                		writer.println("Threshold: " + flag.getTarget());
 					                		writer.println("Actual: " + flag.getActual());
 					                	
-					                		//writer.println(flag.getStartTime() + "\t" + flag.getEndTime() + "\t" + flag.getPhase() + "\t" + flag.getMessage() + "\t"+ "\t" + String.valueOf(flag.getTarget()) + "\t" + String.valueOf(flag.getActual()));
+					                		
 					                		
 					                	}
 					                	
