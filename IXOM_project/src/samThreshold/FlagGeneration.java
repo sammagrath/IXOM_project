@@ -215,6 +215,9 @@ public class FlagGeneration {
 	//Applies phase labels to each data point
 	public void applyPhase(ArrayList<dataPoint> data) {
 		
+		
+		
+		
 		for (dataPoint d: data) {
 			
 			if (d.getZone() == 1) {
@@ -238,6 +241,14 @@ public class FlagGeneration {
 			}
 		}
 	}
+	
+	// Henry's Taint
+	public void assignPhaseNames(){
+		
+		
+	}
+		
+	
 	
 	//local main for testing flag methods
 	public static void main(String[] args) throws FileNotFoundException {

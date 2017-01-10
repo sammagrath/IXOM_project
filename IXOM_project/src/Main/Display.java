@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 
+import com.sun.javafx.scene.layout.region.Margins.Converter;
+
 import javafx.*;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -99,6 +101,10 @@ public class Display extends Application {
 				}
 				
 				try {
+					
+					//henry's addition
+					File RawCSV = new File(excelFile.getParent(), "RawOutput.csv");
+					convertor.xls(excelFile, RawCSV, 4);
 					
 					//!!!PATS ADDITION!!!//
 					data = populator.populateData(dirtyCSVFile, data);
