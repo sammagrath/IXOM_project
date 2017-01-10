@@ -39,6 +39,7 @@ import samThreshold.FlagGeneration;
 import javafx.scene.text.Text;
 import Read_Data.CSV2Array;
 import Read_Data.ExceltoCSV;
+import Read_Data.PhaseNamesFromCSV;
 import Read_Data.dataPoint;
 
 public class Display extends Application {
@@ -104,7 +105,8 @@ public class Display extends Application {
 					
 					//henry's addition
 					File RawCSV = new File(excelFile.getParent(), "RawOutput.csv");
-					convertor.xls(excelFile, RawCSV, 4);
+					convertor.xls(excelFile, RawCSV, ExceltoCSV.getFinalSheetNumber(excelFile)-1);
+					ArrayList<String> phaseNames = PhaseNamesFromCSV.returnPhaseNames(RawCSV);
 					
 					//!!!PATS ADDITION!!!//
 					data = populator.populateData(dirtyCSVFile, data);
@@ -115,11 +117,14 @@ public class Display extends Application {
 					 */
 					flagList = new ArrayList<Flag>();
 					FlagGeneration f = new FlagGeneration(data);
-					f.thresholds(flagList);
-//					f.tempThresholds(flagList);
-//					f.endRinseCond(flagList);
 					
-//					System.out.println(flagList.size());
+					//Henry's addition
+					f.setPhaseNames(phaseNames);
+					
+					f.thresholds(flagList);
+					
+					
+
 					
 
 
