@@ -61,6 +61,7 @@ public class metricTaker {
 		// the sample rate might change on the wizard, so this is just to find
 		// out what it will be in any case
 		countsToEffectivePeriod = (int) ((((double) i * 60) / 86400) / (sampleRate));
+		System.out.println(countsToEffectivePeriod);
 	}
 
 	/**
@@ -149,8 +150,7 @@ public class metricTaker {
 	private void findAverageSampleRate() {
 		TimeConverter tc = new TimeConverter();
 	
-		sampleRate = (tc.HMSToDec(data.get(data.size() - 1).getTime()) - tc.HMSToDec(data.get(0).getTime()))
-				/ data.size();
+		sampleRate = (tc.HMSToDec(data.get(data.size() - 1).getTime()) - tc.HMSToDec(data.get(0).getTime()))/ data.size();
 		
 		//SAM'S ADDITION
 		double CIPduration = (tc.HMSToDec(data.get(data.size() - 1).getTime()) - tc.HMSToDec(data.get(0).getTime()));

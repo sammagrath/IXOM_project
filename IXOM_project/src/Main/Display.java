@@ -89,7 +89,7 @@ public class Display extends Application {
 				excelFile = new File(filename);
 				dirtyCSVFile = new File(excelFile.getParent(), "output.csv");
 				try {
-					convertor.xls(excelFile, dirtyCSVFile);
+					convertor.xls(excelFile, dirtyCSVFile,0);
 				} catch (EncryptedDocumentException e1) {
 					
 					e1.printStackTrace();

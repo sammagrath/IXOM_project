@@ -26,7 +26,7 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 //
 public class ExceltoCSV {
 
-	public void xls(File inputFile, File outputFile) throws EncryptedDocumentException, InvalidFormatException {
+	public void xls(File inputFile, File outputFile, int sheetNumber) throws EncryptedDocumentException, InvalidFormatException {
 
 		StringBuffer data = new StringBuffer();
 		try {
@@ -34,7 +34,7 @@ public class ExceltoCSV {
 
 			Workbook workbook = WorkbookFactory.create(inputFile);
 
-			Sheet sheet = workbook.getSheetAt(0);
+			Sheet sheet = workbook.getSheetAt(sheetNumber);
 			Cell cell;
 			Row row;
 
