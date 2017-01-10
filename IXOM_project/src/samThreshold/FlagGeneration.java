@@ -24,6 +24,7 @@ public class FlagGeneration {
 	private static ArrayList<Integer> boundaries;
 	private metricTaker metric;
 	private static File input;
+	private ArrayList<String> phaseNames;
 	
 	public FlagGeneration(ArrayList<dataPoint> data) {
 		
@@ -47,6 +48,7 @@ public class FlagGeneration {
 	}
 	
 	//measure of conductivity levels across wash phases
+	
 	public void thresholds(ArrayList<Flag> flagList) {
 		
 		applyPhase(data);
@@ -218,8 +220,13 @@ public class FlagGeneration {
 		
 		
 		
-		for (dataPoint d: data) {
+		for (int i=0;i<data.size();i++) {
+			dataPoint d=data.get(i);
+			//Henry's edit: this goes through the list, assigning the names to the phases
+			d.setPhase(phaseNames.get(d.getZone()-1));
 			
+			
+			/*
 			if (d.getZone() == 1) {
 				d.setPhase("Pre-Flush");			
 			}
@@ -239,14 +246,11 @@ public class FlagGeneration {
 			else if (d.getZone() == 5) {
 				d.setPhase("Final Rinse");
 			}
+			*/
 		}
 	}
 	
-	// Henry's Taint
-	public void assignPhaseNames(){
-		
-		
-	}
+	
 		
 	
 	
@@ -280,6 +284,10 @@ public class FlagGeneration {
 		for (dataPoint d : data) {
 			System.out.println(d.getPhase());
 		}
+	}
+
+	public void setPhaseNames(ArrayList<String> phaseNames) {
+		this.phaseNames = phaseNames;
 	}
 	
 }
