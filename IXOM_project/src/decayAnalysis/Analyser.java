@@ -12,9 +12,84 @@ public class Analyser {
 		ArrayList<Coordinate> steepest = new ArrayList<>();
 		ArrayList<dataPoint> tempList = new ArrayList<>();
 		ArrayList<ArrayList> LOL = new ArrayList<>();
+		double gradient = 0;
+		
+		LOL = findAllDescents(dataPoints);
+		LOL = mergeAdjacentDescents(LOL);
+		
+		for(ArrayList a: LOL){
+			if(pointToPointGradient(a) >= gradient){
+				tempList = a;
+				gradient = pointToPointGradient(a);
+			}
+		}
+		
+		for(dataPoint d: tempList){
+			Coordinate c = new Coordinate(d.getTime(), d.getConductivity());
+			
+			System.out.println("("+ d.getTime() +", "+ d.getConductivity() +")");
+			
+			steepest.add(c);
+		}
+		
+		System.out.println(gradient);
+		return steepest;
+		
+	}
+	
+	//calculate the rate of decrease of conductivity for an ArrayList of dataPoints
+	public double pointToPointGradient(ArrayList<dataPoint> dataPoints){
+		TimeConverter tc = new TimeConverter();
+		
+		dataPoint x1y1 = dataPoints.get(dataPoints.size() - 1);
+		dataPoint x2y2 = dataPoints.get(0);
+		
+		double x1 = tc.HMSToDec(x1y1.getTime());
+		double x2 = tc.HMSToDec(x2y2.getTime());
+		double y1 = x1y1.getConductivity();
+		double y2 = x2y2.getConductivity();
+		
+		double gradient = (y2 - y1)/((x1 - x2)*86400);
+		
+		return gradient;
+	}
+	
+	
+	public ArrayList<ArrayList> mergeAdjacentDescents(ArrayList<ArrayList> LOL){
+		
+		ArrayList<ArrayList> newLOL = new ArrayList<>();
+		ArrayList<dataPoint> adjacent, current;
+		
+		for(int i = 0; i< LOL.size() - 1; i++){
+			
+			current = LOL.get(i);
+			adjacent = LOL.get(i+1);
+			
+			if(current.size() > 1 && adjacent.size() > 1){
+				current = mergeArrays(current, adjacent);
+				newLOL.add(current);
+			}
+		}
+		
+		return newLOL;
+	}
+	
+	//merge two ArrayLists of dataPoints together
+	public ArrayList<dataPoint> mergeArrays(ArrayList<dataPoint> a, ArrayList<dataPoint> b){
+		
+		for(dataPoint d: b){
+			a.add(d);
+		}
+		
+		return a;
+	}
+	
+	//Go through a list of dataPoints and make ArrayList of ArrayLists of points with decreasing conductivity values
+	public ArrayList<ArrayList> findAllDescents(ArrayList<dataPoint> dataPoints){
+		ArrayList<dataPoint> tempList = new ArrayList<>();
+		ArrayList<ArrayList> LOL = new ArrayList<>();
 		
 		dataPoint previous = new dataPoint(null, null, 0, Double.MAX_VALUE, 0, 0, 0);
-		double gradient = 0;
 		
 		for(dataPoint d: dataPoints){
 			if(d.getConductivity() <= previous.getConductivity()){
@@ -28,40 +103,7 @@ public class Analyser {
 			}
 		}
 		
-		for(ArrayList a: LOL){
-			if(pointToPointGradient(a) >= gradient){
-				tempList = a;
-				gradient = pointToPointGradient(a);
-			}
-		}
-		
-		for(dataPoint d: tempList){
-			Coordinate c = new Coordinate(d.getTime(), d.getTurbidity());
-			
-			System.out.println("("+ d.getTime() +", "+ d.getTurbidity() +")");
-			
-			steepest.add(c);
-		}
-		
-		System.out.println(gradient);
-		return steepest;
-		
-	}
-	
-	public double pointToPointGradient(ArrayList<dataPoint> coordinates){
-		TimeConverter tc = new TimeConverter();
-		
-		dataPoint x1y1 = coordinates.get(coordinates.size() - 1);
-		dataPoint x2y2 = coordinates.get(0);
-		
-		double x1 = tc.HMSToDec(x1y1.getTime());
-		double x2 = tc.HMSToDec(x2y2.getTime());
-		double y1 = x1y1.getConductivity();
-		double y2 = x2y2.getConductivity();
-		
-		double gradient = (y2 - y1)/((x1 - x2)*86400);
-		
-		return gradient;
+		return LOL;
 	}
 	
 }
