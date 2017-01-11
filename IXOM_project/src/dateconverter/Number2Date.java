@@ -21,7 +21,7 @@ public class Number2Date {
 	}
 
 
-	//given a pair of ints for the year and the day of that year, return a pair of ints for the month and the day of the month
+	//given a pair of ints (IntPair) for the year and the day of that year, return a pair of ints for the month and the day of the month
 	public IntPair determineMonth(IntPair input){
 		int toConvert = input.getRemainder();
 		int month = 1;
