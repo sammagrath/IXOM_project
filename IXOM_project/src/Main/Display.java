@@ -80,6 +80,21 @@ public class Display extends Application {
 
 		Button btnRun = new Button();
 		btnRun.setText("Run Analysis Tool");
+		
+		// Sam's Addition - Instantiation of drop-down menu for selecting CIP process
+		ComboBox combobox = new ComboBox();
+		combobox.getItems().addAll(
+				"Concentrate Lines",
+				"Drier & Fluid beds",
+				"Evap Preheat (MPC)",
+				"Evap Preheat (WMP/SMP)",
+				"Evap (MPC)",
+				"Evap (WMP/SMP)",
+				"Ingredients Oils",
+				"Vitamin/Minerals System"
+				
+				);
+		combobox.setValue("Select Process");
 
 		btnRun.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -307,6 +322,7 @@ public class Display extends Application {
 		grid.add(textField, 0, 1);
 		grid.add(btnFileChooser, 1, 1);
 		grid.add(btnRun, 0, 2);
+		grid.add(combobox, 0, 3);
 
 		root.getChildren().add(grid);
 		stage.setScene(scene);
