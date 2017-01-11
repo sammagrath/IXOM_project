@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 
+import com.sun.javafx.scene.layout.region.Margins.Converter;
+
 import javafx.*;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -37,6 +39,7 @@ import samThreshold.FlagGeneration;
 import javafx.scene.text.Text;
 import Read_Data.CSV2Array;
 import Read_Data.ExceltoCSV;
+import Read_Data.PhaseNamesFromCSV;
 import Read_Data.dataPoint;
 
 public class Display extends Application {
@@ -89,7 +92,7 @@ public class Display extends Application {
 				excelFile = new File(filename);
 				dirtyCSVFile = new File(excelFile.getParent(), "output.csv");
 				try {
-					convertor.xls(excelFile, dirtyCSVFile);
+					convertor.xls(excelFile, dirtyCSVFile,0);
 				} catch (EncryptedDocumentException e1) {
 					
 					e1.printStackTrace();
@@ -100,6 +103,11 @@ public class Display extends Application {
 				
 				try {
 					
+					//henry's addition
+					File RawCSV = new File(excelFile.getParent(), "RawOutput.csv");
+					convertor.xls(excelFile, RawCSV, ExceltoCSV.getFinalSheetNumber(excelFile)-1);
+					ArrayList<String> phaseNames = PhaseNamesFromCSV.returnPhaseNames(RawCSV);
+					
 					//!!!PATS ADDITION!!!//
 					data = populator.populateData(dirtyCSVFile, data);
 					//!!!SAM'S ADDITION!!!//
@@ -109,11 +117,14 @@ public class Display extends Application {
 					 */
 					flagList = new ArrayList<Flag>();
 					FlagGeneration f = new FlagGeneration(data);
-					f.thresholds(flagList);
-//					f.tempThresholds(flagList);
-//					f.endRinseCond(flagList);
 					
-//					System.out.println(flagList.size());
+					//Henry's addition
+					f.setPhaseNames(phaseNames);
+					
+					f.thresholds(flagList);
+					
+					
+
 					
 
 

@@ -23,10 +23,12 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
+
 //
 public class ExceltoCSV {
 
-	public void xls(File inputFile, File outputFile) throws EncryptedDocumentException, InvalidFormatException {
+	public void xls(File inputFile, File outputFile, int sheetNumber)
+			throws EncryptedDocumentException, InvalidFormatException {
 
 		StringBuffer data = new StringBuffer();
 		try {
@@ -34,7 +36,7 @@ public class ExceltoCSV {
 
 			Workbook workbook = WorkbookFactory.create(inputFile);
 
-			Sheet sheet = workbook.getSheetAt(0);
+			Sheet sheet = workbook.getSheetAt(sheetNumber);
 			Cell cell;
 			Row row;
 
@@ -78,6 +80,21 @@ public class ExceltoCSV {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public static int getFinalSheetNumber(File inputFile) {
+		Workbook workbook;
+		int i=-1;
+		try {
+			workbook = WorkbookFactory.create(inputFile);
+			i= workbook.getNumberOfSheets();
+
+
+		} catch (EncryptedDocumentException | InvalidFormatException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return i;
 	}
 
 }
