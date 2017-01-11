@@ -71,6 +71,10 @@ public class FlagGeneration {
 			Flag flag = new Flag(data.get(metric.getCountsToEffectivePeriod()).getTime(),
 					data.get(boundaries.get(1)).getTime(), 1, data.get(boundaries.get(1)).getPhase(),
 					"Caustic strength too low", "0.5 - 0.8", condAverages.get(1));
+			
+			flag.setType("Conductivity");
+			
+			
 			flagList.add(flag);
 		}
 
@@ -79,6 +83,9 @@ public class FlagGeneration {
 			Flag flag = new Flag(data.get(metric.getCountsToEffectivePeriod()).getTime(),
 					data.get(boundaries.get(1)).getTime(), 1, data.get(boundaries.get(1)).getPhase(),
 					"Caustic strength too high", "0.5 - 0.8", condAverages.get(1));
+			
+			flag.setType("Conductivity");
+			
 			flagList.add(flag);
 		}
 
@@ -87,6 +94,10 @@ public class FlagGeneration {
 			Flag flag = new Flag(data.get(boundaries.get(1) + metric.getCountsToEffectivePeriod()).getTime(),
 					data.get(boundaries.get(2)).getTime(), 2, data.get(boundaries.get(2)).getPhase(),
 					"Caustic strength too low", "1.0 - 1.2", condAverages.get(2));
+			
+			flag.setType("Conductivity");
+			
+			
 			flagList.add(flag);
 		}
 
@@ -95,6 +106,10 @@ public class FlagGeneration {
 			Flag flag = new Flag(data.get(boundaries.get(1) + metric.getCountsToEffectivePeriod()).getTime(),
 					data.get(boundaries.get(2)).getTime(), 2, data.get(boundaries.get(2)).getPhase(),
 					"Caustic strength too high", "1.0 - 1.2", condAverages.get(2));
+			
+			flag.setType("Conductivity");
+			
+			
 			flagList.add(flag);
 		}
 
@@ -103,6 +118,9 @@ public class FlagGeneration {
 			Flag flag = new Flag(data.get(boundaries.get(1) + metric.getCountsToEffectivePeriod()).getTime(),
 					data.get(boundaries.get(2)).getTime(), 2, "Caustic Recirculation", "Average Temperature too low",
 					"70.0 - 85.0", tempAverages.get(2));
+			
+			flag.setType("Temperature");
+			
 			flagList.add(flag);
 		}
 
@@ -111,6 +129,10 @@ public class FlagGeneration {
 			Flag flag = new Flag(data.get(boundaries.get(1) + metric.getCountsToEffectivePeriod()).getTime(),
 					data.get(boundaries.get(2)).getTime(), 2, "Caustic Recirculation", "Average Temperature too high",
 					"70.0 - 85.0", tempAverages.get(2));
+			
+			flag.setType("Temperature");
+			
+			
 			flagList.add(flag);
 		}
 
@@ -119,6 +141,10 @@ public class FlagGeneration {
 			Flag flag = new Flag(data.get(boundaries.get(2) + metric.getCountsToEffectivePeriod()).getTime(),
 					data.get(boundaries.get(3)).getTime(), 3, "Intermediate Rinse",
 					"Conductivity Non-Zero at Rinse End", "0.0", endIntRinseVal);
+			
+			flag.setType("Conductivity");
+			
+			
 			flagList.add(flag);
 		}
 
@@ -127,6 +153,10 @@ public class FlagGeneration {
 			Flag flag = new Flag(data.get(boundaries.get(3) + metric.getCountsToEffectivePeriod()).getTime(),
 					data.get(boundaries.get(4)).getTime(), 4, data.get(boundaries.get(4)).getPhase(),
 					"Acidic strength too low", "0.8 - 1.0", condAverages.get(4));
+			
+			flag.setType("Conductivity");
+			
+			
 			flagList.add(flag);
 		}
 
@@ -135,6 +165,10 @@ public class FlagGeneration {
 			Flag flag = new Flag(data.get(boundaries.get(3) + metric.getCountsToEffectivePeriod()).getTime(),
 					data.get(boundaries.get(4)).getTime(), 4, data.get(boundaries.get(4)).getPhase(),
 					"Acidic strength too high", "0.8 - 1.0", condAverages.get(4));
+			
+			flag.setType("Conductivity");
+			
+			
 			flagList.add(flag);
 		}
 
@@ -143,6 +177,10 @@ public class FlagGeneration {
 			Flag flag = new Flag(data.get(boundaries.get(3) + metric.getCountsToEffectivePeriod()).getTime(),
 					data.get(boundaries.get(4)).getTime(), 4, data.get(boundaries.get(4)).getPhase(),
 					"Average Temperature too low", "60.0 - 70.0", tempAverages.get(2));
+			
+			flag.setType("Temperature");
+			
+			
 			flagList.add(flag);
 		}
 
@@ -151,6 +189,10 @@ public class FlagGeneration {
 			Flag flag = new Flag(data.get(boundaries.get(3) + metric.getCountsToEffectivePeriod()).getTime(),
 					data.get(boundaries.get(4)).getTime(), 4, data.get(boundaries.get(4)).getPhase(),
 					"Average Temperature too high", "60.0 - 70.0", tempAverages.get(2));
+			
+			flag.setType("Temperature");
+			
+			
 			flagList.add(flag);
 		}
 
@@ -159,6 +201,10 @@ public class FlagGeneration {
 			Flag flag = new Flag(data.get(boundaries.get(4) + metric.getCountsToEffectivePeriod()).getTime(),
 					data.get(data.size() - 1).getTime(), 5, data.get(data.size() - 1).getPhase(),
 					"Conductivity Non-Zero at Rinse End", "0.0", endFinalRinseVal);
+			
+			flag.setType("Conductivity");
+			
+			
 			flagList.add(flag);
 		}
 
@@ -180,6 +226,9 @@ public class FlagGeneration {
 					data.get(metric.getBoundaryIndices().get(2) + metric.getCountsToEffectivePeriod()).getTime(),
 					data.get(metric.getBoundaryIndices().get(3)).getTime(), 3, "Intermediate Rinse",
 					"Conductivity Non-Zero at Rinse End", "0.0", endIntRinseVal);
+			
+			flag.setType("Conductivity");
+			
 			flagList.add(flag);
 		}
 
@@ -189,6 +238,9 @@ public class FlagGeneration {
 					data.get(metric.getBoundaryIndices().get(4) + metric.getCountsToEffectivePeriod()).getTime(),
 					data.get(data.size() - 1).getTime(), 5, "Final Rinse", "Conductivity Non-Zero at Rinse End", "0.0",
 					endFinalRinseVal);
+			
+			flag.setType("Conductivity");
+			
 			flagList.add(flag);
 		}
 
@@ -206,6 +258,9 @@ public class FlagGeneration {
 					data.get(metric.getBoundaryIndices().get(1) + metric.getCountsToEffectivePeriod()).getTime(),
 					data.get(metric.getBoundaryIndices().get(2)).getTime(), 2, "Caustic Recirculation",
 					"Average Temperature too low", "70.0 - 85.0", tempAverages.get(2));
+			
+			flag.setType("Temperature");
+			
 			flagList.add(flag);
 		}
 
@@ -215,6 +270,9 @@ public class FlagGeneration {
 					data.get(metric.getBoundaryIndices().get(1) + metric.getCountsToEffectivePeriod()).getTime(),
 					data.get(metric.getBoundaryIndices().get(2)).getTime(), 2, "Caustic Recirculation",
 					"Average Temperature too high", "70.0 - 85.0", tempAverages.get(2));
+			
+			flag.setType("Temperature");
+			
 			flagList.add(flag);
 		}
 
@@ -224,6 +282,9 @@ public class FlagGeneration {
 					data.get(metric.getBoundaryIndices().get(3) + metric.getCountsToEffectivePeriod()).getTime(),
 					data.get(metric.getBoundaryIndices().get(4)).getTime(), 4, "Acid Recirculation",
 					"Average Temperature too low", "60.0 - 70.0", tempAverages.get(2));
+			
+			flag.setType("Temperature");
+			
 			flagList.add(flag);
 		}
 
@@ -233,6 +294,9 @@ public class FlagGeneration {
 					data.get(metric.getBoundaryIndices().get(3) + metric.getCountsToEffectivePeriod()).getTime(),
 					data.get(metric.getBoundaryIndices().get(4)).getTime(), 4, "Acid Recirculation",
 					"Average Temperature too high", "60.0 - 70.0", tempAverages.get(2));
+			
+			flag.setType("Temperature");
+			
 			flagList.add(flag);
 		}
 

@@ -16,6 +16,7 @@ public class Flag {
 	private double condUpper;
 	private double tempLower;
 	private double tempUpper;
+	private String type;
 	
 
 
@@ -28,6 +29,7 @@ public class Flag {
 		phase = "";
 		message = "";
 		target = "";
+		type = "";
 		actual = 0.0;
 		tempUpper = 0.0;
 		tempLower = 0.0;
@@ -46,6 +48,7 @@ public class Flag {
 		this.message = message;
 		this.target = target;
 		this.actual = Math.round(actual*100.0)/100.0;
+		
 	}
 	
 	public Flag(String startTime, String endTime, int zone, String phase, String message, double condLower, double condUpper, double tempLower, double tempUpper, String target, double actual) {
@@ -68,6 +71,13 @@ public class Flag {
 
 	public void setStartTime(String startTime) {
 		this.startTime = startTime;
+	}
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	public String getEndTime() {
