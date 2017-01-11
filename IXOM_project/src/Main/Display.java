@@ -41,6 +41,7 @@ import Read_Data.CSV2Array;
 import Read_Data.ExceltoCSV;
 import Read_Data.PhaseNamesFromCSV;
 import Read_Data.dataPoint;
+import decayAnalysis.Analyser;
 
 public class Display extends Application {
 
@@ -118,6 +119,17 @@ public class Display extends Application {
 					 */
 					flagList = new ArrayList<Flag>();
 					FlagGeneration f = new FlagGeneration(data);
+					
+					
+					
+					
+					//Jacob's cheeky medding
+					Analyser a = new Analyser();
+					a.findSteepestTurb(data);
+					
+					
+					
+					
 
 					// Henry's addition
 					f.setPhaseNames(phaseNames);
