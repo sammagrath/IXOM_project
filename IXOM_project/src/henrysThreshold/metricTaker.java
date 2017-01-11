@@ -61,7 +61,7 @@ public class metricTaker {
 		// the sample rate might change on the wizard, so this is just to find
 		// out what it will be in any case
 		countsToEffectivePeriod = (int) ((((double) i * 60) / 86400) / (sampleRate));
-		System.out.println(countsToEffectivePeriod);
+		
 	}
 
 	/**

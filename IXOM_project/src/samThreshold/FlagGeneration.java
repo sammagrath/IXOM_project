@@ -21,7 +21,10 @@ public class FlagGeneration {
 	private static ArrayList<Integer> boundaries;
 	private metricTaker metric;
 	private static File input;
+
 	private ArrayList<String> phaseNames = new ArrayList<String>();
+
+	
 
 	public FlagGeneration(ArrayList<dataPoint> data) {
 
@@ -43,7 +46,9 @@ public class FlagGeneration {
 
 	}
 
-	// measure of conductivity levels across wash phases
+	
+	//measure of conductivity levels across wash phases
+	
 
 	public void thresholds(ArrayList<Flag> flagList) {
 
@@ -257,17 +262,20 @@ public class FlagGeneration {
 	// Applies phase labels to each data point
 	public void applyPhase(ArrayList<dataPoint> data) {
 
-		for (int i = 0; i < data.size(); i++) {
-			dataPoint d = data.get(i);
 
-			if (!phaseNames.isEmpty()) {
-				// Henry's edit: this goes through the list, assigning the names
-				// to the phases
-				d.setPhase(phaseNames.get(d.getZone() - 1));
-			}
 
-			else {
-				if (d.getZone() == 1) {
+		
+		
+		
+		
+		for (int i=0;i<data.size();i++) {
+			dataPoint d=data.get(i);
+			//Henry's edit: this goes through the list, assigning the names to the phases
+			d.setPhase(phaseNames.get(d.getZone()-1));
+			
+			
+			
+				/*if (d.getZone() == 1) {
 					d.setPhase("Pre-Flush");
 				}
 
@@ -286,12 +294,23 @@ public class FlagGeneration {
 				else if (d.getZone() == 5) {
 					d.setPhase("Final Rinse");
 				}
-			}
+				*/
+			
 
+			
 		}
 	}
 
+
 	// local main for testing flag methods
+
+	
+	
+		
+	
+	
+	//local main for testing flag methods
+
 	public static void main(String[] args) throws FileNotFoundException {
 
 		// User must change directory to local in order to test
