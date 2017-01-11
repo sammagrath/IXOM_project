@@ -7,17 +7,17 @@ import timeconverter.TimeConverter;
 
 public class Analyser {
 	
-	public ArrayList<Coordinate> findSteepestTurb(ArrayList<dataPoint> dataPoints){
+	public ArrayList<Coordinate> findSteepestCond(ArrayList<dataPoint> dataPoints){
 		
 		ArrayList<Coordinate> steepest = new ArrayList<>();
 		ArrayList<dataPoint> tempList = new ArrayList<>();
 		ArrayList<ArrayList> LOL = new ArrayList<>();
 		
-		dataPoint previous = new dataPoint(null, null, Double.MAX_VALUE, 0, 0, 0, 0);
+		dataPoint previous = new dataPoint(null, null, 0, Double.MAX_VALUE, 0, 0, 0);
 		double gradient = 0;
 		
 		for(dataPoint d: dataPoints){
-			if(d.getTurbidity() <= previous.getTurbidity()){
+			if(d.getConductivity() <= previous.getConductivity()){
 				tempList.add(d);
 				previous = d;
 			} else {
@@ -56,8 +56,8 @@ public class Analyser {
 		
 		double x1 = tc.HMSToDec(x1y1.getTime());
 		double x2 = tc.HMSToDec(x2y2.getTime());
-		double y1 = x1y1.getTurbidity();
-		double y2 = x2y2.getTurbidity();
+		double y1 = x1y1.getConductivity();
+		double y2 = x2y2.getConductivity();
 		
 		double gradient = (y2 - y1)/((x1 - x2)*86400);
 		

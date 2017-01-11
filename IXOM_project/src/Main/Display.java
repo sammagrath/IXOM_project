@@ -125,7 +125,7 @@ public class Display extends Application {
 					
 					//Jacob's cheeky medding
 					Analyser a = new Analyser();
-					a.findSteepestTurb(data);
+					a.findSteepestCond(data);
 					
 					
 					
