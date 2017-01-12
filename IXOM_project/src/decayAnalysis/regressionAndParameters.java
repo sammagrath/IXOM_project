@@ -1,30 +1,39 @@
 package decayAnalysis;
 
 import java.util.ArrayList;
+import timeconverter.*;
 
 
 
 public class regressionAndParameters {
+	double A; // in units turbidity or conductivity.
+	double tau; // in units of seconds
+	double RSquared;
+	
+	
+	
 	public regressionAndParameters(ArrayList<Coordinate> data){
 		//y   = b   +     ax
 		//lnT = lnA - 1/tau * t
 		
 		double[] y = new double[data.size()] , x = new double[data.size()];
+		TimeConverter tc = new TimeConverter();
+		double start = tc.HMSToDec(data.get(0).getTime())*86400;
 		
 		for (int i=0;i<data.size();i++){
-			x[i]=data.get(i).getTime();
+			x[i]= tc.HMSToDec(data.get(i).getTime())*86400 - start;
 			y[i]=Math.log((data.get(i).getValue()));
 		}
 		double n = (double) x.length;
 		double b = ( mean(y)*sum(vmult(x, x))-mean(x)*sum(vmult(x,y)) ) / ( n*sum(vmult(x,x)) - sum(x)*sum(x) );
 		double a = ( sum(vmult(x,y)) - n*mean(x)*mean(y) ) / ( sum(vmult(x,x)) -n*mean(x)*mean(x) );
 		
-		double A = Math.exp(b);
-		double tau=-1/a;
+		A = Math.exp(b);
+		tau=-1/a;
 		
 		
 		
-		double RSquared = calculateRSquared(x,y,a,b);
+		RSquared = calculateRSquared(x,y,a,b);
 		
 		
 	}
