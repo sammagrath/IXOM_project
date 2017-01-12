@@ -10,21 +10,36 @@ public class Analyser {
 	public ArrayList<Coordinate> findSteepestCond(ArrayList<dataPoint> dataPoints){
 		
 		ArrayList<Coordinate> steepest = new ArrayList<>();
-		ArrayList<dataPoint> tempList = new ArrayList<>();
+		ArrayList<dataPoint> condList = new ArrayList<>();
 		ArrayList<ArrayList> LOL = new ArrayList<>();
 		double gradient = 0;
 		
 		LOL = findAllDescents(dataPoints);
-		LOL = mergeAdjacentDescents(LOL);
+		
+		int oldSize, newSize;
+		
+		while(true){
+			oldSize = LOL.size();
+			
+			LOL = mergeAdjacentDescents(LOL);
+			
+			newSize = LOL.size();
+			
+			System.out.println(oldSize + " and " + newSize);
+			
+			if(oldSize == newSize){
+				break;
+			}
+		}
 		
 		for(ArrayList a: LOL){
 			if(pointToPointGradient(a) >= gradient){
-				tempList = a;
+				condList = a;
 				gradient = pointToPointGradient(a);
 			}
 		}
 		
-		for(dataPoint d: tempList){
+		for(dataPoint d: condList){
 			Coordinate c = new Coordinate(d.getTime(), d.getConductivity());
 			
 			System.out.println("("+ d.getTime() +", "+ d.getConductivity() +")");
@@ -49,7 +64,8 @@ public class Analyser {
 		double y1 = x1y1.getConductivity();
 		double y2 = x2y2.getConductivity();
 		
-		double gradient = (y2 - y1)/((x1 - x2)*86400);
+		//double gradient = (y2 - y1)/((x1 - x2)*86400);
+		double gradient = (y2 - y1);
 		
 		return gradient;
 	}
@@ -68,6 +84,12 @@ public class Analyser {
 			if(current.size() > 1 && adjacent.size() > 1){
 				current = mergeArrays(current, adjacent);
 				newLOL.add(current);
+				i++;
+			} else {
+				newLOL.add(current);
+				if(i == LOL.size() - 2){
+					newLOL.add(adjacent);
+				}
 			}
 		}
 		
