@@ -12,6 +12,7 @@ import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
@@ -19,10 +20,14 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import samThreshold.Flag;
+import timeconverter.TimeConverter;
 
 public class GraphGenerator {
+	
+	private TimeConverter timeConverter;
 
-	public void generateGraphs(ArrayList<dataPoint> data, String name, ArrayList<Flag> flagList) {
+	public void generateGraphs(ArrayList<dataPoint> data, String name, ArrayList<Flag> flagList,
+			ArrayList<String> phaseNames) {
 
 		Stage window = new Stage();
 		Group root = new Group();
@@ -36,13 +41,13 @@ public class GraphGenerator {
 		BorderPane borderPane = new BorderPane();
 
 		final Tab TurbTab = new Tab();
-		setTurbTab(TurbTab, name, data, flagList);
+		setTurbTab(TurbTab, name, data, flagList, phaseNames);
 
 		final Tab CondTab = new Tab();
-		setCondTab(CondTab, name, data, flagList);
+		setCondTab(CondTab, name, data, flagList, phaseNames);
 
 		final Tab TempTab = new Tab();
-		setTempTab(TempTab, name, data, flagList);
+		setTempTab(TempTab, name, data, flagList, phaseNames);
 
 		tabPane.getTabs().addAll(TurbTab, CondTab, TempTab);
 		borderPane.setCenter(tabPane);
@@ -50,6 +55,7 @@ public class GraphGenerator {
 
 		Scene scene = new Scene(root, Color.WHITE);
 		window.setTitle("Line Chart Sample");
+		scene.getStylesheets().add("viper.css");
 
 		window.setScene(scene);
 		window.show();
@@ -57,7 +63,10 @@ public class GraphGenerator {
 	}
 
 	@SuppressWarnings("unchecked")
-	private void setCondTab(Tab CondTab, String name, ArrayList<dataPoint> data, ArrayList<Flag> flagList) {
+	private void setCondTab(Tab CondTab, String name, ArrayList<dataPoint> data, ArrayList<Flag> flagList,
+			ArrayList<String> phaseNames) {
+		
+		timeConverter = new TimeConverter();
 
 		final NumberAxis xAxis = new NumberAxis();
 		final NumberAxis yAxis = new NumberAxis();
@@ -67,55 +76,45 @@ public class GraphGenerator {
 		final AreaChart<Number, Number> lineChart = new AreaChart<Number, Number>(xAxis, yAxis);
 		lineChart.setTitle("Conductivity - " + name);
 		// defining a series
-		XYChart.Series<Number, Number> cpf = new XYChart.Series<Number, Number>();
-		XYChart.Series<Number, Number> caustic = new XYChart.Series<Number, Number>();
-		XYChart.Series<Number, Number> rinse = new XYChart.Series<Number, Number>();
-		XYChart.Series<Number, Number> acid = new XYChart.Series<Number, Number>();
-		XYChart.Series<Number, Number> rinse2 = new XYChart.Series<Number, Number>();
-		Rectangle rec = new Rectangle(200,200);
+
+		int count = 0;
+		int zonecount = 1;
+
+		ArrayList<Series<Number, Number>> serieslist = new ArrayList<Series<Number, Number>>();
+
+		for (String phasename : phaseNames) {
+			
+			XYChart.Series<Number, Number> series = new XYChart.Series<Number, Number>();
+			series.setName(phasename);
+			serieslist.add(series);
+
+		}
+		for (dataPoint d : data) {
+			if (d.getZone() == zonecount) {
+				System.out.println(d.getTime());
+				System.out.println(timeConverter.HMSToDec(d.getTime()));
+				
+				serieslist.get(zonecount-1).getData().add(new XYChart.Data<Number, Number>((timeConverter.HMSToDec(d.getTime())*86400), d.getConductivity()));
+				
+				
+				count++;
+			}
+			if (d.getZone() != zonecount) {
+				zonecount++;
+			}
+		}
 		
-	
-		
-		cpf.setName("Pre Rinse");
-		caustic.setName("Caustic");
-		rinse.setName("Rinse");
-		acid.setName("Acid");
-		rinse2.setName("Final Rinse");
+		lineChart.getData().addAll(serieslist);
 
 		// populating the series with data
 
-		int count = 0;
-
-		for (dataPoint d : data) {
-			if (d.getZone() == 1) {
-				cpf.getData().add(new XYChart.Data<Number, Number>(count, d.getConductivity()));
-				count++;
-			}
-			if (d.getZone() == 2) {
-				caustic.getData().add(new XYChart.Data<Number, Number>(count, d.getConductivity()));
-				count++;
-			}
-			if (d.getZone() == 3) {
-				rinse.getData().add(new XYChart.Data<Number, Number>(count, d.getConductivity()));
-				count++;
-			}
-			if (d.getZone() == 4) {
-				acid.getData().add(new XYChart.Data<Number, Number>(count, d.getConductivity()));
-				count++;
-			}
-			if (d.getZone() == 5) {
-				rinse2.getData().add(new XYChart.Data<Number, Number>(count, d.getConductivity()));
-				count++;
-			}
-		}
-
-		lineChart.getData().addAll(cpf, caustic, rinse, acid, rinse2);
 		CondTab.setText("Conductivity");
 		CondTab.setContent(lineChart);
 	}
 
 	@SuppressWarnings("unchecked")
-	private void setTurbTab(Tab TurbTab, String name, ArrayList<dataPoint> data, ArrayList<Flag> flagList) {
+	private void setTurbTab(Tab TurbTab, String name, ArrayList<dataPoint> data, ArrayList<Flag> flagList,
+			ArrayList<String> phaseNames) {
 		final NumberAxis xAxis = new NumberAxis();
 		final NumberAxis yAxis = new NumberAxis();
 		xAxis.setLabel("Time");
@@ -124,49 +123,36 @@ public class GraphGenerator {
 		final AreaChart<Number, Number> lineChart = new AreaChart<Number, Number>(xAxis, yAxis);
 		lineChart.setTitle("Turbidity - " + name);
 		// defining a series
-		XYChart.Series<Number, Number> cpf = new XYChart.Series<Number, Number>();
-		XYChart.Series<Number, Number> caustic = new XYChart.Series<Number, Number>();
-		XYChart.Series<Number, Number> rinse = new XYChart.Series<Number, Number>();
-		XYChart.Series<Number, Number> acid = new XYChart.Series<Number, Number>();
-		XYChart.Series<Number, Number> rinse2 = new XYChart.Series<Number, Number>();
-		cpf.setName("Pre Rinse");
-		caustic.setName("Caustic");
-		rinse.setName("Rinse");
-		acid.setName("Acid");
-		rinse2.setName("Final Rinse");
-
-		// populating the series with data
-
 		int count = 0;
+		int zonecount = 1;
+
+		ArrayList<Series<Number, Number>> serieslist = new ArrayList<Series<Number, Number>>();
+
+		for (String phasename : phaseNames) {
+			
+			XYChart.Series<Number, Number> series = new XYChart.Series<Number, Number>();
+			series.setName(phasename);
+			serieslist.add(series);
+
+		}
 		for (dataPoint d : data) {
-			if (d.getZone() == 1) {
-				cpf.getData().add(new XYChart.Data<Number, Number>(count, d.getTurbidity()));
+			if (d.getZone() == zonecount) {
+				serieslist.get(zonecount-1).getData().add(new XYChart.Data<Number, Number>(count, d.getTurbidity()));
 				count++;
 			}
-			if (d.getZone() == 2) {
-				caustic.getData().add(new XYChart.Data<Number, Number>(count, d.getTurbidity()));
-				count++;
-			}
-			if (d.getZone() == 3) {
-				rinse.getData().add(new XYChart.Data<Number, Number>(count, d.getTurbidity()));
-				count++;
-			}
-			if (d.getZone() == 4) {
-				acid.getData().add(new XYChart.Data<Number, Number>(count, d.getTurbidity()));
-				count++;
-			}
-			if (d.getZone() == 5) {
-				rinse2.getData().add(new XYChart.Data<Number, Number>(count, d.getTurbidity()));
-				count++;
+			if (d.getZone() != zonecount) {
+				zonecount++;
 			}
 		}
-		lineChart.getData().addAll(cpf, caustic, rinse, acid, rinse2);
+		
+		lineChart.getData().addAll(serieslist);
 		TurbTab.setText("Turbidity");
 		TurbTab.setContent(lineChart);
 	}
 
 	@SuppressWarnings("unchecked")
-	private void setTempTab(Tab TempTab, String name, ArrayList<dataPoint> data, ArrayList<Flag> flagList) {
+	private void setTempTab(Tab TempTab, String name, ArrayList<dataPoint> data, ArrayList<Flag> flagList,
+			ArrayList<String> phaseNames) {
 
 		final NumberAxis xAxis = new NumberAxis();
 		final NumberAxis yAxis = new NumberAxis();
@@ -176,82 +162,31 @@ public class GraphGenerator {
 		final AreaChart<Number, Number> lineChart = new AreaChart<Number, Number>(xAxis, yAxis);
 		lineChart.setTitle("Temperature - " + name);
 		// defining a series
-		XYChart.Series<Number, Number> cpf = new XYChart.Series<Number, Number>();
-		XYChart.Series<Number, Number> caustic = new XYChart.Series<Number, Number>();
-		XYChart.Series<Number, Number> rinse = new XYChart.Series<Number, Number>();
-		XYChart.Series<Number, Number> acid = new XYChart.Series<Number, Number>();
-		XYChart.Series<Number, Number> rinse2 = new XYChart.Series<Number, Number>();
-		XYChart.Series<Number, Number> flags = new XYChart.Series<Number, Number>();
-
-		cpf.setName("Pre Rinse");
-		caustic.setName("Caustic");
-		rinse.setName("Rinse");
-		acid.setName("Acid");
-		rinse2.setName("Final Rinse");
-
-		// populating the series with data
-
 		int count = 0;
+		int zonecount = 1;
+
+		ArrayList<Series<Number, Number>> serieslist = new ArrayList<Series<Number, Number>>();
+
+		for (String phasename : phaseNames) {
+			
+			XYChart.Series<Number, Number> series = new XYChart.Series<Number, Number>();
+			series.setName(phasename);
+			serieslist.add(series);
+
+		}
 		for (dataPoint d : data) {
-			if (d.getZone() == 1) {
-				cpf.getData().add(new XYChart.Data<Number, Number>(count, d.getTemp()));
-				
-			
-				for (Flag f : flagList) {
-					if (f.getType().equals("Temperature") && (f.getStartTime().equals(d.getTime()) || f.getEndTime().equals(d.getTime()))) {
-						flags.getData().add(new XYChart.Data<Number, Number>(count, 70, Color.BLACK));
-					}
-				}
-				
+			if (d.getZone() == zonecount) {
+				serieslist.get(zonecount-1).getData().add(new XYChart.Data<Number, Number>(count, d.getTemp()));
 				count++;
 			}
-			if (d.getZone() == 2) {
-				caustic.getData().add(new XYChart.Data<Number, Number>(count, d.getTemp()));
-				
-				for (Flag f : flagList) {
-					if (f.getType().equals("Temperature") && (f.getStartTime().equals(d.getTime()) || f.getEndTime().equals(d.getTime()))) {
-						flags.getData().add(new XYChart.Data<Number, Number>(count, 70));
-					}
-				}
-			
-				count++;
-			}
-			if (d.getZone() == 3) {
-				rinse.getData().add(new XYChart.Data<Number, Number>(count, d.getTemp()));
-				
-				for (Flag f : flagList) {
-					if (f.getType().equals("Temperature") && (f.getStartTime().equals(d.getTime()) || f.getEndTime().equals(d.getTime()))) {
-						flags.getData().add(new XYChart.Data<Number, Number>(count, 70));
-					}
-				}
-				count++;
-				
-			}
-			if (d.getZone() == 4) {
-				acid.getData().add(new XYChart.Data<Number, Number>(count, d.getTemp()));
-			/*
-				for (Flag f : flagList) {
-					if (f.getType().equals("Temperature") && (f.getStartTime().equals(d.getTime()) || f.getEndTime().equals(d.getTime()))) {
-						flags.getData().add(new XYChart.Data<Number, Number>(count, 70));
-					}
-				}
-			*/
-				count++;
-			}
-			if (d.getZone() == 5) {
-				rinse2.getData().add(new XYChart.Data<Number, Number>(count, d.getTemp()));
-			
-				for (Flag f : flagList) {
-					if (f.getType().equals("Temperature") && (f.getStartTime().equals(d.getTime()) || f.getEndTime().equals(d.getTime()))) {
-						flags.getData().add(new XYChart.Data<Number, Number>(count, 70));
-					}
-				}
-				
-				count++;
+			if (d.getZone() != zonecount) {
+				zonecount++;
 			}
 		}
 		
-		lineChart.getData().addAll(cpf, caustic, rinse, acid, rinse2, flags);
+		lineChart.getData().addAll(serieslist);
+		
+
 		TempTab.setText("Temperature");
 		TempTab.setContent(lineChart);
 	}

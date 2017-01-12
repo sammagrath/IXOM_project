@@ -243,7 +243,7 @@ public class Display extends Application {
 
 					String shortname = excelFile.getName().substring(0, excelFile.getName().lastIndexOf('.'));
 					graphGenerator = new GraphGenerator();
-					graphGenerator.generateGraphs(data, shortname, flagList);
+					graphGenerator.generateGraphs(data, shortname, flagList, phaseNames);
 					
 					alert.showAndWait();
 
@@ -302,7 +302,7 @@ public class Display extends Application {
 		setUserAgentStylesheet(STYLESHEET_CASPIAN);
 		stage.show();
 	}
-
+//ewf
 	// !!!PATS ADDITION!!!//
 	public String printAll(ArrayList<dataPoint> data) {
 
