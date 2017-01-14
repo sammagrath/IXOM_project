@@ -38,6 +38,33 @@ public class regressionAndParameters {
 		
 	}
 	
+	
+	//Jacob sticking his nose where it doesn't belong. Alternate method to Henry's code above.
+	//Returns A and B to fit a functional form y = Aexp(Bx) as well as rSquared value for the curve
+	public Triple leastSquaresFitting(ArrayList<Coordinate> data){
+		
+		TimeConverter tc = new TimeConverter();
+		int n = data.size();
+		double start = tc.HMSToDec(data.get(0).getTime())*86400;
+		double[] x = new double[n], y = new double[n];
+		
+		for(int i = 0; i < n; i++){
+			x[i] = tc.HMSToDec(data.get(i).getTime())*86400 - start;
+			y[i] = Math.log(data.get(i).getValue());
+		}
+		
+		double a = ((sum(y)*sum(vmult(x, x))) - (sum(x)*sum(vmult(x, y)))) / ((n*sum(vmult(x, x))) - (sum(x)*sum(x)));
+		double b = ((n*sum(vmult(x, y))) - (sum(x)*sum(y))) / ((n*sum(vmult(x, x))) - (sum(x)*sum(x)));
+		
+		double rSq = calculateRSquared(x, y, b, a);
+		
+		Triple toReturn = new Triple(Math.exp(a), b, rSq);
+		
+		return toReturn;
+		
+	}
+	
+	
 	private double calculateRSquared(double[] x, double[] y, double a, double b) {
 		double total=0;
 		for (int i=0; i<x.length;i++){
