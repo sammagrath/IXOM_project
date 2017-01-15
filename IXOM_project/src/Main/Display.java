@@ -42,6 +42,9 @@ import Read_Data.ExceltoCSV;
 import Read_Data.PhaseNamesFromCSV;
 import Read_Data.dataPoint;
 import decayAnalysis.Analyser;
+import decayAnalysis.Coordinate;
+import decayAnalysis.Triple;
+import decayAnalysis.regressionAndParameters;
 
 public class Display extends Application {
 
@@ -140,7 +143,12 @@ public class Display extends Application {
 					
 					//Jacob's cheeky medding
 					Analyser a = new Analyser();
-					a.findSteepestCond(data);
+					ArrayList<Coordinate> coords = a.findSteepestCond(data);
+					
+					regressionAndParameters reg = new regressionAndParameters(coords);
+					Triple triple = reg.leastSquaresFitting(coords);
+					
+					System.out.println("Curve estimated as: y = "+triple.getA()+"exp("+triple.getB()+"x) with r^2 value of "+triple.getrSquared());
 					
 					
 					
