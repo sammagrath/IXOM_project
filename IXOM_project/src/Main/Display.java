@@ -128,6 +128,10 @@ public class Display extends Application {
 
 					// !!!PATS ADDITION!!!//
 					data = populator.populateData(dirtyCSVFile, data);
+					
+					//set up Map
+					dataPoint.setMap(data, phaseNames);
+					
 					// !!!SAM'S ADDITION!!!//
 					/*
 					 * instantiates Flag Array, Flag Generation object - it is
