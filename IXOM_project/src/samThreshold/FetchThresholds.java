@@ -15,46 +15,42 @@ import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import Read_Data.ExceltoCSV;
 
 public class FetchThresholds {
-	
+
 	private static ArrayList<Double> thresholds = new ArrayList();
 	private static HashMap<String, ArrayList<Double>> powders = new HashMap();
 	private static Threshold t;
 
-	
 	public void setThresholds(String input, String product, String process) throws FileNotFoundException {
-		
+
 		File excel = new File(input);
 
 		Scanner scanner = new Scanner(excel);
-        scanner.useDelimiter(",");
-        while(scanner.hasNextLine()){
-        	     	
-        if(scanner.next().equals(process)){
-        	
-        	while(scanner.hasNextDouble()) {
-        			thresholds.add(scanner.nextDouble());
-        	}
-        	powders.put(process, thresholds);
-        
-        }
-        }
-        scanner.close();
-        for(Double d : thresholds) {
-        	System.out.println(d);
-        }
-        System.out.println("\n" + powders.keySet());
-        System.out.println(powders.get(process));
-        
+		scanner.useDelimiter(",");
+		while (scanner.hasNextLine()) {
+
+			if (scanner.next().equals(process)) {
+
+				while (scanner.hasNextDouble()) {
+					thresholds.add(scanner.nextDouble());
+				}
+				powders.put(process, thresholds);
+
+			}
+		}
+		scanner.close();
+		for (Double d : thresholds) {
+			System.out.println(d);
+		}
+		System.out.println("\n" + powders.keySet());
+		System.out.println(powders.get(process));
+
 	}
 
-
 	public static void main(String[] args) throws IOException {
-		
-		FetchThresholds ft = new FetchThresholds();
-		ft.setThresholds("/Users/magratsam/Downloads/IXOM/thresholds.csv", "Powders", "Evap (MPC)");
-		
-        
 
+		FetchThresholds ft = new FetchThresholds();
+		System.out.println(System.getProperty("user.dir")+ File.separator + "thresholds.csv");
+		ft.setThresholds(System.getProperty("user.dir")+ File.separator + "thresholds.csv", "Powders", "Evap (MPC)");
 
 	}
 }
