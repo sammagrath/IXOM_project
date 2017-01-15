@@ -26,8 +26,6 @@ public class Analyser {
 			
 			newSize = LOL.size();
 			
-			System.out.println(oldSize + " and " + newSize);
-			
 			if(oldSize == newSize){
 				break;
 			}
@@ -77,6 +75,24 @@ public class Analyser {
 		return gradient;
 	}
 	
+	//Given the initial array of dataPoints, splits into separate lists by zone
+	public ArrayList<ArrayList<dataPoint>> splitByZones(ArrayList<dataPoint> dataPoints){
+		ArrayList<ArrayList<dataPoint>> LOC = new ArrayList<ArrayList<dataPoint>>();
+		ArrayList<dataPoint> zonePoints = new ArrayList<dataPoint>();
+		
+		int zone = 1;
+		
+		for(dataPoint d: dataPoints){
+			if(d.getZone() != zone){
+				zone++;
+				LOC.add(zonePoints);
+				zonePoints = new ArrayList<dataPoint>();
+			}
+			zonePoints.add(d);
+		}
+		
+		return LOC;
+	}
 	
 	public ArrayList<ArrayList<dataPoint>> mergeAdjacentDescents(ArrayList<ArrayList<dataPoint>> LOL){
 		

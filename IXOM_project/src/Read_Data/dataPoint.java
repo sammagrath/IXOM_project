@@ -88,6 +88,7 @@ public class dataPoint {
 
 		for(dataPoint d: data){
 			if(d.getZone() != zone){
+				zone++;
 				phaseIndex++;
 			}
 			map.put(d, phases.get(phaseIndex));

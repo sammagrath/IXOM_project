@@ -145,8 +145,18 @@ public class Display extends Application {
 					
 					
 					
-					//Jacob's cheeky medding
+					//Jacob's cheeky meddling
 					Analyser a = new Analyser();
+					
+					ArrayList<ArrayList<dataPoint>> LOC = a.splitByZones(data);
+					
+					for(ArrayList<dataPoint> dp: LOC){
+						dataPoint point = dp.get(0);
+						String zoneString = dataPoint.getMap().get(point).toString();
+						
+						System.out.println(zoneString);
+					}
+					
 					ArrayList<Coordinate> coords = a.findSteepestCond(data);
 					
 					regressionAndParameters reg = new regressionAndParameters(coords);
