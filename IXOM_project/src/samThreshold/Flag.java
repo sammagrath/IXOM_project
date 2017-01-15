@@ -1,6 +1,9 @@
 package samThreshold;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+
+import timeconverter.TimeConverter;
 
 public class Flag {
 	
@@ -17,8 +20,10 @@ public class Flag {
 	private double tempLower;
 	private double tempUpper;
 	private String type;
+	private double durationSeconds;
+	private String durationLabel;
 	
-
+	private final static TimeConverter timeConverter = new TimeConverter();
 
 	public Flag() {
 		
@@ -48,7 +53,8 @@ public class Flag {
 		this.message = message;
 		this.target = target;
 		this.actual = Math.round(actual*100.0)/100.0;
-		
+		setDurationSeconds();
+		setDurationLabel();
 	}
 	
 	public Flag(String startTime, String endTime, int zone, String phase, String message, double condLower, double condUpper, double tempLower, double tempUpper, String target, double actual) {
@@ -59,10 +65,31 @@ public class Flag {
 		this.message = message;
 		this.target = target;
 		this.actual = Math.round(actual*100.0)/100.0;
+		setDurationSeconds();
+		setDurationLabel();
 	}
 
 	public String print() {
 		return "| " + startTime + " | " + endTime + " | " + phase + " | " + message + " | " + target + " | " + actual + " | \n"; 
+	}
+	
+	public double getDurationSeconds() {
+		return durationSeconds;
+	}
+
+	public void setDurationSeconds() {
+		
+		this.durationSeconds = Math.floor(((timeConverter.HMSToDec(this.endTime) * 86400) - (timeConverter.HMSToDec(this.startTime) * 86400))* 100) / 100 ;
+		
+	}
+	public String getDurationLabel() {
+		return durationLabel;
+	}
+
+	public void setDurationLabel() {
+		
+		this.durationLabel = timeConverter.decToHMS(this.durationSeconds / 86400) ;
+		
 	}
 	
 	public String getStartTime() {
