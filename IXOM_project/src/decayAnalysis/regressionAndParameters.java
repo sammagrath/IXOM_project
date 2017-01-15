@@ -1,6 +1,8 @@
 package decayAnalysis;
 
 import java.util.ArrayList;
+
+import Read_Data.dataPoint;
 import timeconverter.*;
 
 
@@ -44,13 +46,26 @@ public class regressionAndParameters {
 	public Triple leastSquaresFitting(ArrayList<Coordinate> data){
 		
 		TimeConverter tc = new TimeConverter();
-		int n = data.size();
-		double start = tc.HMSToDec(data.get(0).getTime())*86400;
-		double[] x = new double[n], y = new double[n];
+		int n = 0;
+		double start = tc.HMSToDec(data.get(0).getTime())*86400, value;
+		Coordinate cd;
 		
+		for(Coordinate xy: data){
+			if(xy.getValue() != 0.0){
+				n++;
+			}
+		}
+		
+		double[] x = new double[n], y = new double[n];
 		for(int i = 0; i < n; i++){
-			x[i] = tc.HMSToDec(data.get(i).getTime())*86400 - start;
-			y[i] = Math.log(data.get(i).getValue());
+			cd = data.get(i);
+			
+			value = cd.getValue();
+			if(value != 0.0){
+				x[i] = tc.HMSToDec(cd.getTime())*86400 - start;
+				y[i] = Math.log(value);
+			}
+			
 		}
 		
 		double a = ((sum(y)*sum(vmult(x, x))) - (sum(x)*sum(vmult(x, y)))) / ((n*sum(vmult(x, x))) - (sum(x)*sum(x)));
@@ -62,7 +77,7 @@ public class regressionAndParameters {
 		double f = n;
 		double g = sum(x);
 		
-		System.out.println("Numbers are "+c+", "+", "+", "+", ");
+		System.out.println("Numbers are "+c+", "+d+", "+e+", "+f+", "+g);
 		
 		
 		
