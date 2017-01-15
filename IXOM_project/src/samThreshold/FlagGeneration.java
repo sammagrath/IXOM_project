@@ -7,6 +7,7 @@ import java.util.HashMap;
 
 import Read_Data.CSV2Array;
 import Read_Data.dataPoint;
+import henrysThreshold.MetricTaker2;
 import henrysThreshold.metricTaker;
 
 /**
@@ -30,6 +31,7 @@ public class FlagGeneration {
 
 		FlagGeneration.data = data;
 		flagList = new ArrayList<Flag>();
+		//metric = new metricTaker(data);
 		metric = new metricTaker(data);
 	}
 
