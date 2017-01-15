@@ -70,21 +70,6 @@ public class regressionAndParameters {
 		
 		double a = ((sum(y)*sum(vmult(x, x))) - (sum(x)*sum(vmult(x, y)))) / ((n*sum(vmult(x, x))) - (sum(x)*sum(x)));
 		double b = ((n*sum(vmult(x, y))) - (sum(x)*sum(y))) / ((n*sum(vmult(x, x))) - (sum(x)*sum(x)));
-		
-		double c = sum(vmult(x, x));
-		double d = sum(y);
-		double e = sum(vmult(x, y));
-		double f = n;
-		double g = sum(x);
-		
-		System.out.println("Numbers are "+c+", "+d+", "+e+", "+f+", "+g);
-		
-		
-		
-		
-		
-		
-		
 		double rSq = calculateRSquared(x, y, b, a);
 		
 		Triple toReturn = new Triple(Math.exp(a), b, rSq);

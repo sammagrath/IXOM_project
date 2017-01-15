@@ -154,20 +154,17 @@ public class Display extends Application {
 						dataPoint point = dp.get(0);
 						String zoneString = dataPoint.getMap().get(point).toString();
 						
-						System.out.println(zoneString);
+						if(zoneString.contains("RINSE")){
+							ArrayList<Coordinate> coords = a.findSteepestCond(dp);
+							
+							regressionAndParameters reg = new regressionAndParameters(coords);
+							Triple triple = reg.leastSquaresFitting(coords);
+							
+							System.out.println("Curve for "+zoneString+" estimated as: y = "+triple.getA()+"exp("+triple.getB()+"x) with r^2 value of "+triple.getrSquared());
+						}
 					}
 					
-					ArrayList<Coordinate> coords = a.findSteepestCond(data);
 					
-					regressionAndParameters reg = new regressionAndParameters(coords);
-					Triple triple = reg.leastSquaresFitting(coords);
-					
-					System.out.println("Curve estimated as: y = "+triple.getA()+"exp("+triple.getB()+"x) with r^2 value of "+triple.getrSquared());
-					
-					
-					
-					
-
 					// Henry's addition
 					f.setPhaseNames(phaseNames);
 

@@ -90,6 +90,7 @@ public class Analyser {
 			}
 			zonePoints.add(d);
 		}
+		LOC.add(zonePoints);
 		
 		return LOC;
 	}
