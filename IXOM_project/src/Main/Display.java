@@ -128,6 +128,10 @@ public class Display extends Application {
 
 					// !!!PATS ADDITION!!!//
 					data = populator.populateData(dirtyCSVFile, data);
+					
+					//set up Map
+					dataPoint.setMap(data, phaseNames);
+					
 					// !!!SAM'S ADDITION!!!//
 					/*
 					 * instantiates Flag Array, Flag Generation object - it is
@@ -141,19 +145,26 @@ public class Display extends Application {
 					
 					
 					
-					//Jacob's cheeky medding
+					//Jacob's cheeky meddling
 					Analyser a = new Analyser();
-					ArrayList<Coordinate> coords = a.findSteepestCond(data);
 					
-					regressionAndParameters reg = new regressionAndParameters(coords);
-					Triple triple = reg.leastSquaresFitting(coords);
+					ArrayList<ArrayList<dataPoint>> LOC = a.splitByZones(data);
 					
-					System.out.println("Curve estimated as: y = "+triple.getA()+"exp("+triple.getB()+"x) with r^2 value of "+triple.getrSquared());
+					for(ArrayList<dataPoint> dp: LOC){
+						dataPoint point = dp.get(0);
+						String zoneString = dataPoint.getMap().get(point).toString();
+						
+						if(zoneString.contains("RINSE") && !zoneString.contains("PRERINSE")){
+							ArrayList<Coordinate> coords = a.findSteepestCond(dp);
+							
+							regressionAndParameters reg = new regressionAndParameters(coords);
+							Triple triple = reg.leastSquaresFitting(coords);
+							
+							System.out.println("Curve for "+zoneString+" estimated as: y = "+triple.getA()+"exp("+triple.getB()+"x) with r^2 value of "+triple.getrSquared());
+						}
+					}
 					
 					
-					
-					
-
 					// Henry's addition
 					f.setPhaseNames(phaseNames);
 

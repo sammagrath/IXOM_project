@@ -168,8 +168,6 @@ public class GraphGenerator {
 		}
 		for (dataPoint d : data) {
 			if (d.getZone() == zonecount) {
-				System.out.println(d.getTime());
-				System.out.println(timeConverter.HMSToDec(d.getTime()));
 				serieslist.get(zonecount - 1).getData().add(new XYChart.Data<Number, Number>(
 						(timeConverter.HMSToDec(d.getTime()) * 86400) - offset, d.getTurbidity()));
 
@@ -231,8 +229,6 @@ public class GraphGenerator {
 
 		for (dataPoint d : data) {
 			if (d.getZone() == zonecount) {
-				System.out.println(d.getTime());
-				System.out.println(timeConverter.HMSToDec(d.getTime()));
 				serieslist.get(zonecount - 1).getData().add(new XYChart.Data<Number, Number>(
 						(timeConverter.HMSToDec(d.getTime()) * 86400) - offset, d.getTemp()));
 

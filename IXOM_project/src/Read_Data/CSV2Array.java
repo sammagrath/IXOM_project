@@ -71,7 +71,7 @@ public class CSV2Array {
 		return data;
 
 	}
-
+	
 	public static void printAll(ArrayList<dataPoint> data) {
 
 		for (dataPoint output : data) {
