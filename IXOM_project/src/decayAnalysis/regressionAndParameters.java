@@ -79,11 +79,19 @@ public class regressionAndParameters {
 	
 	
 	private double calculateRSquared(double[] x, double[] y, double a, double b) {
-		double total=0;
+		double ssres=0;
+		double sstot=0;
+		double ymean=mean(y);
+		
 		for (int i=0; i<x.length;i++){
-			total+=(y[i]-a*x[i]-b) * (y[i]-a*x[i]-b);
+			ssres+=(y[i]-a*x[i]-b) * (y[i]-a*x[i]-b);
 		}
-		return total;
+		
+		for(int i=0;i<y.length;i++){
+			sstot+=(y[i]-ymean)*(y[i]-ymean);
+		}
+		
+		return(1-(ssres/sstot));
 	}
 
 	private double sum(double[] vals){

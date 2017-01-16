@@ -24,7 +24,6 @@ public class MetricTaker2 {
 
 		assignBoundaryIndicesAndDataToPhases();
 		ascribePhaseType();
-		
 		calculateAverages();
 	}
 
