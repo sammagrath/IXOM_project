@@ -154,7 +154,7 @@ public class Display extends Application {
 						dataPoint point = dp.get(0);
 						String zoneString = dataPoint.getMap().get(point).toString();
 						
-						if(zoneString.contains("RINSE")){
+						if(zoneString.contains("RINSE") && !zoneString.contains("PRERINSE")){
 							ArrayList<Coordinate> coords = a.findSteepestCond(dp);
 							
 							regressionAndParameters reg = new regressionAndParameters(coords);
