@@ -95,7 +95,7 @@ public class dataPoint {
 		}
 	}
 	
-	public static HashMap getMap(){
+	public static HashMap<dataPoint, String> getMap(){
 		return map;
 	}
 
