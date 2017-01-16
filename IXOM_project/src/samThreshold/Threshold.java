@@ -69,10 +69,18 @@ public class Threshold {
 		this.tempUpper = tempUpper;
 	}
 	
+	public Threshold() {
+		this.phase = "";
+		this.condLower = 0;
+		this.condUpper = 0;
+		this.tempLower = 0;
+		this.tempUpper = 0;
+	}
+	
 	
 	public String printThresholds() {
 		
-		return phase;
+		return "|" + phase + "|" + condLower + "|" + condUpper + "|" + tempLower +"|" + tempUpper + "|";
 	}
 	
 }
