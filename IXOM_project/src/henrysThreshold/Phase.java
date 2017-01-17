@@ -3,7 +3,7 @@ package henrysThreshold;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import Read_Data.dataPoint;
+import Read_Data.DataPoint;
 
 public class Phase {
 
@@ -14,8 +14,8 @@ public class Phase {
 	private double tempAverages;
 	private double condAverages;
 	private double soilAverages;
-	private ArrayList<dataPoint> phaseData;
-	private ArrayList<dataPoint> effPeriodData;
+	private ArrayList<DataPoint> phaseData;
+	private ArrayList<DataPoint> effPeriodData;
 	private boolean isRinse;
 	
 	public Phase(String name){
@@ -78,20 +78,20 @@ public class Phase {
 		this.soilAverages = soilAverages;
 	}
 
-	public ArrayList<dataPoint> getPhaseData() {
+	public ArrayList<DataPoint> getPhaseData() {
 		return phaseData;
 	}
 
-	public void setPhaseData(ArrayList<dataPoint> phaseData) {
+	public void setPhaseData(ArrayList<DataPoint> phaseData) {
 		this.phaseData = phaseData;
 	}
 
 	
-	public ArrayList<dataPoint> getEffPeriodData() {
+	public ArrayList<DataPoint> getEffPeriodData() {
 		return effPeriodData;
 	}
 
-	public void setEffPeriodData(ArrayList<dataPoint> effPeriodData) {
+	public void setEffPeriodData(ArrayList<DataPoint> effPeriodData) {
 		this.effPeriodData = effPeriodData;
 	}
 

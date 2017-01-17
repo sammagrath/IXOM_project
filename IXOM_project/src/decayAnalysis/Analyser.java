@@ -2,23 +2,23 @@ package decayAnalysis;
 
 import java.util.ArrayList;
 
-import Read_Data.dataPoint;
+import Read_Data.DataPoint;
 //import timeconverter.TimeConverter;
 
 public class Analyser {
 	
-	public ArrayList<Coordinate> findSteepestCond(ArrayList<dataPoint> dataPoints){
+	public ArrayList<Coordinate> findSteepestCond(ArrayList<DataPoint> DataPoints){
 		
 		ArrayList<Coordinate> steepest = new ArrayList<>();
-		ArrayList<dataPoint> condList = new ArrayList<>();
-		ArrayList<ArrayList<dataPoint>> LOL = new ArrayList<>();
+		ArrayList<DataPoint> condList = new ArrayList<>();
+		ArrayList<ArrayList<DataPoint>> LOL = new ArrayList<>();
 		double gradient = 0;
 		
-		LOL = findAllDescents(dataPoints);
+		LOL = findAllDescents(DataPoints);
 		
 		int oldSize, newSize;
 		
-		//repeat merging as long as there are two adjacent decreasing sets of dataPoints
+		//repeat merging as long as there are two adjacent decreasing sets of DataPoints
 		while(true){
 			oldSize = LOL.size();
 			
@@ -31,8 +31,8 @@ public class Analyser {
 			}
 		}
 		
-		//find the arraylist of dataPoints with the largest decrease in conductivity
-		for(ArrayList<dataPoint> a: LOL){
+		//find the arraylist of DataPoints with the largest decrease in conductivity
+		for(ArrayList<DataPoint> a: LOL){
 			if(a.size() > 1){
 				if(pointToPointGradient(a) >= gradient){
 					condList = a;
@@ -41,10 +41,10 @@ public class Analyser {
 			}
 		}
 		
-		condList = completeZone(condList, dataPoints);
+		condList = completeZone(condList, DataPoints);
 		
-		//for the arraylist of dataPoints with the largest decrease in conductivity, construct coordinate objects for each dataPoint and return an arraylist of those coordinates
-		for(dataPoint d: condList){
+		//for the arraylist of DataPoints with the largest decrease in conductivity, construct coordinate objects for each DataPoint and return an arraylist of those coordinates
+		for(DataPoint d: condList){
 			Coordinate c = new Coordinate(d.getTime(), d.getConductivity());
 			
 			System.out.println("("+ d.getTime() +", "+ d.getConductivity() +")");
@@ -57,12 +57,12 @@ public class Analyser {
 		
 	}
 	
-	//calculate the rate of decrease of conductivity for an ArrayList of dataPoints
-	public double pointToPointGradient(ArrayList<dataPoint> dataPoints){
+	//calculate the rate of decrease of conductivity for an ArrayList of DataPoints
+	public double pointToPointGradient(ArrayList<DataPoint> DataPoints){
 		//TimeConverter tc = new TimeConverter();
 		
-		dataPoint x1y1 = dataPoints.get(dataPoints.size() - 1);
-		dataPoint x2y2 = dataPoints.get(0);
+		DataPoint x1y1 = DataPoints.get(DataPoints.size() - 1);
+		DataPoint x2y2 = DataPoints.get(0);
 		
 		//double x1 = tc.HMSToDec(x1y1.getTime());
 		//double x2 = tc.HMSToDec(x2y2.getTime());
@@ -75,18 +75,18 @@ public class Analyser {
 		return gradient;
 	}
 	
-	//Given the initial array of dataPoints, splits into separate lists by zone
-	public ArrayList<ArrayList<dataPoint>> splitByZones(ArrayList<dataPoint> dataPoints){
-		ArrayList<ArrayList<dataPoint>> LOC = new ArrayList<ArrayList<dataPoint>>();
-		ArrayList<dataPoint> zonePoints = new ArrayList<dataPoint>();
+	//Given the initial array of DataPoints, splits into separate lists by zone
+	public ArrayList<ArrayList<DataPoint>> splitByZones(ArrayList<DataPoint> DataPoints){
+		ArrayList<ArrayList<DataPoint>> LOC = new ArrayList<ArrayList<DataPoint>>();
+		ArrayList<DataPoint> zonePoints = new ArrayList<DataPoint>();
 		
 		int zone = 1;
 		
-		for(dataPoint d: dataPoints){
+		for(DataPoint d: DataPoints){
 			if(d.getZone() != zone){
 				zone++;
 				LOC.add(zonePoints);
-				zonePoints = new ArrayList<dataPoint>();
+				zonePoints = new ArrayList<DataPoint>();
 			}
 			zonePoints.add(d);
 		}
@@ -95,10 +95,10 @@ public class Analyser {
 		return LOC;
 	}
 	
-	public ArrayList<ArrayList<dataPoint>> mergeAdjacentDescents(ArrayList<ArrayList<dataPoint>> LOL){
+	public ArrayList<ArrayList<DataPoint>> mergeAdjacentDescents(ArrayList<ArrayList<DataPoint>> LOL){
 		
-		ArrayList<ArrayList<dataPoint>> newLOL = new ArrayList<>();
-		ArrayList<dataPoint> adjacent, current;
+		ArrayList<ArrayList<DataPoint>> newLOL = new ArrayList<>();
+		ArrayList<DataPoint> adjacent, current;
 		
 		for(int i = 0; i < LOL.size() - 1; i++){
 			
@@ -120,24 +120,24 @@ public class Analyser {
 		return newLOL;
 	}
 	
-	//merge two ArrayLists of dataPoints together
-	public ArrayList<dataPoint> mergeArrays(ArrayList<dataPoint> a, ArrayList<dataPoint> b){
+	//merge two ArrayLists of DataPoints together
+	public ArrayList<DataPoint> mergeArrays(ArrayList<DataPoint> a, ArrayList<DataPoint> b){
 		
-		for(dataPoint d: b){
+		for(DataPoint d: b){
 			a.add(d);
 		}
 		
 		return a;
 	}
 	
-	//Go through a list of dataPoints and make ArrayList of ArrayLists of points with decreasing conductivity values
-	public ArrayList<ArrayList<dataPoint>> findAllDescents(ArrayList<dataPoint> dataPoints){
-		ArrayList<dataPoint> tempList = new ArrayList<>();
-		ArrayList<ArrayList<dataPoint>> LOL = new ArrayList<>();
+	//Go through a list of DataPoints and make ArrayList of ArrayLists of points with decreasing conductivity values
+	public ArrayList<ArrayList<DataPoint>> findAllDescents(ArrayList<DataPoint> DataPoints){
+		ArrayList<DataPoint> tempList = new ArrayList<>();
+		ArrayList<ArrayList<DataPoint>> LOL = new ArrayList<>();
 		
-		dataPoint previous = new dataPoint(null, null, 0, Double.MAX_VALUE, 0, 0, 0);
+		DataPoint previous = new DataPoint(null, null, 0, Double.MAX_VALUE, 0, 0, 0);
 		
-		for(dataPoint d: dataPoints){
+		for(DataPoint d: DataPoints){
 			if(!((d.getConductivity() <= previous.getConductivity()) && (previous.getZone() == d.getZone()))){
 				LOL.add(tempList);
 				tempList = new ArrayList<>();
@@ -151,13 +151,13 @@ public class Analyser {
 	}
 	
 	//tag on the rest of the points in the same zone as the steepest decrease arraylist
-	public ArrayList<dataPoint> completeZone(ArrayList<dataPoint> steepest, ArrayList<dataPoint> dataPoints){
+	public ArrayList<DataPoint> completeZone(ArrayList<DataPoint> steepest, ArrayList<DataPoint> dataPoints){
 		
-		dataPoint oldEnd = steepest.get(steepest.size() - 1);
+		DataPoint oldEnd = steepest.get(steepest.size() - 1);
 		boolean complete = false;
 		int zone = oldEnd.getZone();
 		
-		for(dataPoint d: dataPoints){
+		for(DataPoint d: dataPoints){
 			if(complete == true){
 				if(d.getZone() == zone){
 					steepest.add(d);

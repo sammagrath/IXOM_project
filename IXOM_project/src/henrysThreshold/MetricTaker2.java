@@ -10,12 +10,12 @@ public class MetricTaker2 {
 
 	private ArrayList<Phase> phases;
 	
-	private ArrayList<dataPoint> data;
+	private ArrayList<DataPoint> data;
 	private ArrayList<Integer> BoundaryIndices;
 	private double minCond; 
 	private double minTemp;
 
-	public MetricTaker2(ArrayList<dataPoint> data, ArrayList<String> phaseNames, double minCond, double minTemp) {
+	public MetricTaker2(ArrayList<DataPoint> data, ArrayList<String> phaseNames, double minCond, double minTemp) {
 
 		for (String s : phaseNames) {
 			phases.add(new Phase(s));
@@ -33,13 +33,13 @@ public class MetricTaker2 {
 
 	private void assignBoundaryIndicesAndDataToPhases() {
 		int phasecount = 0;
-		ArrayList<dataPoint> temp = new ArrayList<dataPoint>(100);
+		ArrayList<DataPoint> temp = new ArrayList<DataPoint>(100);
 		phases.get(phasecount).setStartIndex(0);
 		
-		dataPoint prevdatapoint = data.get(0);
+		DataPoint prevDataPoint = data.get(0);
 		BoundaryIndices.add(0);
 		for (int i=0;i<data.size();i++) {
-			dataPoint d = data.get(i);
+			DataPoint d = data.get(i);
 			
 			
 			
@@ -48,7 +48,7 @@ public class MetricTaker2 {
 				phases.get(phasecount).setPhaseData(temp);
 			}
 			
-			if (d.getZone() != prevdatapoint.getZone()) {
+			if (d.getZone() != prevDataPoint.getZone()) {
 				phases.get(phasecount).setPhaseData(temp);
 				phases.get(phasecount).setEndIndex(i-1);
 				phasecount++;
@@ -57,7 +57,7 @@ public class MetricTaker2 {
 			else {
 				temp.add(d);
 			}
-			prevdatapoint = d;
+			prevDataPoint = d;
 		}
 
 	}
@@ -84,8 +84,8 @@ public class MetricTaker2 {
 
 	private void setEffectivePeriodDetails(Phase p) {
 		// this might need reevaluating
-		ArrayList<dataPoint> temp = new ArrayList<dataPoint>(100);
-		for(dataPoint d : p.getPhaseData()){
+		ArrayList<DataPoint> temp = new ArrayList<DataPoint>(100);
+		for(DataPoint d : p.getPhaseData()){
 			if(d.getConductivity()>minCond && d.getTemp()>minTemp){
 				temp.add(d);
 			}
@@ -103,13 +103,13 @@ public class MetricTaker2 {
 
 	}
 
-	private double[] findAverages(ArrayList<dataPoint> data) {
+	private double[] findAverages(ArrayList<DataPoint> data) {
 		double condtot =0;
 		double soiltot =0;
 		double temptot =0;
 		double[] ret = new double[3];
 		
-		for(dataPoint d : data){
+		for(DataPoint d : data){
 			temptot+=d.getTemp();
 			condtot+=d.getConductivity();
 			soiltot+=d.getSoil();

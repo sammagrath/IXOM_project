@@ -3,9 +3,9 @@ package Read_Data;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class dataPoint {
+public class DataPoint {
 
-	static HashMap<dataPoint, String> map = new HashMap<dataPoint, String>();
+	static HashMap<DataPoint, String> map = new HashMap<DataPoint, String>();
 
 	private String date;
 	private String time;
@@ -16,8 +16,7 @@ public class dataPoint {
 	private double temp;
 	private int zone;
 
-	public dataPoint(String date, String time, double turbidity, double conductivity, double soil, double temp,
-			int zone) {
+	public DataPoint(String date, String time, double turbidity, double conductivity, double soil, double temp, int zone) {
 
 		this.date = date;
 		this.time = time;
@@ -83,10 +82,10 @@ public class dataPoint {
 
 	}
 	
-	public static void setMap(ArrayList<dataPoint> data, ArrayList<String> phases){
+	public static void setMap(ArrayList<DataPoint> data, ArrayList<String> phases){
 		int zone = 1, phaseIndex = 0;
 
-		for(dataPoint d: data){
+		for(DataPoint d: data){
 			if(d.getZone() != zone){
 				zone++;
 				phaseIndex++;
@@ -95,7 +94,7 @@ public class dataPoint {
 		}
 	}
 	
-	public static HashMap<dataPoint, String> getMap(){
+	public static HashMap<DataPoint, String> getMap(){
 		return map;
 	}
 

@@ -4,7 +4,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-import Read_Data.dataPoint;
+import Read_Data.DataPoint;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
@@ -41,7 +41,7 @@ public class GraphGenerator {
 
 	private TimeConverter timeConverter = new TimeConverter();;
 
-	public void generateGraphs(ArrayList<dataPoint> data, String name, ArrayList<Flag> flagList,
+	public void generateGraphs(ArrayList<DataPoint> data, String name, ArrayList<Flag> flagList,
 			ArrayList<String> phaseNames) {
 
 		Stage window = new Stage();
@@ -157,7 +157,7 @@ public class GraphGenerator {
 		FlagTab.setContent(vbox);
 	}
 
-	private void setCondTab(Tab CondTab, String name, ArrayList<dataPoint> data, ArrayList<Flag> flagList,
+	private void setCondTab(Tab CondTab, String name, ArrayList<DataPoint> data, ArrayList<Flag> flagList,
 			ArrayList<String> phaseNames) {
 
 		final NumberAxis xAxis = new NumberAxis();
@@ -185,7 +185,7 @@ public class GraphGenerator {
 			// Populates each series with data from appropriate zone
 
 		}
-		for (dataPoint d : data) {
+		for (DataPoint d : data) {
 			if (d.getZone() == zonecount) {
 
 				serieslist.get(zonecount - 1).getData().add(new XYChart.Data<Number, Number>(
@@ -224,7 +224,7 @@ public class GraphGenerator {
 		CondTab.setContent(lineChart);
 	}
 
-	private void setTurbTab(Tab TurbTab, String name, ArrayList<dataPoint> data, ArrayList<Flag> flagList,
+	private void setTurbTab(Tab TurbTab, String name, ArrayList<DataPoint> data, ArrayList<Flag> flagList,
 			ArrayList<String> phaseNames) {
 		final NumberAxis xAxis = new NumberAxis();
 		final NumberAxis yAxis = new NumberAxis();
@@ -245,7 +245,7 @@ public class GraphGenerator {
 			serieslist.add(series);
 
 		}
-		for (dataPoint d : data) {
+		for (DataPoint d : data) {
 			if (d.getZone() == zonecount) {
 				serieslist.get(zonecount - 1).getData().add(new XYChart.Data<Number, Number>(
 						(timeConverter.HMSToDec(d.getTime()) * 86400) - offset, d.getTurbidity()));
@@ -279,7 +279,7 @@ public class GraphGenerator {
 		TurbTab.setContent(lineChart);
 	}
 
-	private void setTempTab(Tab TempTab, String name, ArrayList<dataPoint> data, ArrayList<Flag> flagList,
+	private void setTempTab(Tab TempTab, String name, ArrayList<DataPoint> data, ArrayList<Flag> flagList,
 			ArrayList<String> phaseNames) {
 
 		final NumberAxis xAxis = new NumberAxis();
@@ -305,7 +305,7 @@ public class GraphGenerator {
 
 		}
 
-		for (dataPoint d : data) {
+		for (DataPoint d : data) {
 			if (d.getZone() == zonecount) {
 				serieslist.get(zonecount - 1).getData().add(new XYChart.Data<Number, Number>(
 						(timeConverter.HMSToDec(d.getTime()) * 86400) - offset, d.getTemp()));

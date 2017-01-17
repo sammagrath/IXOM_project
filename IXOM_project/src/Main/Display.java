@@ -31,7 +31,7 @@ import samThreshold.FlagGeneration;
 import Read_Data.CSV2Array;
 import Read_Data.ExceltoCSV;
 import Read_Data.PhaseNamesFromCSV;
-import Read_Data.dataPoint;
+import Read_Data.DataPoint;
 import decayAnalysis.Analyser;
 import decayAnalysis.Coordinate;
 import decayAnalysis.Quintuple;
@@ -44,7 +44,7 @@ public class Display extends Application {
 	private CSV2Array populator = new CSV2Array();
 	private GraphGenerator graphGenerator;
 	
-	private ArrayList<dataPoint> data;
+	private ArrayList<DataPoint> data;
 	private ArrayList<Flag> flagList;
 	
 	private File excelFile, dirtyCSVFile;
@@ -108,7 +108,7 @@ public class Display extends Application {
 					data = populator.populateData(dirtyCSVFile, data);
 					
 					//set up Map
-					dataPoint.setMap(data, phaseNames);
+					DataPoint.setMap(data, phaseNames);
 					
 					// !!!SAM'S ADDITION!!!//
 					/*
@@ -303,12 +303,12 @@ public class Display extends Application {
 	
 //ewf
 	// !!!PATS ADDITION!!!//
-	public String printAll(ArrayList<dataPoint> data) {
+	public String printAll(ArrayList<DataPoint> data) {
 
 		String output;
 		output = "|   Date   |   Time   | turb | cond | soil | temp | zone | \n";
 
-		for (dataPoint d : data) {
+		for (DataPoint d : data) {
 			output = output + d.print();
 		}
 
@@ -341,15 +341,15 @@ public class Display extends Application {
 
 	
 	//method for testing Curve Fitting etc, prints out results to console
-	public void analyseData(ArrayList<dataPoint> data){
+	public void analyseData(ArrayList<DataPoint> data){
 		Analyser a = new Analyser();
 		
-		ArrayList<ArrayList<dataPoint>> LOC = a.splitByZones(data);
+		ArrayList<ArrayList<DataPoint>> LOC = a.splitByZones(data);
 		
 		System.out.println("Results for Conductivity curve fitting");
-		for(ArrayList<dataPoint> dp: LOC){
-			dataPoint point = dp.get(0);
-			String zoneString = dataPoint.getMap().get(point).toString();
+		for(ArrayList<DataPoint> dp: LOC){
+			DataPoint point = dp.get(0);
+			String zoneString = DataPoint.getMap().get(point).toString();
 			
 			if(zoneString.contains("RINSE") && !zoneString.contains("PRERINSE")){
 				ArrayList<Coordinate> coords = a.findSteepestCond(dp);

@@ -20,11 +20,11 @@ public class CSV2Array {
 
 	
 	
-	public ArrayList<dataPoint> populateData(File dirtyCSVFile, ArrayList<dataPoint> data) throws FileNotFoundException {
+	public ArrayList<DataPoint> populateData(File dirtyCSVFile, ArrayList<DataPoint> data) throws FileNotFoundException {
 
 		Scanner linescanner = new Scanner(dirtyCSVFile);
 
-		data = new ArrayList<dataPoint>();
+		data = new ArrayList<DataPoint>();
 
 		CSVCleaner c = new CSVCleaner(); 
 		
@@ -47,7 +47,7 @@ public class CSV2Array {
 				Scanner scanner = new Scanner(line);
 				scanner.useDelimiter(", ");
 
-				dataPoint d = new dataPoint(scanner.next(), scanner.next(), scanner.nextDouble(), scanner.nextDouble(),
+				DataPoint d = new DataPoint(scanner.next(), scanner.next(), scanner.nextDouble(), scanner.nextDouble(),
 						scanner.nextDouble(), scanner.nextDouble(), (int) scanner.nextDouble());
 				
 				if(d.getZone() != previousStep){
@@ -72,9 +72,9 @@ public class CSV2Array {
 
 	}
 	
-	public static void printAll(ArrayList<dataPoint> data) {
+	public static void printAll(ArrayList<DataPoint> data) {
 
-		for (dataPoint output : data) {
+		for (DataPoint output : data) {
 
 			output.print();
 

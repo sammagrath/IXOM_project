@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import Read_Data.CSV2Array;
-import Read_Data.dataPoint;
+import Read_Data.DataPoint;
 import henrysThreshold.MetricTaker2;
 import henrysThreshold.metricTaker;
 
@@ -18,7 +18,7 @@ import henrysThreshold.metricTaker;
 
 public class FlagGeneration {
 
-	private static ArrayList<dataPoint> data;
+	private static ArrayList<DataPoint> data;
 	private static ArrayList<Flag> flagList;
 	private static ArrayList<Integer> boundaries;
 	private MetricTaker2 metric;
@@ -30,7 +30,7 @@ public class FlagGeneration {
 
 	
 
-	public FlagGeneration(ArrayList<dataPoint> data, ArrayList<String> PhaseNames, String processName) {
+	public FlagGeneration(ArrayList<DataPoint> data, ArrayList<String> PhaseNames, String processName) {
 
 		FlagGeneration.data = data;
 		this.phaseNames=PhaseNames;
@@ -340,7 +340,7 @@ public class FlagGeneration {
 	}
 
 	// Applies phase labels to each data point
-	public void applyPhase(ArrayList<dataPoint> data) {
+	public void applyPhase(ArrayList<DataPoint> data) {
 
 
 
@@ -349,7 +349,7 @@ public class FlagGeneration {
 		
 		
 		for (int i=0;i<data.size();i++) {
-			dataPoint d=data.get(i);
+			DataPoint d=data.get(i);
 			d.setPhase(phaseNames.get(d.getZone()-1));
 			
 		}
@@ -388,7 +388,7 @@ public class FlagGeneration {
 		}
 
 		// console print of data
-		for (dataPoint d : data) {
+		for (DataPoint d : data) {
 			System.out.println(d.getPhase());
 		}
 	}

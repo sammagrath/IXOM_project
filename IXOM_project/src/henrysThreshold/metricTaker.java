@@ -15,9 +15,9 @@ public class metricTaker {
 	 * 
 	 */
 
-	private ArrayList<dataPoint> data = new ArrayList<dataPoint>();
+	private ArrayList<DataPoint> data = new ArrayList<DataPoint>();
 	private ArrayList<Integer> boundaryIndices = new ArrayList<Integer>();
-	private HashMap<Integer, ArrayList<dataPoint>> effectivePeriods = new HashMap<Integer, ArrayList<dataPoint>>();
+	private HashMap<Integer, ArrayList<DataPoint>> effectivePeriods = new HashMap<Integer, ArrayList<DataPoint>>();
 	private double sampleRate;
 	private int minsIncrement;
 	private int countsToEffectivePeriod;
@@ -32,7 +32,7 @@ public class metricTaker {
 	 * @param data
 	 */
 
-	public metricTaker(ArrayList<dataPoint> data) {
+	public metricTaker(ArrayList<DataPoint> data) {
 		// assigns the data to the field
 		this.data = data;
 		/*
@@ -75,9 +75,9 @@ public class metricTaker {
 		int counts = 0;
 
 		for (Integer key : effectivePeriods.keySet()) {
-			ArrayList<dataPoint> pointsOfData = effectivePeriods.get(key);
+			ArrayList<DataPoint> pointsOfData = effectivePeriods.get(key);
 
-			for (dataPoint dp : pointsOfData) {
+			for (DataPoint dp : pointsOfData) {
 				temptot += dp.getTemp();
 				condtot += dp.getConductivity();
 				soiltot += dp.getSoil();
@@ -104,7 +104,7 @@ public class metricTaker {
 
 		for (int i = 0; i < boundaryIndices.size() - 1; i++) {
 
-			ArrayList<dataPoint> effectiveTime = new ArrayList<dataPoint>();
+			ArrayList<DataPoint> effectiveTime = new ArrayList<DataPoint>();
 
 			// need to start at the beginning of the effective period
 			for (int j = boundaryIndices.get(i) + countsToEffectivePeriod; j < boundaryIndices.get(i + 1); j++) {
@@ -130,8 +130,8 @@ public class metricTaker {
 		boundaryIndices.add(0);
 
 		for (int i = 1; i < data.size(); i++) {
-			dataPoint p = data.get(i);
-			dataPoint q = data.get(i - 1);
+			DataPoint p = data.get(i);
+			DataPoint q = data.get(i - 1);
 			if (p.getZone() != (q.getZone())) {
 				boundaryIndices.add(i);
 			}
@@ -159,11 +159,11 @@ public class metricTaker {
 
 	}
 
-	public HashMap<Integer, ArrayList<dataPoint>> getEffectivePeriods() {
+	public HashMap<Integer, ArrayList<DataPoint>> getEffectivePeriods() {
 		return effectivePeriods;
 	}
 
-	public void setEffectivePeriods(HashMap<Integer, ArrayList<dataPoint>> effectivePeriods) {
+	public void setEffectivePeriods(HashMap<Integer, ArrayList<DataPoint>> effectivePeriods) {
 		this.effectivePeriods = effectivePeriods;
 	}
 

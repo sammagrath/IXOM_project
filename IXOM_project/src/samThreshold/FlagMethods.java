@@ -5,14 +5,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import Read_Data.CSV2Array;
-import Read_Data.dataPoint;
+import Read_Data.DataPoint;
 import henrysThreshold.metricTaker;
 
 public class FlagMethods {
 
 	
 	private static ArrayList<Flag> flags;
-	private static ArrayList<dataPoint> data;
+	private static ArrayList<DataPoint> data;
 	private static ArrayList<Integer> boundaries;
 	private static HashMap<Integer,Double> condAverages;
 	private static HashMap<Integer,Double> tempAverages;
@@ -21,7 +21,7 @@ public class FlagMethods {
 	private static File input;
 	
 	
-	public FlagMethods(ArrayList<dataPoint> data) {
+	public FlagMethods(ArrayList<DataPoint> data) {
 		
 		FlagMethods.data = data;
 		flags = new ArrayList<Flag>();
@@ -29,7 +29,7 @@ public class FlagMethods {
 		
 	}
 	
-	public void createFlags(ArrayList<dataPoint> data) {
+	public void createFlags(ArrayList<DataPoint> data) {
 		
 		condAverages = new HashMap<Integer,Double>();
 		tempAverages = new HashMap<Integer,Double>();
@@ -59,9 +59,9 @@ public class FlagMethods {
 		
 	}
 	
-	public void applyPhase(ArrayList<dataPoint> data) {
+	public void applyPhase(ArrayList<DataPoint> data) {
 		
-		for (dataPoint d: data) {
+		for (DataPoint d: data) {
 			
 			if (d.getZone() == 1) {
 				d.setPhase("Pre-Flush");			
