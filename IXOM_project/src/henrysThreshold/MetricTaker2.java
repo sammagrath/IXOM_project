@@ -9,17 +9,21 @@ import Read_Data.*;
 public class MetricTaker2 {
 
 	private ArrayList<Phase> phases;
-	private int numOfPhases;
+	
 	private ArrayList<dataPoint> data;
 	private ArrayList<Integer> BoundaryIndices;
+	private double minCond; 
+	private double minTemp;
 
-	public MetricTaker2(ArrayList<dataPoint> data, ArrayList<String> phaseNames) {
+	public MetricTaker2(ArrayList<dataPoint> data, ArrayList<String> phaseNames, double minCond, double minTemp) {
 
 		for (String s : phaseNames) {
 			phases.add(new Phase(s));
 		}
-		this.numOfPhases = phaseNames.size();
-
+		
+		
+		this.minCond=minCond;
+		this.minTemp=minTemp;
 		this.data = data;
 
 		assignBoundaryIndicesAndDataToPhases();
@@ -79,12 +83,16 @@ public class MetricTaker2 {
 	
 
 	private void setEffectivePeriodDetails(Phase p) {
-		p.setEffectiveStartIndex(p.getStartIndex());
+		// this might need reevaluating
 		ArrayList<dataPoint> temp = new ArrayList<dataPoint>(100);
-		for(int i=p.getEffectiveStartIndex();i<=p.getEndIndex();i++){
-			temp.add(data.get(i));
+		for(dataPoint d : p.getPhaseData()){
+			if(d.getConductivity()>minCond && d.getTemp()>minTemp){
+				temp.add(d);
+			}
 		}
-		p.setEffPeriodData(temp);
+		
+		
+		
 	}
 
 	private void calculateAverages() {
