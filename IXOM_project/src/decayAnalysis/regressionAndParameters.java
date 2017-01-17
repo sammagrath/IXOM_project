@@ -7,11 +7,7 @@ import timeconverter.*;
 
 
 public class regressionAndParameters {
-	double A; // in units turbidity or conductivity.
-	double tau; // in units of seconds
-	double RSquared;
-	
-	
+	double A, tau, RSquared; // A in units turbidity or conductivity. tau in units of seconds.
 	
 	public regressionAndParameters(ArrayList<Coordinate> data){
 		//y   = b   +     ax
@@ -79,9 +75,7 @@ public class regressionAndParameters {
 	
 	
 	private double calculateRSquared(double[] x, double[] y, double a, double b) {
-		double ssres=0;
-		double sstot=0;
-		double ymean=mean(y);
+		double ssres=0, sstot=0, ymean=mean(y);
 		
 		for (int i=0; i<x.length;i++){
 			ssres+=(y[i]-a*x[i]-b) * (y[i]-a*x[i]-b);

@@ -23,8 +23,7 @@ public class Number2Date {
 
 	//given a pair of ints (IntPair) for the year and the day of that year, return a pair of ints for the month and the day of the month
 	public IntPair determineMonth(IntPair input){
-		int toConvert = input.getRemainder();
-		int month = 1;
+		int toConvert = input.getRemainder(), month = 1;
 
 		if((input.getValue() % 4 == 0) && toConvert >= 60){ 	// is a leap year
 			toConvert--;

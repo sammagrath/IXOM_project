@@ -76,10 +76,8 @@ public class TimeConverter {
 	//input time as a String in the form hh:mm:ss and return a double in the range [0, 1).
 	public double HMSToDec(String hourMinSec){
 		double decimalTime = 2.0;
-		int datelength = hourMinSec.length();
-		int unit = 0;
+		int datelength = hourMinSec.length(), unit = 0, hour = 0, min = 0, second = 0;
 		String hourString = "", minString = "", secondString = "";
-		int hour = 0, min = 0, second = 0;
 		
 		for(int i = 0; i < datelength; i++){
 			char current = hourMinSec.charAt(i);
@@ -112,6 +110,5 @@ public class TimeConverter {
 		
 		return decimalTime;
 	}
-	
 	
 }
