@@ -22,6 +22,7 @@ public class FlagGeneration {
 	private static ArrayList<Integer> boundaries;
 	private metricTaker metric;
 	private static File input;
+	private String processName;
 
 	private ArrayList<String> phaseNames = new ArrayList<String>();
 
@@ -408,5 +409,15 @@ public class FlagGeneration {
 	public void setPhaseNames(ArrayList<String> phaseNames) {
 		this.phaseNames = phaseNames;
 	}
+
+	public String getProcessName() {
+		return processName;
+	}
+
+	public void setProcessName(String processName) {
+		this.processName = processName;
+	}
+	
+	
 
 }
