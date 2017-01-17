@@ -42,7 +42,7 @@ public class regressionAndParameters {
 	
 	//Jacob sticking his nose where it doesn't belong. Alternate method to Henry's code above.
 	//Returns A and B to fit a functional form y = Aexp(Bx) as well as rSquared value for the curve
-	public Triple leastSquaresFitting(ArrayList<Coordinate> data){
+	public Quintuple leastSquaresFitting(ArrayList<Coordinate> data){
 		
 		TimeConverter tc = new TimeConverter();
 		int n = 0;
@@ -71,7 +71,7 @@ public class regressionAndParameters {
 		double b = ((n*sum(vmult(x, y))) - (sum(x)*sum(y))) / ((n*sum(vmult(x, x))) - (sum(x)*sum(x)));
 		double rSq = calculateRSquared(x, y, b, a);
 		
-		Triple toReturn = new Triple(Math.exp(a), b, rSq);
+		Quintuple toReturn = new Quintuple(Math.exp(a), b, rSq, data.get(0).getTime(), data.get(data.size()-1).getTime());
 		
 		return toReturn;
 		

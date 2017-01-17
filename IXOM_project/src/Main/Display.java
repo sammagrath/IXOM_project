@@ -43,7 +43,7 @@ import Read_Data.PhaseNamesFromCSV;
 import Read_Data.dataPoint;
 import decayAnalysis.Analyser;
 import decayAnalysis.Coordinate;
-import decayAnalysis.Triple;
+import decayAnalysis.Quintuple;
 import decayAnalysis.regressionAndParameters;
 
 public class Display extends Application {
@@ -51,7 +51,6 @@ public class Display extends Application {
 	// !!!PATS ADDITION!!!//
 	private File excelFile;
 	private File dirtyCSVFile;
-	private String filename;
 	private ExceltoCSV convertor;
 	private CSV2Array populator;
 	private ArrayList<dataPoint> data;
@@ -150,6 +149,7 @@ public class Display extends Application {
 					
 					ArrayList<ArrayList<dataPoint>> LOC = a.splitByZones(data);
 					
+					System.out.println("Results for Conductivity curve fitting");
 					for(ArrayList<dataPoint> dp: LOC){
 						dataPoint point = dp.get(0);
 						String zoneString = dataPoint.getMap().get(point).toString();
@@ -158,9 +158,10 @@ public class Display extends Application {
 							ArrayList<Coordinate> coords = a.findSteepestCond(dp);
 							
 							regressionAndParameters reg = new regressionAndParameters(coords);
-							Triple triple = reg.leastSquaresFitting(coords);
+							Quintuple quintuple = reg.leastSquaresFitting(coords);
 							
-							System.out.println("Curve for "+zoneString+" estimated as: y = "+triple.getA()+"exp("+triple.getB()+"x) with r^2 value of "+triple.getrSquared());
+							System.out.println("Curve for "+zoneString+" estimated as: y = "+quintuple.getA()+"exp("+quintuple.getB()+"x) with r^2 value of "+quintuple.getrSquared());
+							System.out.println("With start time: "+quintuple.getStartTime()+" and end time: "+quintuple.getEndTime());
 						}
 					}
 					
