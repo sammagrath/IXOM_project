@@ -61,7 +61,9 @@ public class Display extends Application {
 		
 		// Wrapping everything in this StackPane called 'root' was necessary to centre the grid later
 		StackPane root = new StackPane();
+		root.setId("pane");
 		Scene scene = new Scene(root, 450, 450);
+		scene.getStylesheets().add("cobra.css");
 
 		// Sam's Addition - Instantiation of drop-down menu for selecting CIP process
 		ComboBox<String> combobox = setUpComboBox();
@@ -77,6 +79,7 @@ public class Display extends Application {
 
 		// This is the run button and contains the click event for when you click it
 		Button btnRun = new Button();
+		btnRun.setId("btnRun");
 		btnRun.setText("Run Analysis Tool");
 		btnRun.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -230,7 +233,7 @@ public class Display extends Application {
 		// This is the grid, which is contained within a
 
 		GridPane grid = new GridPane();
-		
+		grid.setId("grid");
 		//calls method grid settings
 		setUpGrid(grid);
 
@@ -365,6 +368,7 @@ public class Display extends Application {
 	
 	public ComboBox<String> setUpComboBox(){
 		ComboBox<String> combobox = new ComboBox<String>();
+		combobox.setId("combobox");
 		combobox.getItems().addAll(
 				"Concentrate Lines",
 				"Drier & Fluid beds",

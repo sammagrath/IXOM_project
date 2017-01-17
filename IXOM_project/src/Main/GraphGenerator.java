@@ -87,75 +87,76 @@ public class GraphGenerator {
 	@SuppressWarnings("unchecked")
 	private void setFlagTab(Tab FlagTab, String name, ArrayList<Flag> flagList){
 		
-	TableView<Flag> table = new TableView<>();
-	
+		TableView table = new TableView();
+		table.setId("flagTable");
 		
-	ObservableList<Flag> data = FXCollections.observableArrayList(flagList);
-	
-	
-	Label label = new Label("Flags identified for: " + name);
-    label.setFont(new Font("Arial", 20));
+			
+		ObservableList<Flag> data = FXCollections.observableArrayList(flagList);
+		
+		
+		Label label = new Label("Flags identified for: " + name);
+	    label.setFont(new Font("Arial", 20));
 
-    
-    TableColumn<Flag, String> startCol = new TableColumn<Flag, String>("Start Time");
-    startCol.setCellValueFactory(
-            new PropertyValueFactory<Flag, String>("startTime"));
-    
-    startCol.setSortable(false);
-    startCol.prefWidthProperty().bind(table.widthProperty().multiply(0.1));
-        
-    TableColumn<Flag, String> endCol = new TableColumn<Flag, String>("End Time");
-    endCol.setCellValueFactory(
-            new PropertyValueFactory<Flag, String>("endTime"));
-    
-    endCol.setSortable(false);
-    endCol.prefWidthProperty().bind(table.widthProperty().multiply(0.1));
-    
-    TableColumn<Flag, String> phaseCol = new TableColumn<Flag, String>("Phase");
-    phaseCol.setCellValueFactory(
-            new PropertyValueFactory<Flag, String>("phase"));
-    
-    phaseCol.setSortable(false);
-    phaseCol.prefWidthProperty().bind(table.widthProperty().multiply(0.2));
-    
-    TableColumn<Flag, String> messageCol = new TableColumn<Flag, String>("Message");
-    messageCol.setCellValueFactory(
-            new PropertyValueFactory<Flag, String>("message"));
-    
-    messageCol.setSortable(false);
-    //this one is multiplied by a weird number because the total has to be slightly less than 100 otherwise a scrollbar appears
-    messageCol.prefWidthProperty().bind(table.widthProperty().multiply(0.33795));
-   
-    TableColumn<Flag, String> targetCol = new TableColumn<Flag, String>("Target");
-    targetCol.setCellValueFactory(
-            new PropertyValueFactory<Flag, String>("target"));
-    
-    targetCol.setSortable(false);
-    targetCol.prefWidthProperty().bind(table.widthProperty().multiply(0.13));
-    
-    TableColumn<Flag, String> actualCol = new TableColumn<Flag, String>("Actual");
-    actualCol.setCellValueFactory(
-            new PropertyValueFactory<Flag, String>("actual"));
-    
-    actualCol.setSortable(false);
-    actualCol.prefWidthProperty().bind(table.widthProperty().multiply(0.13));
-    
-   
-    
-    table.setItems(data);
-    table.getColumns().addAll(startCol, endCol, phaseCol, messageCol, targetCol, actualCol);
-    
+	    
+	    TableColumn startCol = new TableColumn("Start Time");
+	    startCol.setCellValueFactory(
+	            new PropertyValueFactory<Flag, String>("startTime"));
+	    
+	    startCol.setSortable(false);
+	    startCol.prefWidthProperty().bind(table.widthProperty().multiply(0.1));
+	        
+	    TableColumn endCol = new TableColumn("End Time");
+	    endCol.setCellValueFactory(
+	            new PropertyValueFactory<Flag, String>("endTime"));
+	    
+	    endCol.setSortable(false);
+	    endCol.prefWidthProperty().bind(table.widthProperty().multiply(0.1));
+	    
+	    TableColumn phaseCol = new TableColumn("Phase");
+	    phaseCol.setCellValueFactory(
+	            new PropertyValueFactory<Flag, String>("phase"));
+	    
+	    phaseCol.setSortable(false);
+	    phaseCol.prefWidthProperty().bind(table.widthProperty().multiply(0.2));
+	    
+	    TableColumn messageCol = new TableColumn("Message");
+	    messageCol.setCellValueFactory(
+	            new PropertyValueFactory<Flag, String>("message"));
+	    
+	    messageCol.setSortable(false);
+	    //this one is multiplied by a weird number because the total has to be slightly less than 100 otherwise a scrollbar appears
+	    messageCol.prefWidthProperty().bind(table.widthProperty().multiply(0.33795));
+	   
+	    TableColumn targetCol = new TableColumn("Target");
+	    targetCol.setCellValueFactory(
+	            new PropertyValueFactory<Flag, String>("target"));
+	    
+	    targetCol.setSortable(false);
+	    targetCol.prefWidthProperty().bind(table.widthProperty().multiply(0.13));
+	    
+	    TableColumn actualCol = new TableColumn("Actual");
+	    actualCol.setCellValueFactory(
+	            new PropertyValueFactory<Flag, String>("actual"));
+	    
+	    actualCol.setSortable(false);
+	    actualCol.prefWidthProperty().bind(table.widthProperty().multiply(0.13));
+	    
+	   
+	    
+	    table.setItems(data);
+	    table.getColumns().addAll(startCol, endCol, phaseCol, messageCol, targetCol, actualCol);
+	    
 
-    
-    VBox vbox = new VBox();
-    vbox.setSpacing(5);
-    vbox.setPadding(new Insets(10, 10, 10, 10));
-    vbox.getChildren().addAll(label, table);
-    
-    
-		FlagTab.setText("Flags");
-		FlagTab.setContent(vbox);
-	}
+	    
+	    VBox vbox = new VBox();
+	    vbox.setSpacing(5);
+	    vbox.setPadding(new Insets(10, 10, 10, 10));
+	    vbox.getChildren().addAll(label, table);
+	    
+	    
+			FlagTab.setText("Flags");
+			FlagTab.setContent(vbox);
+		}
 
 	private void setCondTab(Tab CondTab, String name, ArrayList<DataPoint> data, ArrayList<Flag> flagList,
 			ArrayList<String> phaseNames) {
