@@ -35,7 +35,7 @@ import Read_Data.DataPoint;
 import decayAnalysis.Analyser;
 import decayAnalysis.Coordinate;
 import decayAnalysis.Quintuple;
-import decayAnalysis.regressionAndParameters;
+import decayAnalysis.RegressionAndParameters;
 
 public class Display extends Application {
 
@@ -354,7 +354,7 @@ public class Display extends Application {
 			if(zoneString.contains("RINSE") && !zoneString.contains("PRERINSE")){
 				ArrayList<Coordinate> coords = a.findSteepestCond(dp);
 				
-				regressionAndParameters reg = new regressionAndParameters(coords);
+				RegressionAndParameters reg = new RegressionAndParameters(coords);
 				Quintuple quintuple = reg.leastSquaresFitting(coords);
 				
 				System.out.println("Curve for "+zoneString+" estimated as: y = "+quintuple.getA()+"exp("+quintuple.getB()+"x) with r^2 value of "+quintuple.getrSquared());

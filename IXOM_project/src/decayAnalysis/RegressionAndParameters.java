@@ -6,10 +6,10 @@ import timeconverter.*;
 
 
 
-public class regressionAndParameters {
+public class RegressionAndParameters {
 	double A, tau, RSquared; // A in units turbidity or conductivity. tau in units of seconds.
 	
-	public regressionAndParameters(ArrayList<Coordinate> data){
+	public RegressionAndParameters(ArrayList<Coordinate> data){
 		//y   = b   +     ax
 		//lnT = lnA - 1/tau * t
 		
