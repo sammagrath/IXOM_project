@@ -30,10 +30,10 @@ public class FlagGeneration {
 
 	
 
-	public FlagGeneration(ArrayList<dataPoint> data, ArrayList<String> PhaseNames) {
+	public FlagGeneration(ArrayList<dataPoint> data, ArrayList<String> PhaseNames, String processName) {
 
 		FlagGeneration.data = data;
-		
+		this.phaseNames=PhaseNames;
 		FetchThresholds ft = new FetchThresholds();
 		
 
