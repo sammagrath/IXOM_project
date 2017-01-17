@@ -7,14 +7,14 @@ import Read_Data.DataPoint;
 
 public class Analyser {
 	
-	public ArrayList<Coordinate> findSteepestCond(ArrayList<DataPoint> DataPoints){
+	public ArrayList<Coordinate> findSteepestCond(ArrayList<DataPoint> dataPoints){
 		
 		ArrayList<Coordinate> steepest = new ArrayList<>();
 		ArrayList<DataPoint> condList = new ArrayList<>();
 		ArrayList<ArrayList<DataPoint>> LOL = new ArrayList<>();
 		double gradient = 0;
 		
-		LOL = findAllDescents(DataPoints);
+		LOL = findAllDescents(dataPoints);
 		
 		int oldSize, newSize;
 		
@@ -41,7 +41,7 @@ public class Analyser {
 			}
 		}
 		
-		condList = completeZone(condList, DataPoints);
+		condList = completeZone(condList, dataPoints);
 		
 		//for the arraylist of DataPoints with the largest decrease in conductivity, construct coordinate objects for each DataPoint and return an arraylist of those coordinates
 		for(DataPoint d: condList){
@@ -58,19 +58,16 @@ public class Analyser {
 	}
 	
 	//calculate the rate of decrease of conductivity for an ArrayList of DataPoints
-	public double pointToPointGradient(ArrayList<DataPoint> DataPoints){
+	public double pointToPointGradient(ArrayList<DataPoint> dataPoints){
 		//TimeConverter tc = new TimeConverter();
 		
-		DataPoint x1y1 = DataPoints.get(DataPoints.size() - 1);
-		DataPoint x2y2 = DataPoints.get(0);
+		DataPoint x1y1 = dataPoints.get(dataPoints.size() - 1), x2y2 = dataPoints.get(0);
 		
 		//double x1 = tc.HMSToDec(x1y1.getTime());
 		//double x2 = tc.HMSToDec(x2y2.getTime());
-		double y1 = x1y1.getConductivity();
-		double y2 = x2y2.getConductivity();
+		double y1 = x1y1.getConductivity(), y2 = x2y2.getConductivity(), gradient = (y2 - y1);
 		
 		//double gradient = (y2 - y1)/((x1 - x2)*86400);
-		double gradient = (y2 - y1);
 		
 		return gradient;
 	}
