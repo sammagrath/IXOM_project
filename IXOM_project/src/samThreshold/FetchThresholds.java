@@ -35,6 +35,7 @@ public class FetchThresholds {
 				new FileReader(System.getProperty("user.dir") + File.separator + "thresholds.csv"));
 
 		String text = brTest.readLine();
+		text = removeCommas(text);
 		Scanner pScan = new Scanner(text);
 		pScan.useDelimiter(",");
 		ArrayList<String> phaseNames = new ArrayList();
@@ -103,7 +104,7 @@ public class FetchThresholds {
 
 			String key = s.toString();
 
-			System.out.println(key + " " + powders.get(s).get(3).printThresholds());
+			System.out.println(key + " " + powders.get(s).get(0).printThresholds());
 
 		}
 		
