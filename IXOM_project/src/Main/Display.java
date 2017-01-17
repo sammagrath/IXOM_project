@@ -40,13 +40,14 @@ import decayAnalysis.regressionAndParameters;
 public class Display extends Application {
 
 	// !!!PATS ADDITION!!!//
-	private File excelFile;
-	private File dirtyCSVFile;
-	private ExceltoCSV convertor;
-	private CSV2Array populator;
+	private ExceltoCSV convertor = new ExceltoCSV();
+	private CSV2Array populator = new CSV2Array();
+	private GraphGenerator graphGenerator;
+	
 	private ArrayList<dataPoint> data;
 	private ArrayList<Flag> flagList;
-	private GraphGenerator graphGenerator;
+	
+	private File excelFile, dirtyCSVFile;
 
 	// **The textfield which displays file path**//
 	private TextField textField = new TextField();
@@ -54,38 +55,18 @@ public class Display extends Application {
 	@Override
 	public void start(Stage stage) throws Exception {
 
-		// !!!PATS ADDITION!!!//
-		convertor = new ExceltoCSV();
-		populator = new CSV2Array();
-
-		// Wrapping everything in this StackPane called 'root' was necessary to
-		// centre the grid later
+		stage.setTitle("IXOM Analysis Tool");
+		
+		// Wrapping everything in this StackPane called 'root' was necessary to centre the grid later
 		StackPane root = new StackPane();
 		Scene scene = new Scene(root, 450, 450);
 
-		stage.setTitle("IXOM Analysis Tool");
+		// Sam's Addition - Instantiation of drop-down menu for selecting CIP process
+		ComboBox<String> combobox = setUpComboBox();
 
-		// This is the run button and contains the click event for when you
-		// click it
-
+		// This is the run button and contains the click event for when you click it
 		Button btnRun = new Button();
 		btnRun.setText("Run Analysis Tool");
-		
-		// Sam's Addition - Instantiation of drop-down menu for selecting CIP process
-		ComboBox<String> combobox = new ComboBox<String>();
-		combobox.getItems().addAll(
-				"Concentrate Lines",
-				"Drier & Fluid beds",
-				"Evap Preheat (MPC)",
-				"Evap Preheat (WMP/SMP)",
-				"Evap (MPC)",
-				"Evap (WMP/SMP)",
-				"Ingredients Oils",
-				"Vitamin/Minerals System"
-				
-				);
-		combobox.setValue("Select Process");
-
 		btnRun.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -107,7 +88,6 @@ public class Display extends Application {
 				}
 
 				try {
-
 					// henry's addition
 					File RawCSV = new File(excelFile.getParent(), "RawOutput.csv");
 					convertor.xls(excelFile, RawCSV, ExceltoCSV.getFinalSheetNumber(excelFile) - 1);
@@ -131,17 +111,14 @@ public class Display extends Application {
 					
 					//Print results of curve fitting, remove later
 					analyseData(data);
-					
-					
+						
 					// Henry's addition
 					f.setPhaseNames(phaseNames);
-
 					f.thresholds(flagList);
 
 					Alert alert = new Alert(AlertType.INFORMATION);
 
-					// this line allows the alert box to accept a gridpane for
-					// displaying the flags
+					// this line allows the alert box to accept a gridpane for displaying the flags
 					DialogPane dialogPane = alert.getDialogPane();
 
 					alert.setTitle("Information Dialog");
@@ -152,9 +129,7 @@ public class Display extends Application {
 					GridPane dialogGrid = new GridPane();
 					setUpGrid(dialogGrid);
 
-					// if there are any flags in the flag array they are printed
-					// with the below code, if not the else is triggered and
-					// will say there are no flags
+					// print if there are any flags, else say that there are no flags
 					if (flagList.size() > 0) {
 
 						dialogGrid.add(new Label("| Start Time |"), 0, 0);
@@ -180,14 +155,11 @@ public class Display extends Application {
 							dialogGrid.add(new Label(String.valueOf(flag.getActual())), 5, counter);
 
 							counter++;
-
 						}
 
+						
 						Button print = new Button();
 						print.setText("Export to File");
-
-						dialogGrid.add(print, 5, counter);
-
 						print.setOnAction(new EventHandler<ActionEvent>() {
 
 							@Override
@@ -210,10 +182,8 @@ public class Display extends Application {
 										writer.println("Date: " + (String) data.get(4).getDate());
 
 										for (Flag flag : flagList) {
-
-											writer.println();
-
-											writer.println("Flag: " + flag.getMessage());
+											
+											writer.println("\nFlag: " + flag.getMessage());
 											writer.println("Phase: " + flag.getPhase());
 											writer.println("Start: " + flag.getStartTime());
 											writer.println("End: " + flag.getEndTime());
@@ -225,11 +195,7 @@ public class Display extends Application {
 										writer.close();
 
 										Alert success = new Alert(AlertType.INFORMATION);
-
-										// this line allows the alert box to
-										// accept a gridpane for displaying the
-										// flags
-
+										// this line allows the alert box to accept a gridpane for displaying the flags
 										success.setTitle("Information Dialog");
 										success.setHeaderText("Flags Exported Successfully");
 										success.showAndWait();
@@ -243,11 +209,9 @@ public class Display extends Application {
 
 						});
 
-					
+						dialogGrid.add(print, 5, counter);
 
-					}
-
-					else {
+					} else {
 						dialogGrid.add(new Label("No flags to display"), 0, 0);
 						dialogPane.setContent(dialogGrid);
 					}
@@ -273,10 +237,8 @@ public class Display extends Application {
 		});
 
 		// The following is a button and when clicked it launches a file chooser
-
 		Button btnFileChooser = new Button();
 		btnFileChooser.setText("Choose file");
-
 		btnFileChooser.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -383,6 +345,23 @@ public class Display extends Application {
 				System.out.println("With start time: "+quintuple.getStartTime()+" and end time: "+quintuple.getEndTime());
 			}
 		}
+	}
+	
+	public ComboBox<String> setUpComboBox(){
+		ComboBox<String> combobox = new ComboBox<String>();
+		combobox.getItems().addAll(
+				"Concentrate Lines",
+				"Drier & Fluid beds",
+				"Evap Preheat (MPC)",
+				"Evap Preheat (WMP/SMP)",
+				"Evap (MPC)",
+				"Evap (WMP/SMP)",
+				"Ingredients Oils",
+				"Vitamin/Minerals System"
+
+				);
+		combobox.setValue("Select Process");
+		return combobox;
 	}
 		
 }
