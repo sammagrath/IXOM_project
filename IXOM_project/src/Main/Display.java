@@ -61,9 +61,6 @@ public class Display extends Application {
 		// Wrapping everything in this StackPane called 'root' was necessary to
 		// centre the grid later
 		StackPane root = new StackPane();
-
-	
-		
 		Scene scene = new Scene(root, 450, 450);
 
 		stage.setTitle("IXOM Analysis Tool");
