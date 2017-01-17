@@ -7,7 +7,10 @@ import java.util.List;
 import Read_Data.dataPoint;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Side;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -21,15 +24,20 @@ import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.Tooltip;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -63,7 +71,12 @@ public class GraphGenerator {
 		final Tab TempTab = new Tab();
 		setTempTab(TempTab, name, data, flagList, phaseNames);
 
-		tabPane.getTabs().addAll(CondTab, TempTab, TurbTab );
+		//andrews addition
+		final Tab FlagTab = new Tab();
+		setFlagTab(FlagTab, name, flagList);
+		
+
+		tabPane.getTabs().addAll(FlagTab, CondTab, TempTab, TurbTab );
 		borderPane.setCenter(tabPane);
 		root.getChildren().add(borderPane);
 
@@ -74,6 +87,80 @@ public class GraphGenerator {
 		window.setScene(scene);
 		window.show();
 
+	}
+	
+
+	//andrews addition
+	private void setFlagTab(Tab FlagTab, String name, ArrayList<Flag> flagList){
+		
+	TableView table = new TableView();
+	
+		
+	ObservableList<Flag> data = FXCollections.observableArrayList(flagList);
+	
+	
+	Label label = new Label("Flags identified for: " + name);
+    label.setFont(new Font("Arial", 20));
+
+    
+    TableColumn startCol = new TableColumn("Start Time");
+    startCol.setCellValueFactory(
+            new PropertyValueFactory<Flag, String>("startTime"));
+    
+    startCol.setSortable(false);
+    startCol.prefWidthProperty().bind(table.widthProperty().multiply(0.1));
+        
+    TableColumn endCol = new TableColumn("End Time");
+    endCol.setCellValueFactory(
+            new PropertyValueFactory<Flag, String>("endTime"));
+    
+    endCol.setSortable(false);
+    endCol.prefWidthProperty().bind(table.widthProperty().multiply(0.1));
+    
+    TableColumn phaseCol = new TableColumn("Phase");
+    phaseCol.setCellValueFactory(
+            new PropertyValueFactory<Flag, String>("phase"));
+    
+    phaseCol.setSortable(false);
+    phaseCol.prefWidthProperty().bind(table.widthProperty().multiply(0.2));
+    
+    TableColumn messageCol = new TableColumn("Message");
+    messageCol.setCellValueFactory(
+            new PropertyValueFactory<Flag, String>("message"));
+    
+    messageCol.setSortable(false);
+    //this one is multiplied by a weird number because the total has to be slightly less than 100 otherwise a scrollbar appears
+    messageCol.prefWidthProperty().bind(table.widthProperty().multiply(0.33795));
+   
+    TableColumn targetCol = new TableColumn("Target");
+    targetCol.setCellValueFactory(
+            new PropertyValueFactory<Flag, String>("target"));
+    
+    targetCol.setSortable(false);
+    targetCol.prefWidthProperty().bind(table.widthProperty().multiply(0.13));
+    
+    TableColumn actualCol = new TableColumn("Actual");
+    actualCol.setCellValueFactory(
+            new PropertyValueFactory<Flag, String>("actual"));
+    
+    actualCol.setSortable(false);
+    actualCol.prefWidthProperty().bind(table.widthProperty().multiply(0.13));
+    
+   
+    
+    table.setItems(data);
+    table.getColumns().addAll(startCol, endCol, phaseCol, messageCol, targetCol, actualCol);
+    
+
+    
+    VBox vbox = new VBox();
+    vbox.setSpacing(5);
+    vbox.setPadding(new Insets(10, 10, 10, 10));
+    vbox.getChildren().addAll(label, table);
+    
+    
+		FlagTab.setText("Flags");
+		FlagTab.setContent(vbox);
 	}
 
 	@SuppressWarnings("unchecked")
