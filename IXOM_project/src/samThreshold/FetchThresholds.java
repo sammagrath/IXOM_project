@@ -2,29 +2,22 @@ package samThreshold;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
-import org.apache.poi.EncryptedDocumentException;
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-
-import Read_Data.ExceltoCSV;
-
 public class FetchThresholds {
 
-	private static ArrayList<String> processes = new ArrayList();
+	private static ArrayList<String> processes = new ArrayList<>();
 	private static HashMap<String, ArrayList<Threshold>> powders = new HashMap<String, ArrayList<Threshold>>();
-	private static Threshold t;
 
 	public HashMap<String, ArrayList<Threshold>> setThresholds(String input) throws IOException {
 		
 		String processName = "";
 		
-		ArrayList<Threshold> thresholds = new ArrayList();
+		ArrayList<Threshold> thresholds = new ArrayList<>();
 		
 		File excel = new File(input);
 
@@ -35,17 +28,18 @@ public class FetchThresholds {
 				new FileReader(System.getProperty("user.dir") + File.separator + "thresholds.csv"));
 
 		String text = brTest.readLine();
+		brTest.close();
+		
 		text = removeCommas(text);
 		Scanner pScan = new Scanner(text);
 		pScan.useDelimiter(",");
-		ArrayList<String> phaseNames = new ArrayList();
 		while (pScan.hasNext()) {
 
 			Threshold t = new Threshold();
 			t.setPhase(pScan.next());
 			thresholds.add(t);
 		}
-		
+		pScan.close();
 		
 		//Scanner initialised, scans CSV file and populates processes arrayList with the name of each process, which is
 		//then used as reference for populating hashmap
@@ -64,6 +58,7 @@ public class FetchThresholds {
 			counter++;
 
 		}
+		nScan.close();
 		
 		//CSV file is scanned process name matches in the process name arrayList, when a match is found,
 		//the threshold array is populated with the associated threshold values pertaining to that process
@@ -97,6 +92,7 @@ public class FetchThresholds {
 				}
 
 			}
+			tScan.close();
 		}
 		
 		//print function for validating hashmap population
