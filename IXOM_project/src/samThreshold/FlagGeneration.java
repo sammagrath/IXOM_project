@@ -39,7 +39,7 @@ public class FlagGeneration {
 		
 
 		try {
-			HashMap<String, ArrayList<Threshold>> processInfo=ft.setThresholds(System.getProperty("user.dir") + File.separator + "thresholds.csv");
+			processInfo=ft.setThresholds(System.getProperty("user.dir") + File.separator + "thresholds.csv");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -73,9 +73,17 @@ public class FlagGeneration {
 		editBoundaries();
 		HashMap<Integer, Double> condAverages = new HashMap<Integer, Double>();
 		HashMap<Integer, Double> tempAverages = new HashMap<Integer, Double>();
+		
+		//henry's taint
+		//this populates the condAverages and tempAverages, so it can be used as previously done
+		for (int i=0;i<metric.getNumberOfPhases();i++){
+			tempAverages.put(i+1, metric.getPhase(i).getTempAverages());
+			condAverages.put(i+1, metric.getPhase(i).getCondAverages());
+		}
+		//
 
-		tempAverages = metric.getTempAverages();
-		condAverages = metric.getCondAverages();
+//		tempAverages = metric.getTempAverages();
+//		condAverages = metric.getCondAverages();
 		
 
 		double endIntRinseVal;
@@ -84,7 +92,7 @@ public class FlagGeneration {
 		endIntRinseVal = data.get(metric.getBoundaryIndices().get(3)).getConductivity();
 		endFinalRinseVal = data.get(data.size() - 1).getConductivity();
 
-		if (condAverages.get(1) < 0.5) {
+		if (condAverages.get(1) < processInfo.get(processName).get(0).getCondLower()) {
 
 			Flag flag = new Flag(data.get(metric.getCountsToEffectivePeriod()).getTime(),
 					data.get(boundaries.get(1)).getTime(), 1, data.get(boundaries.get(1)).getPhase(),
