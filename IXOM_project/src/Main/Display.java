@@ -167,53 +167,14 @@ public class Display extends Application {
 							counter++;
 						}
 
-						
 						Button print = new Button();
 						print.setText("Export to File");
 						print.setOnAction(new EventHandler<ActionEvent>() {
 
 							@Override
 							public void handle(ActionEvent arg0) {
-
-								FileChooser fileChooser = new FileChooser();
-								fileChooser.setTitle(" Save/Export Flag Summary");
-								fileChooser.setInitialFileName("Flag Summary - "
-										+ excelFile.getName().substring(0, excelFile.getName().lastIndexOf("."))
-										+ ".txt");
-								File file = fileChooser.showSaveDialog(stage);
-
-								if (file != null) {
-									try {
-										PrintWriter writer = new PrintWriter(file, "UTF-8");
-
-										writer.println();
-										writer.println("Flag Summary: " + excelFile.getName().substring(0,
-												excelFile.getName().lastIndexOf(".")));
-										writer.println("Date: " + (String) data.get(4).getDate());
-
-										for (Flag flag : flagList) {
-											
-											writer.println("\nFlag: " + flag.getMessage());
-											writer.println("Phase: " + flag.getPhase());
-											writer.println("Start: " + flag.getStartTime());
-											writer.println("End: " + flag.getEndTime());
-											writer.println("Threshold: " + flag.getTarget());
-											writer.println("Actual: " + flag.getActual());
-
-										}
-
-										writer.close();
-
-										Alert success = new Alert(AlertType.INFORMATION);
-										// this line allows the alert box to accept a gridpane for displaying the flags
-										success.setTitle("Information Dialog");
-										success.setHeaderText("Flags Exported Successfully");
-										success.showAndWait();
-
-									} catch (IOException ex) {
-										System.out.println(ex.getMessage());
-									}
-								}
+								
+								exportSummary(stage, flagList, excelFile);
 
 							}
 
@@ -294,6 +255,51 @@ public class Display extends Application {
 		grid.setPadding(new Insets(5, 5, 5, 5));
 	}
 	
+	
+	public void exportSummary (Stage stage, ArrayList<Flag> flagList, File excelFile){
+		
+
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle(" Save/Export Flag Summary");
+		fileChooser.setInitialFileName("Flag Summary - "
+				+ excelFile.getName().substring(0, excelFile.getName().lastIndexOf("."))
+				+ ".txt");
+		File file = fileChooser.showSaveDialog(stage);
+
+		if (file != null) {
+			try {
+				PrintWriter writer = new PrintWriter(file, "UTF-8");
+
+				writer.println();
+				writer.println("Flag Summary: " + excelFile.getName().substring(0,
+						excelFile.getName().lastIndexOf(".")));
+				writer.println("Date: " + (String) data.get(4).getDate());
+
+				for (Flag flag : flagList) {
+					
+					writer.println("\nFlag: " + flag.getMessage());
+					writer.println("Phase: " + flag.getPhase());
+					writer.println("Start: " + flag.getStartTime());
+					writer.println("End: " + flag.getEndTime());
+					writer.println("Threshold: " + flag.getTarget());
+					writer.println("Actual: " + flag.getActual());
+
+				}
+
+				writer.close();
+
+				Alert success = new Alert(AlertType.INFORMATION);
+				// this line allows the alert box to accept a gridpane for displaying the flags
+				success.setTitle("Information Dialog");
+				success.setHeaderText("Flags Exported Successfully");
+				success.showAndWait();
+
+			} catch (IOException ex) {
+				System.out.println(ex.getMessage());
+			}
+		}
+		
+	}
 	
 //ewf
 	// !!!PATS ADDITION!!!//
