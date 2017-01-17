@@ -118,14 +118,12 @@ public class Display extends Application {
 					 * then passed to the application
 					 */
 					flagList = new ArrayList<Flag>();
-					FlagGeneration f = new FlagGeneration(data);
+					FlagGeneration f = new FlagGeneration(data,phaseNames);
 					f.setProcessName(selection);
 					
 					//Print results of curve fitting, remove later
 					analyseData(data);
 						
-					// Henry's addition
-					f.setPhaseNames(phaseNames);
 					f.thresholds(flagList);
 
 					Alert alert = new Alert(AlertType.INFORMATION);

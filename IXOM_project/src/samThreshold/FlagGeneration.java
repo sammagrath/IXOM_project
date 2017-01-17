@@ -2,6 +2,7 @@ package samThreshold;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -20,20 +21,32 @@ public class FlagGeneration {
 	private static ArrayList<dataPoint> data;
 	private static ArrayList<Flag> flagList;
 	private static ArrayList<Integer> boundaries;
-	private metricTaker metric;
+	private MetricTaker2 metric;
 	private static File input;
 	private String processName;
+	private HashMap<String, ArrayList<Threshold>> processInfo;
 
 	private ArrayList<String> phaseNames = new ArrayList<String>();
 
 	
 
-	public FlagGeneration(ArrayList<dataPoint> data) {
+	public FlagGeneration(ArrayList<dataPoint> data, ArrayList<String> PhaseNames) {
 
 		FlagGeneration.data = data;
+		
+		FetchThresholds ft = new FetchThresholds();
+		
+
+		try {
+			HashMap<String, ArrayList<Threshold>> processInfo=ft.setThresholds(System.getProperty("user.dir") + File.separator + "thresholds.csv");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		flagList = new ArrayList<Flag>();
 		//metric = new metricTaker(data);
-		metric = new metricTaker(data);
+		metric = new MetricTaker2(data, phaseNames, 0, 0);
 	}
 
 	// unified method for running all flag methods
@@ -337,33 +350,7 @@ public class FlagGeneration {
 		
 		for (int i=0;i<data.size();i++) {
 			dataPoint d=data.get(i);
-			//Henry's edit: this goes through the list, assigning the names to the phases
 			d.setPhase(phaseNames.get(d.getZone()-1));
-			
-			
-			
-				/*if (d.getZone() == 1) {
-					d.setPhase("Pre-Flush");
-				}
-
-				else if (d.getZone() == 2) {
-					d.setPhase("Caustic Recirculation");
-				}
-
-				else if (d.getZone() == 3) {
-					d.setPhase("Intermediate Wash");
-				}
-
-				else if (d.getZone() == 4) {
-					d.setPhase("Acid Recirculation");
-				}
-
-				else if (d.getZone() == 5) {
-					d.setPhase("Final Rinse");
-				}
-				*/
-			
-
 			
 		}
 	}
