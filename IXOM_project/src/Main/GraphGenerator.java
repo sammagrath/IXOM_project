@@ -15,9 +15,6 @@ import javafx.geometry.Side;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.chart.AreaChart;
-import javafx.scene.chart.Axis;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Series;
@@ -30,15 +27,11 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.scene.text.Font;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import samThreshold.Flag;
@@ -91,9 +84,10 @@ public class GraphGenerator {
 	
 
 	//andrews addition
+	@SuppressWarnings("unchecked")
 	private void setFlagTab(Tab FlagTab, String name, ArrayList<Flag> flagList){
 		
-	TableView table = new TableView();
+	TableView<Flag> table = new TableView<>();
 	
 		
 	ObservableList<Flag> data = FXCollections.observableArrayList(flagList);
@@ -103,28 +97,28 @@ public class GraphGenerator {
     label.setFont(new Font("Arial", 20));
 
     
-    TableColumn startCol = new TableColumn("Start Time");
+    TableColumn<Flag, String> startCol = new TableColumn<Flag, String>("Start Time");
     startCol.setCellValueFactory(
             new PropertyValueFactory<Flag, String>("startTime"));
     
     startCol.setSortable(false);
     startCol.prefWidthProperty().bind(table.widthProperty().multiply(0.1));
         
-    TableColumn endCol = new TableColumn("End Time");
+    TableColumn<Flag, String> endCol = new TableColumn<Flag, String>("End Time");
     endCol.setCellValueFactory(
             new PropertyValueFactory<Flag, String>("endTime"));
     
     endCol.setSortable(false);
     endCol.prefWidthProperty().bind(table.widthProperty().multiply(0.1));
     
-    TableColumn phaseCol = new TableColumn("Phase");
+    TableColumn<Flag, String> phaseCol = new TableColumn<Flag, String>("Phase");
     phaseCol.setCellValueFactory(
             new PropertyValueFactory<Flag, String>("phase"));
     
     phaseCol.setSortable(false);
     phaseCol.prefWidthProperty().bind(table.widthProperty().multiply(0.2));
     
-    TableColumn messageCol = new TableColumn("Message");
+    TableColumn<Flag, String> messageCol = new TableColumn<Flag, String>("Message");
     messageCol.setCellValueFactory(
             new PropertyValueFactory<Flag, String>("message"));
     
@@ -132,14 +126,14 @@ public class GraphGenerator {
     //this one is multiplied by a weird number because the total has to be slightly less than 100 otherwise a scrollbar appears
     messageCol.prefWidthProperty().bind(table.widthProperty().multiply(0.33795));
    
-    TableColumn targetCol = new TableColumn("Target");
+    TableColumn<Flag, String> targetCol = new TableColumn<Flag, String>("Target");
     targetCol.setCellValueFactory(
             new PropertyValueFactory<Flag, String>("target"));
     
     targetCol.setSortable(false);
     targetCol.prefWidthProperty().bind(table.widthProperty().multiply(0.13));
     
-    TableColumn actualCol = new TableColumn("Actual");
+    TableColumn<Flag, String> actualCol = new TableColumn<Flag, String>("Actual");
     actualCol.setCellValueFactory(
             new PropertyValueFactory<Flag, String>("actual"));
     
@@ -163,7 +157,6 @@ public class GraphGenerator {
 		FlagTab.setContent(vbox);
 	}
 
-	@SuppressWarnings("unchecked")
 	private void setCondTab(Tab CondTab, String name, ArrayList<dataPoint> data, ArrayList<Flag> flagList,
 			ArrayList<String> phaseNames) {
 
@@ -231,7 +224,6 @@ public class GraphGenerator {
 		CondTab.setContent(lineChart);
 	}
 
-	@SuppressWarnings("unchecked")
 	private void setTurbTab(Tab TurbTab, String name, ArrayList<dataPoint> data, ArrayList<Flag> flagList,
 			ArrayList<String> phaseNames) {
 		final NumberAxis xAxis = new NumberAxis();
@@ -287,7 +279,6 @@ public class GraphGenerator {
 		TurbTab.setContent(lineChart);
 	}
 
-	@SuppressWarnings("unchecked")
 	private void setTempTab(Tab TempTab, String name, ArrayList<dataPoint> data, ArrayList<Flag> flagList,
 			ArrayList<String> phaseNames) {
 
@@ -367,8 +358,6 @@ public class GraphGenerator {
 
 				flagArea.getPoints().addAll(new Double[] { x1, 0.0, x1, 500.0, x2, 500.0, x2, 0.0 });
 				shapes.add(flagArea);
-				
-				Polygon expectedArea = new Polygon();
 				
 				
 
