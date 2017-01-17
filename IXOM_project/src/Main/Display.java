@@ -51,6 +51,8 @@ public class Display extends Application {
 
 	// **The textfield which displays file path**//
 	private TextField textField = new TextField();
+	
+	private String selection;
 
 	@Override
 	public void start(Stage stage) throws Exception {
@@ -63,6 +65,15 @@ public class Display extends Application {
 
 		// Sam's Addition - Instantiation of drop-down menu for selecting CIP process
 		ComboBox<String> combobox = setUpComboBox();
+		combobox.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				// TODO Auto-generated method stub
+				selection = combobox.getValue();
+				
+			}
+		});
 
 		// This is the run button and contains the click event for when you click it
 		Button btnRun = new Button();
@@ -72,7 +83,7 @@ public class Display extends Application {
 			@Override
 			public void handle(ActionEvent arg0) {
 				String filename = textField.getText();
-
+				System.out.println(selection);
 				// !!!! PATS ADDITION !!!!////
 				// Calls csv convertor//
 				excelFile = new File(filename);
@@ -108,6 +119,7 @@ public class Display extends Application {
 					 */
 					flagList = new ArrayList<Flag>();
 					FlagGeneration f = new FlagGeneration(data);
+					f.setProcessName(selection);
 					
 					//Print results of curve fitting, remove later
 					analyseData(data);
