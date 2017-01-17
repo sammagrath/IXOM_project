@@ -119,4 +119,27 @@ public class FetchThresholds {
 		ft.setThresholds(System.getProperty("user.dir") + File.separator + "thresholds.csv");
 
 	}
+	
+	
+	public String removeCommas(String toClean){
+		Boolean keepComma = false;
+		String toReturn = "";
+		int length = toClean.length();
+		char c;
+		
+		if(length > 0){
+			for(int i = 0; i < length; i++){
+				c = toClean.charAt(i);
+				if(c != ','){
+					toReturn += c;
+					keepComma = true;
+				} else if (keepComma == true){
+					toReturn += c;
+					keepComma = false;	
+				}
+			}
+		}
+		
+		return toReturn;
+	}
 }
