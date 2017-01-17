@@ -1,7 +1,6 @@
 package Main;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -9,18 +8,12 @@ import java.util.ArrayList;
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 
-import com.sun.javafx.scene.layout.region.Margins.Converter;
-
-import javafx.*;
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -31,12 +24,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import samThreshold.Flag;
 import samThreshold.FlagGeneration;
-import javafx.scene.text.Text;
 import Read_Data.CSV2Array;
 import Read_Data.ExceltoCSV;
 import Read_Data.PhaseNamesFromCSV;
@@ -84,7 +75,7 @@ public class Display extends Application {
 		btnRun.setText("Run Analysis Tool");
 		
 		// Sam's Addition - Instantiation of drop-down menu for selecting CIP process
-		ComboBox combobox = new ComboBox();
+		ComboBox<String> combobox = new ComboBox<String>();
 		combobox.getItems().addAll(
 				"Concentrate Lines",
 				"Drier & Fluid beds",
@@ -141,29 +132,8 @@ public class Display extends Application {
 					flagList = new ArrayList<Flag>();
 					FlagGeneration f = new FlagGeneration(data);
 					
-					
-					
-					
-					//Jacob's cheeky meddling
-					Analyser a = new Analyser();
-					
-					ArrayList<ArrayList<dataPoint>> LOC = a.splitByZones(data);
-					
-					System.out.println("Results for Conductivity curve fitting");
-					for(ArrayList<dataPoint> dp: LOC){
-						dataPoint point = dp.get(0);
-						String zoneString = dataPoint.getMap().get(point).toString();
-						
-						if(zoneString.contains("RINSE") && !zoneString.contains("PRERINSE")){
-							ArrayList<Coordinate> coords = a.findSteepestCond(dp);
-							
-							regressionAndParameters reg = new regressionAndParameters(coords);
-							Quintuple quintuple = reg.leastSquaresFitting(coords);
-							
-							System.out.println("Curve for "+zoneString+" estimated as: y = "+quintuple.getA()+"exp("+quintuple.getB()+"x) with r^2 value of "+quintuple.getrSquared());
-							System.out.println("With start time: "+quintuple.getStartTime()+" and end time: "+quintuple.getEndTime());
-						}
-					}
+					//Print results of curve fitting, remove later
+					analyseData(data);
 					
 					
 					// Henry's addition
@@ -183,10 +153,7 @@ public class Display extends Application {
 
 					// gridpane is set up here
 					GridPane dialogGrid = new GridPane();
-					dialogGrid.setAlignment(Pos.CENTER);
-					dialogGrid.setVgap(10);
-					dialogGrid.setHgap(10);
-					dialogGrid.setPadding(new Insets(5, 5, 5, 5));
+					setUpGrid(dialogGrid);
 
 					// if there are any flags in the flag array they are printed
 					// with the below code, if not the else is triggered and
@@ -333,23 +300,32 @@ public class Display extends Application {
 		// This is the grid, which is contained within a
 
 		GridPane grid = new GridPane();
-		grid.setAlignment(Pos.CENTER);
-		grid.setVgap(10);
-		grid.setHgap(10);
-		grid.setPadding(new Insets(5, 5, 5, 5));
+		
+		//calls method grid settings
+		setUpGrid(grid);
 
 		grid.add(new Label("Select a data file to analyse: "), 0, 0);
 		grid.add(textField, 0, 1);
+		
 		grid.add(btnFileChooser, 1, 1);
 		grid.add(btnRun, 0, 2);
 		grid.add(combobox, 0, 3);
 
 		root.getChildren().add(grid);
 		stage.setScene(scene);
-		stage.setScene(scene);
 		setUserAgentStylesheet(STYLESHEET_CASPIAN);
 		stage.show();
 	}
+	
+	
+	public void setUpGrid(GridPane grid){
+		grid.setAlignment(Pos.CENTER);
+		grid.setVgap(10);
+		grid.setHgap(10);
+		grid.setPadding(new Insets(5, 5, 5, 5));
+	}
+	
+	
 //ewf
 	// !!!PATS ADDITION!!!//
 	public String printAll(ArrayList<dataPoint> data) {
@@ -365,6 +341,7 @@ public class Display extends Application {
 
 	}
 
+	
 	// SAMS CODE // ANDREW SAYS: I had to abandon this particular method when
 	// using the gridpane, but I'm keeping it here in case we need it again
 	public String printFlags(ArrayList<Flag> flagList) {
@@ -381,8 +358,34 @@ public class Display extends Application {
 		return output;
 	}
 
+	
+	
 	public static void main(String args[]) {
 		launch(args);
 	}
 
+	
+	//method for testing Curve Fitting etc, prints out results to console
+	public void analyseData(ArrayList<dataPoint> data){
+		Analyser a = new Analyser();
+		
+		ArrayList<ArrayList<dataPoint>> LOC = a.splitByZones(data);
+		
+		System.out.println("Results for Conductivity curve fitting");
+		for(ArrayList<dataPoint> dp: LOC){
+			dataPoint point = dp.get(0);
+			String zoneString = dataPoint.getMap().get(point).toString();
+			
+			if(zoneString.contains("RINSE") && !zoneString.contains("PRERINSE")){
+				ArrayList<Coordinate> coords = a.findSteepestCond(dp);
+				
+				regressionAndParameters reg = new regressionAndParameters(coords);
+				Quintuple quintuple = reg.leastSquaresFitting(coords);
+				
+				System.out.println("Curve for "+zoneString+" estimated as: y = "+quintuple.getA()+"exp("+quintuple.getB()+"x) with r^2 value of "+quintuple.getrSquared());
+				System.out.println("With start time: "+quintuple.getStartTime()+" and end time: "+quintuple.getEndTime());
+			}
+		}
+	}
+		
 }
