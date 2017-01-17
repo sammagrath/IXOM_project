@@ -12,6 +12,7 @@ public class MetricTaker2 {
 	
 	private ArrayList<DataPoint> data;
 	private ArrayList<Integer> BoundaryIndices;
+	private int NumberOfPhases;
 	private double minCond; 
 	private double minTemp;
 
@@ -21,7 +22,7 @@ public class MetricTaker2 {
 			phases.add(new Phase(s));
 		}
 		
-		
+		this.NumberOfPhases=phaseNames.size();
 		this.minCond=minCond;
 		this.minTemp=minTemp;
 		this.data = data;
@@ -129,5 +130,14 @@ public class MetricTaker2 {
 	public Phase getPhase(int i) {
 		return phases.get(i);
 	}
+
+	public int getNumberOfPhases() {
+		return NumberOfPhases;
+	}
+
+	public void setNumberOfPhases(int numberOfPhases) {
+		NumberOfPhases = numberOfPhases;
+	}
+	
 
 }

@@ -34,6 +34,7 @@ public class FlagGeneration {
 
 		FlagGeneration.data = data;
 		this.phaseNames=PhaseNames;
+		this.processName=processName;
 		FetchThresholds ft = new FetchThresholds();
 		
 
@@ -46,7 +47,7 @@ public class FlagGeneration {
 		
 		flagList = new ArrayList<Flag>();
 		//metric = new metricTaker(data);
-		metric = new MetricTaker2(data, phaseNames, 0, 0);
+		metric = new MetricTaker2(data, phaseNames, 0.5, 60);
 	}
 
 	// unified method for running all flag methods
@@ -75,6 +76,7 @@ public class FlagGeneration {
 
 		tempAverages = metric.getTempAverages();
 		condAverages = metric.getCondAverages();
+		
 
 		double endIntRinseVal;
 		double endFinalRinseVal;
