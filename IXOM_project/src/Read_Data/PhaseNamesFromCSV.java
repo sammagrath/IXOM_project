@@ -5,8 +5,6 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import csvcleaner.CSVCleaner;
-
 public class PhaseNamesFromCSV {
 
 	public static ArrayList<String> returnPhaseNames(File csv) throws FileNotFoundException {
