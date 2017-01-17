@@ -17,10 +17,10 @@ import Read_Data.ExceltoCSV;
 public class FetchThresholds {
 
 	private static ArrayList<String> processes = new ArrayList();
-	private static HashMap<String, ArrayList<Threshold>> powders = new HashMap();
+	private static HashMap<String, ArrayList<Threshold>> powders = new HashMap<String, ArrayList<Threshold>>();
 	private static Threshold t;
 
-	public HashMap setThresholds(String input) throws IOException {
+	public HashMap<String, ArrayList<Threshold>> setThresholds(String input) throws IOException {
 		
 		String processName = "";
 		
