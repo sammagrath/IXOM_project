@@ -44,9 +44,9 @@ public class FlagGeneration {
 			e.printStackTrace();
 		}
 				
-		for(int i = 0; i < processInfo.size()-1; i++) {
+		for(int i = 0; i < processInfo.size(); i++) {
 			System.out.println(processInfo.get(processName).get(i).getPhase());
-//			phaseNames.add(processInfo.get(processName).get(i).getPhase());
+			phaseNames.add(processInfo.get(processName).get(i).getPhase());
 		}
 		flagList = new ArrayList<Flag>();
 		//metric = new metricTaker(data);
