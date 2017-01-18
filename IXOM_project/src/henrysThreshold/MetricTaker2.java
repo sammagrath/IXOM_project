@@ -11,7 +11,7 @@ public class MetricTaker2 {
 	private ArrayList<Phase> phases= new ArrayList<Phase>();
 	
 	private ArrayList<DataPoint> data;
-	private ArrayList<Integer> BoundaryIndices;
+	private ArrayList<Integer> BoundaryIndices = new ArrayList<Integer>();
 	private int NumberOfPhases;
 	private double minCond; 
 	private double minTemp;
