@@ -30,21 +30,23 @@ public class FlagGeneration {
 
 	
 
-	public FlagGeneration(ArrayList<DataPoint> data, ArrayList<String> PhaseNames, String processName) {
+	public FlagGeneration(ArrayList<DataPoint> data, String processName) {
 
 		FlagGeneration.data = data;
-		this.phaseNames=PhaseNames;
 		this.processName=processName;
+		
 		FetchThresholds ft = new FetchThresholds();
 		
-
 		try {
 			processInfo=ft.setThresholds(System.getProperty("user.dir") + File.separator + "thresholds.csv");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+				
+		for(int i = 0; i < processInfo.size(); i++) {
+			phaseNames.add(processInfo.get(processName).get(i).getPhase());
+		}
 		flagList = new ArrayList<Flag>();
 		//metric = new metricTaker(data);
 		metric = new MetricTaker2(data, phaseNames, 0.5, 60);
@@ -91,7 +93,8 @@ public class FlagGeneration {
 
 		endIntRinseVal = data.get(metric.getBoundaryIndices().get(3)).getConductivity();
 		endFinalRinseVal = data.get(data.size() - 1).getConductivity();
-
+		
+		//Caustic Prerinse
 		if (condAverages.get(1) < processInfo.get(processName).get(0).getCondLower()) {
 
 			Flag flag = new Flag(data.get(metric.getCountsToEffectivePeriod()).getTime(),

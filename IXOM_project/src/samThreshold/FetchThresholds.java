@@ -82,7 +82,7 @@ public class FetchThresholds {
 						t.setCondUpper(tScan.nextDouble());
 						t.setTempLower(tScan.nextDouble());
 						t.setTempUpper(tScan.nextDouble());
-						System.out.println(t.printThresholds());
+//						System.out.println(t.printThresholds());
 
 					}
 					System.out.println();
@@ -96,13 +96,13 @@ public class FetchThresholds {
 		}
 		
 		//print function for validating hashmap population
-		for (String s : powders.keySet()) {
-
-			String key = s.toString();
-
-			System.out.println(key + " " + powders.get(s).get(0).printThresholds());
-
-		}
+//		for (String s : powders.keySet()) {
+//
+//			String key = s.toString();
+//
+//			System.out.println(key + " " + powders.get(s).get(0).printThresholds());
+//
+//		}
 		
 		return powders;
 
