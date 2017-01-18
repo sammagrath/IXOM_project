@@ -58,6 +58,7 @@ public class Display extends Application {
 	public void start(Stage stage) throws Exception {
 
 		stage.setTitle("IXOM Analysis Tool");
+		stage.setResizable(false);
 		
 		// Wrapping everything in this StackPane called 'root' was necessary to centre the grid later
 		StackPane root = new StackPane();
