@@ -30,7 +30,7 @@ public class FlagGeneration {
 
 	
 
-	public FlagGeneration(ArrayList<DataPoint> data, String processName) {
+	public FlagGeneration(ArrayList<DataPoint> data, String processName, ArrayList<String> phaseNames) {
 
 		FlagGeneration.data = data;
 		this.processName=processName;
@@ -44,11 +44,7 @@ public class FlagGeneration {
 			e.printStackTrace();
 		}
 		
-		int processSize = processInfo.get(processName).size();
-		for(int i = 0; i < processSize; i++) {
-			System.out.println(processInfo.get(processName).get(i).getPhase());
-			phaseNames.add(processInfo.get(processName).get(i).getPhase());
-		}
+		
 		flagList = new ArrayList<Flag>();
 		//metric = new metricTaker(data);
 		metric = new MetricTaker2(data, phaseNames, 0.5, 60);

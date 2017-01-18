@@ -21,7 +21,9 @@ public class MetricTaker2 {
 		
 		for (String s : phaseNames) {
 			phases.add(new Phase(s));
+			
 		}
+		
 		
 		this.NumberOfPhases=phaseNames.size();
 		this.minCond=minCond;
