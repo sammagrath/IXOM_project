@@ -241,8 +241,10 @@ public class Display extends Application {
 		grid.add(textField, 0, 1);
 		
 		grid.add(btnFileChooser, 1, 1);
-		grid.add(btnRun, 0, 2);
-		grid.add(combobox, 0, 3);
+		
+		
+		grid.add(combobox, 0, 2);
+		grid.add(btnRun, 0, 3);
 
 		root.getChildren().add(grid);
 		stage.setScene(scene);
