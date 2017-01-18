@@ -93,7 +93,8 @@ public class FlagGeneration {
 
 		endIntRinseVal = data.get(metric.getBoundaryIndices().get(3)).getConductivity();
 		endFinalRinseVal = data.get(data.size() - 1).getConductivity();
-
+		
+		//Caustic Prerinse
 		if (condAverages.get(1) < processInfo.get(processName).get(0).getCondLower()) {
 
 			Flag flag = new Flag(data.get(metric.getCountsToEffectivePeriod()).getTime(),
