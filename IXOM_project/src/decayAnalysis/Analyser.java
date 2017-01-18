@@ -47,12 +47,9 @@ public class Analyser {
 		for(DataPoint d: condList){
 			Coordinate c = new Coordinate(d.getTime(), d.getConductivity());
 			
-			System.out.println("("+ d.getTime() +", "+ d.getConductivity() +")");
-			
 			steepest.add(c);
 		}
 		
-		System.out.println(gradient);
 		return steepest;
 		
 	}
