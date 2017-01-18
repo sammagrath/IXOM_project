@@ -43,8 +43,9 @@ public class FlagGeneration {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-			
-		for(int i = 0; i < processInfo.get(processName).size(); i++) {
+		
+		int processSize = processInfo.get(processName).size();
+		for(int i = 0; i < processSize; i++) {
 			System.out.println(processInfo.get(processName).get(i).getPhase());
 			phaseNames.add(processInfo.get(processName).get(i).getPhase());
 		}
