@@ -104,8 +104,10 @@ public class MetricTaker2 {
 		
 		if(startIndex==-1){
 			p.setEffectiveStartIndex(p.getStartIndex());
+			p.setEffPeriodData(p.getPhaseData());
 		}else{
 			p.setEffectiveStartIndex(startIndex);
+			p.setEffPeriodData(temp);
 		}
 		
 		
@@ -115,7 +117,10 @@ public class MetricTaker2 {
 	private void calculateAverages() {
 		for (int i=0;i<phases.size();i++){
 			Phase p = phases.get(i);
-			findAverages(p.getEffPeriodData());
+			double[] avs = findAverages(p.getEffPeriodData());
+			p.setTempAverages(avs[0]);
+			p.setCondAverages(avs[1]);
+			p.setSoilAverages(avs[2]);
 		}
 
 	}
