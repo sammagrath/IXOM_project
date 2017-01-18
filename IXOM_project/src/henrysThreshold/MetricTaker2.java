@@ -152,6 +152,14 @@ public class MetricTaker2 {
 		NumberOfPhases = numberOfPhases;
 	}
 	
-	
+	public int getIndexOfEffectivePeriod(String phasename){
+		int garry = -1;
+		for(Phase p : phases){
+			if(p.getName().contains(phasename)){
+				garry = p.getEffectiveStartIndex();
+			}
+		}
+		return garry;
+	}
 
 }
