@@ -94,69 +94,74 @@ public class FlagGeneration {
 		endIntRinseVal = data.get(metric.getBoundaryIndices().get(3)).getConductivity();
 		endFinalRinseVal = data.get(data.size() - 1).getConductivity();
 		
-		//Caustic Prerinse
+		//Caustic/Acid Prerinse chemical strength lower threshold
 		if (condAverages.get(1) < processInfo.get(processName).get(0).getCondLower()) {
 
-			Flag flag = new Flag(data.get(metric.getCountsToEffectivePeriod()).getTime(),
+			Flag flag = new Flag(data.get(metric.getIndexOfEffectivePeriod(processInfo.get(processName).get(0).getPhase())).getTime(),
 					data.get(boundaries.get(1)).getTime(), 1, data.get(boundaries.get(1)).getPhase(),
-					"Caustic strength too low", "0.5 - 0.8", condAverages.get(1));
+					"Chemical strength too low", "0.5 - 0.8", condAverages.get(1));
 			
 			flag.setType("Conductivity");
 			
 			
 			flagList.add(flag);
 		}
-
-		if (condAverages.get(1) > 0.8) {
+		
+		//Caustic/Acid Prerinse chemical strength upper threshold
+		if (condAverages.get(1) > processInfo.get(processName).get(0).getCondUpper()) {
 
 			Flag flag = new Flag(data.get(metric.getCountsToEffectivePeriod()).getTime(),
 					data.get(boundaries.get(1)).getTime(), 1, data.get(boundaries.get(1)).getPhase(),
-					"Caustic strength too high", "0.5 - 0.8", condAverages.get(1));
+					"Chemical strength too high", "0.5 - 0.8", condAverages.get(1));
 			
 			flag.setType("Conductivity");
 			
 			flagList.add(flag);
 		}
-
-		if (condAverages.get(2) < 1.0) {
+		
+		//Caustic Cycle chemical strength lower threshold
+		if (condAverages.get(2) < processInfo.get(processName).get(2).getCondLower()) {
 
 			Flag flag = new Flag(data.get(boundaries.get(1) + metric.getCountsToEffectivePeriod()).getTime(),
 					data.get(boundaries.get(2)).getTime(), 2, data.get(boundaries.get(2)).getPhase(),
-					"Caustic strength too low", "1.0 - 1.2", condAverages.get(2));
+					"Chemical strength too low", "1.0 - 1.2", condAverages.get(2));
 			
 			flag.setType("Conductivity");
 			
 			
 			flagList.add(flag);
 		}
-
-		if (condAverages.get(2) > 1.2) {
+		
+		//Caustic Cycle chemical strength upper threshold
+		if (condAverages.get(2) > processInfo.get(processName).get(2).getCondUpper()) {
 
 			Flag flag = new Flag(data.get(boundaries.get(1) + metric.getCountsToEffectivePeriod()).getTime(),
 					data.get(boundaries.get(2)).getTime(), 2, data.get(boundaries.get(2)).getPhase(),
-					"Caustic strength too high", "1.0 - 1.2", condAverages.get(2));
+					"Chemical strength too high", "1.0 - 1.2", condAverages.get(2));
 			
 			flag.setType("Conductivity");
 			
 			
 			flagList.add(flag);
 		}
-
-		if (tempAverages.get(2) < 70.0) {
+		
+		//Caustic Cycle temperature lower threshold
+		if (tempAverages.get(2) < processInfo.get(processName).get(2).getTempLower()) {
 
 			Flag flag = new Flag(data.get(boundaries.get(1) + metric.getCountsToEffectivePeriod()).getTime(),
-					data.get(boundaries.get(2)).getTime(), 2, "Caustic Recirculation", "Average Temperature too low",
+					data.get(boundaries.get(2)).getTime(), 2, data.get(boundaries.get(2)).getPhase(), "Average Temperature too low",
 					"70.0 - 85.0", tempAverages.get(2));
 			
 			flag.setType("Temperature");
 			
 			flagList.add(flag);
 		}
-
-		if (tempAverages.get(2) > 85.0) {
+		
+		//Caustic Cycle temperature upper threshold
+		if (tempAverages.get(2) > processInfo.get(processName).get(2).getTempUpper()) {
 
 			Flag flag = new Flag(data.get(boundaries.get(1) + metric.getCountsToEffectivePeriod()).getTime(),
-					data.get(boundaries.get(2)).getTime(), 2, "Caustic Recirculation", "Average Temperature too high",
+					data.get(boundaries.get(2)).getTime(), 2, data.get(boundaries.get(2)).getPhase(), "Average Temperature too high",
 					"70.0 - 85.0", tempAverages.get(2));
 			
 			flag.setType("Temperature");
@@ -164,7 +169,8 @@ public class FlagGeneration {
 			
 			flagList.add(flag);
 		}
-
+		
+		//Zero conductivity test at end of intermediate rinse phase
 		if (endIntRinseVal != 0.0) {
 
 			Flag flag = new Flag(data.get(boundaries.get(2) + metric.getCountsToEffectivePeriod()).getTime(),
@@ -176,36 +182,39 @@ public class FlagGeneration {
 			
 			flagList.add(flag);
 		}
-
-		if (condAverages.get(4) < 0.8) {
+		
+		//Acid Cycle chemical strength lower threshold
+		if (condAverages.get(4) < processInfo.get(processName).get(3).getCondLower()) {
 
 			Flag flag = new Flag(data.get(boundaries.get(3) + metric.getCountsToEffectivePeriod()).getTime(),
 					data.get(boundaries.get(4)).getTime(), 4, data.get(boundaries.get(4)).getPhase(),
-					"Acidic strength too low", "0.8 - 1.0", condAverages.get(4));
+					"Chemical strength too low", "0.8 - 1.0", condAverages.get(4));
 			
 			flag.setType("Conductivity");
 			
 			
 			flagList.add(flag);
 		}
-
-		if (condAverages.get(4) > 1.0) {
+		
+		//Acid cycle chemical strength upper threshold
+		if (condAverages.get(4) > processInfo.get(processName).get(3).getCondUpper()) {
 
 			Flag flag = new Flag(data.get(boundaries.get(3) + metric.getCountsToEffectivePeriod()).getTime(),
 					data.get(boundaries.get(4)).getTime(), 4, data.get(boundaries.get(4)).getPhase(),
-					"Acidic strength too high", "0.8 - 1.0", condAverages.get(4));
+					"Chemical strength too high", "0.8 - 1.0", condAverages.get(4));
 			
 			flag.setType("Conductivity");
 			
 			
 			flagList.add(flag);
 		}
-
-		if (tempAverages.get(4) < 60.0) {
+		
+		//Acid Cycle temperature lower threshold
+		if (tempAverages.get(4) < processInfo.get(processName).get(3).getTempLower()) {
 
 			Flag flag = new Flag(data.get(boundaries.get(3) + metric.getCountsToEffectivePeriod()).getTime(),
 					data.get(boundaries.get(4)).getTime(), 4, data.get(boundaries.get(4)).getPhase(),
-					"Average Temperature too low", "60.0 - 70.0", tempAverages.get(2));
+					"Average Temperature too low", "60.0 - 70.0", tempAverages.get(4));
 			
 			flag.setType("Temperature");
 			
@@ -213,11 +222,12 @@ public class FlagGeneration {
 			flagList.add(flag);
 		}
 
-		if (tempAverages.get(4) > 70.0) {
+		//Acid Cycle temperature upper threshold
+		if (tempAverages.get(4) > processInfo.get(processName).get(3).getTempUpper()) {
 
 			Flag flag = new Flag(data.get(boundaries.get(3) + metric.getCountsToEffectivePeriod()).getTime(),
 					data.get(boundaries.get(4)).getTime(), 4, data.get(boundaries.get(4)).getPhase(),
-					"Average Temperature too high", "60.0 - 70.0", tempAverages.get(2));
+					"Average Temperature too high", "60.0 - 70.0", tempAverages.get(4));
 			
 			flag.setType("Temperature");
 			
@@ -225,6 +235,7 @@ public class FlagGeneration {
 			flagList.add(flag);
 		}
 
+		//Zero conductivity test at end of final rinse phase
 		if (endFinalRinseVal != 0.0) {
 
 			Flag flag = new Flag(data.get(boundaries.get(4) + metric.getCountsToEffectivePeriod()).getTime(),
@@ -310,7 +321,7 @@ public class FlagGeneration {
 			Flag flag = new Flag(
 					data.get(metric.getBoundaryIndices().get(3) + metric.getCountsToEffectivePeriod()).getTime(),
 					data.get(metric.getBoundaryIndices().get(4)).getTime(), 4, "Acid Recirculation",
-					"Average Temperature too low", "60.0 - 70.0", tempAverages.get(2));
+					"Average Temperature too low", "60.0 - 70.0", tempAverages.get(4));
 			
 			flag.setType("Temperature");
 			
@@ -322,7 +333,7 @@ public class FlagGeneration {
 			Flag flag = new Flag(
 					data.get(metric.getBoundaryIndices().get(3) + metric.getCountsToEffectivePeriod()).getTime(),
 					data.get(metric.getBoundaryIndices().get(4)).getTime(), 4, "Acid Recirculation",
-					"Average Temperature too high", "60.0 - 70.0", tempAverages.get(2));
+					"Average Temperature too high", "60.0 - 70.0", tempAverages.get(4));
 			
 			flag.setType("Temperature");
 			
@@ -386,13 +397,13 @@ public class FlagGeneration {
 
 		data = c.populateData(input, data);
 
-		FlagGeneration f = new FlagGeneration(data);
+		//FlagGeneration f = new FlagGeneration(data);
 		// f.applyPhase(data);
 		// f.editBoundaries();
 		// f.condThresholds(flagList);
 		// f.endRinseCond(flagList);
 		// f.tempThresholds(flagList);
-		f.thresholds(flagList);
+	//	f.thresholds(flagList);
 
 		// Console print of flags
 		for (Flag flag : flagList) {
