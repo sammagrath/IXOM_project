@@ -121,7 +121,7 @@ public class Display extends Application {
 					 * then passed to the application
 					 */
 					flagList = new ArrayList<Flag>();
-					FlagGeneration f = new FlagGeneration(data,phaseNames,selection);
+					FlagGeneration f = new FlagGeneration(data,selection);
 					
 					
 					//Print results of curve fitting, remove later
