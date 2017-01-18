@@ -32,6 +32,7 @@ public class FlagGeneration {
 
 	public FlagGeneration(ArrayList<DataPoint> data, String processName, ArrayList<String> phaseNames) {
 
+		
 		FlagGeneration.data = data;
 		this.processName=processName;
 		

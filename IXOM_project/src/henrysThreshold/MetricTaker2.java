@@ -18,7 +18,7 @@ public class MetricTaker2 {
 
 	public MetricTaker2(ArrayList<DataPoint> data, ArrayList<String> phaseNames, double minCond, double minTemp) {
 
-		
+		System.out.println(phaseNames);
 		for (String s : phaseNames) {
 			phases.add(new Phase(s));
 			
@@ -75,6 +75,7 @@ public class MetricTaker2 {
 			if(p.getName().contains("RINSE")){
 				p.setIsRinse(true);
 				p.setEffectiveStartIndex(p.getEffectiveStartIndex());
+				setEffectivePeriodDetails(p);
 			}
 			else{
 				p.setIsRinse(false);
@@ -105,9 +106,11 @@ public class MetricTaker2 {
 		if(startIndex==-1){
 			p.setEffectiveStartIndex(p.getStartIndex());
 			p.setEffPeriodData(p.getPhaseData());
+			System.out.println("phase: "+p.getName()+" has effective data: " +p.getEffPeriodData().size());
 		}else{
 			p.setEffectiveStartIndex(startIndex);
 			p.setEffPeriodData(temp);
+			System.out.println("phaze: "+p.getName()+" has effective data: " +p.getEffPeriodData().size());
 		}
 		
 		
