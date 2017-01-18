@@ -1,19 +1,25 @@
 package Main;
 
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.imageio.ImageIO;
 
 import Read_Data.DataPoint;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Side;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.chart.AreaChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
@@ -25,6 +31,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
@@ -39,8 +46,12 @@ import timeconverter.TimeConverter;
 
 public class GraphGenerator {
 
-	private TimeConverter timeConverter = new TimeConverter();;
-
+	private TimeConverter timeConverter = new TimeConverter();
+	private ExportData exportData = new ExportData();
+	private ArrayList<AreaChart<Number, Number>> graphList;
+	
+	
+	
 	public void generateGraphs(ArrayList<DataPoint> data, String name, ArrayList<Flag> flagList,
 			ArrayList<String> phaseNames) {
 
@@ -68,6 +79,7 @@ public class GraphGenerator {
 		final Tab FlagTab = new Tab();
 		setFlagTab(FlagTab, name, flagList);
 		
+		exportData.exportData(graphList, name);
 
 		tabPane.getTabs().addAll(FlagTab, CondTab, TempTab, TurbTab );
 		borderPane.setCenter(tabPane);
@@ -223,6 +235,7 @@ public class GraphGenerator {
 
 		CondTab.setText("Conductivity");
 		CondTab.setContent(lineChart);
+		graphList.add(lineChart);
 	}
 
 	private void setTurbTab(Tab TurbTab, String name, ArrayList<DataPoint> data, ArrayList<Flag> flagList,
@@ -278,6 +291,7 @@ public class GraphGenerator {
 		lineChart.setTitle("Turbidity - " + name);
 		TurbTab.setText("Turbidity");
 		TurbTab.setContent(lineChart);
+		graphList.add(lineChart);
 	}
 
 	private void setTempTab(Tab TempTab, String name, ArrayList<DataPoint> data, ArrayList<Flag> flagList,
@@ -339,6 +353,7 @@ public class GraphGenerator {
 		lineChart.getData().addAll(serieslist);
 		TempTab.setText("Temperature");
 		TempTab.setContent(lineChart);
+		graphList.add(lineChart);
 	}
 
 	protected void generateFlagShapes(NumberAxis xAxis, NumberAxis yAxis, ArrayList<Flag> flagList, List<Shape> shapes,
@@ -405,5 +420,13 @@ public class GraphGenerator {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public ArrayList<AreaChart<Number, Number>> getGraphList() {
+		return graphList;
+	}
+
+	public void setGraphList(ArrayList<AreaChart<Number, Number>> graphList) {
+		this.graphList = graphList;
 	}
 }
