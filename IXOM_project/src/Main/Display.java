@@ -58,6 +58,7 @@ public class Display extends Application {
 	public void start(Stage stage) throws Exception {
 
 		stage.setTitle("IXOM Analysis Tool");
+		stage.setResizable(false);
 		
 		// Wrapping everything in this StackPane called 'root' was necessary to centre the grid later
 		StackPane root = new StackPane();
@@ -361,7 +362,9 @@ public class Display extends Application {
 				
 				RegressionAndParameters reg = new RegressionAndParameters(coords);
 				Quintuple quintuple = reg.leastSquaresFitting(coords);
-				
+				String Message = "Curve for "+zoneString+" estimated as: y = "+quintuple.getA()+"exp("+quintuple.getB()+"x) with r^2 value of "+quintuple.getrSquared();
+				Flag analyticflag = new Flag(coords.get(0).getTime(),coords.get(coords.size()-1).getTime(),point.getZone(),zoneString,Message,null,0);
+				flagList.add(analyticflag);
 				System.out.println("Curve for "+zoneString+" estimated as: y = "+quintuple.getA()+"exp("+quintuple.getB()+"x) with r^2 value of "+quintuple.getrSquared());
 				System.out.println("With start time: "+quintuple.getStartTime()+" and end time: "+quintuple.getEndTime());
 			}
