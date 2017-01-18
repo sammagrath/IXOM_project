@@ -5,6 +5,7 @@
 
 #pane{
 	-fx-background-image: url("ixomlayout2.jpg");
+	-fx-background-size: cover;
 	
 }
 
