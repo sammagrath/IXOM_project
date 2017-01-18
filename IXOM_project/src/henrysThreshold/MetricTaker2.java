@@ -8,7 +8,7 @@ import Read_Data.*;
 
 public class MetricTaker2 {
 
-	private ArrayList<Phase> phases;
+	private ArrayList<Phase> phases= new ArrayList<Phase>();
 	
 	private ArrayList<DataPoint> data;
 	private ArrayList<Integer> BoundaryIndices;
@@ -18,6 +18,7 @@ public class MetricTaker2 {
 
 	public MetricTaker2(ArrayList<DataPoint> data, ArrayList<String> phaseNames, double minCond, double minTemp) {
 
+		
 		for (String s : phaseNames) {
 			phases.add(new Phase(s));
 		}
