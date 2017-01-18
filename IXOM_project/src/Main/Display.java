@@ -146,12 +146,7 @@ public class Display extends Application {
 					// print if there are any flags, else say that there are no flags
 					if (flagList.size() > 0) {
 
-						dialogGrid.add(new Label("| Start Time |"), 0, 0);
-						dialogGrid.add(new Label("| End Time |"), 1, 0);
-						dialogGrid.add(new Label("| Phase |"), 2, 0);
-						dialogGrid.add(new Label("| Message |"), 3, 0);
-						dialogGrid.add(new Label("| Target |"), 4, 0);
-						dialogGrid.add(new Label("| Actual |"), 5, 0);
+						setGridLabelConstant(dialogGrid);
 
 						// this line sets the content of the dialogpane (which
 						// is inside the alert box) to be the gridpane (which
@@ -161,16 +156,11 @@ public class Display extends Application {
 						int counter = 1;
 						for (Flag flag : flagList) {
 
-							dialogGrid.add(new Label(flag.getStartTime()), 0, counter);
-							dialogGrid.add(new Label(flag.getEndTime()), 1, counter);
-							dialogGrid.add(new Label(flag.getPhase()), 2, counter);
-							dialogGrid.add(new Label(flag.getMessage()), 3, counter);
-							dialogGrid.add(new Label(String.valueOf(flag.getTarget())), 4, counter);
-							dialogGrid.add(new Label(String.valueOf(flag.getActual())), 5, counter);
-
+							setGridLabelVary(dialogGrid, flag, counter);
 							counter++;
 						}
 
+						
 						Button print = new Button();
 						print.setText("Export to File");
 						print.setOnAction(new EventHandler<ActionEvent>() {
@@ -387,6 +377,24 @@ public class Display extends Application {
 				);
 		combobox.setValue("Select Process");
 		return combobox;
+	}
+	
+	public void setGridLabelConstant(GridPane grid){
+		grid.add(new Label("| Start Time |"), 0, 0);
+		grid.add(new Label("| End Time |"), 1, 0);
+		grid.add(new Label("| Phase |"), 2, 0);
+		grid.add(new Label("| Message |"), 3, 0);
+		grid.add(new Label("| Target |"), 4, 0);
+		grid.add(new Label("| Actual |"), 5, 0);
+	}
+	
+	public void setGridLabelVary(GridPane grid, Flag flag, int counter){
+		grid.add(new Label(flag.getStartTime()), 0, counter);
+		grid.add(new Label(flag.getEndTime()), 1, counter);
+		grid.add(new Label(flag.getPhase()), 2, counter);
+		grid.add(new Label(flag.getMessage()), 3, counter);
+		grid.add(new Label(String.valueOf(flag.getTarget())), 4, counter);
+		grid.add(new Label(String.valueOf(flag.getActual())), 5, counter);
 	}
 		
 }

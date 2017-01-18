@@ -47,12 +47,9 @@ public class Analyser {
 		for(DataPoint d: condList){
 			Coordinate c = new Coordinate(d.getTime(), d.getConductivity());
 			
-			System.out.println("("+ d.getTime() +", "+ d.getConductivity() +")");
-			
 			steepest.add(c);
 		}
 		
-		System.out.println(gradient);
 		return steepest;
 		
 	}
@@ -96,8 +93,9 @@ public class Analyser {
 		
 		ArrayList<ArrayList<DataPoint>> newLOL = new ArrayList<>();
 		ArrayList<DataPoint> adjacent, current;
+		int j = LOL.size() - 1;
 		
-		for(int i = 0; i < LOL.size() - 1; i++){
+		for(int i = 0; i < j; i++){
 			
 			current = LOL.get(i);
 			adjacent = LOL.get(i+1);
