@@ -88,6 +88,18 @@ public class Display extends Application {
 			public void handle(ActionEvent arg0) {
 				String filename = textField.getText();
 				System.out.println(selection);
+				
+				//this is for if someone clicks run and they havent selected a file
+				if(filename.equals("")){
+					Alert alertNoFlag = new Alert(AlertType.INFORMATION);
+					alertNoFlag.setTitle("Alert!");
+					alertNoFlag.setHeaderText("No file detected");
+					alertNoFlag.setContentText("Select a file before clicking run");
+
+					alertNoFlag.showAndWait();
+				}
+				
+				else{
 				// !!!! PATS ADDITION !!!!////
 				// Calls csv convertor//
 				excelFile = new File(filename);
@@ -208,8 +220,9 @@ public class Display extends Application {
 				}
 
 			}
-
+			}
 		});
+		
 
 		// The following is a button and when clicked it launches a file chooser
 		Button btnFileChooser = new Button();
