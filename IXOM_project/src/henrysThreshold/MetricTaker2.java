@@ -142,10 +142,7 @@ public class MetricTaker2 {
 		
 	}
 
-	public ArrayList<Integer> getBoundaryIndices() {
-		return BoundaryIndices;
-	}
-
+	
 	public Phase getPhase(int i) {
 		return phases.get(i);
 	}
