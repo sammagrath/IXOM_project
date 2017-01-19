@@ -45,8 +45,6 @@ public class MetricTaker2 {
 		for (int i=0;i<data.size();i++) {
 			DataPoint d = data.get(i);
 			
-			
-			
 			if(i==data.size()-1){
 				phases.get(phasecount).setEndIndex(i);
 				phases.get(phasecount).setPhaseData(temp);
