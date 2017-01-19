@@ -14,11 +14,8 @@ public class CSVCleaner {
 	
 	public String lineCleaner(String dirtyLine){
 		
-		String cleanLine = "";
-		int lineLength = dirtyLine.length();
-		String input = "";
-		int stage = 0;
-		String date = "", time = "", turb = "", cond = "", soil = "", temp = "", step = "";
+		String cleanLine = "", input = "", date = "", time = "", turb = "", cond = "", soil = "", temp = "", step = "";
+		int lineLength = dirtyLine.length(), stage = 0;
 		
 		for(int i = 0; i < lineLength; i++){
 			if(dirtyLine.charAt(i) == ','){
@@ -135,8 +132,7 @@ public class CSVCleaner {
 	public String decimalCleaner(String dirtyDec){
 		
 		String cleanDec = "";
-		int length = dirtyDec.length();
-		int dec = 0, dot = 0;
+		int length = dirtyDec.length(), dec = 0, dot = 0;
 		char c;
 		
 		for(int i = 0; i < length; i++){
