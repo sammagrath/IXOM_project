@@ -9,9 +9,7 @@ import Read_Data.*;
 public class MetricTaker2 {
 
 	private ArrayList<Phase> phases= new ArrayList<Phase>();
-	
 	private ArrayList<DataPoint> data;
-	private ArrayList<Integer> BoundaryIndices = new ArrayList<Integer>();
 	private int NumberOfPhases;
 	private double minCond; 
 	private double minTemp;
@@ -41,7 +39,6 @@ public class MetricTaker2 {
 		phases.get(phasecount).setStartIndex(0);
 		
 		DataPoint prevDataPoint = data.get(0);
-		BoundaryIndices.add(0);
 		for (int i=0;i<data.size();i++) {
 			DataPoint d = data.get(i);
 			
@@ -170,5 +167,15 @@ public class MetricTaker2 {
 		}
 		return garry;
 	}
+
+	public ArrayList<Phase> getPhases() {
+		return phases;
+	}
+
+	public void setPhases(ArrayList<Phase> phases) {
+		this.phases = phases;
+	}
+	
+	
 
 }
