@@ -257,17 +257,15 @@ public class FlagGeneration {
 	// Applies phase labels to each data point
 	public void applyPhase(ArrayList<DataPoint> data) {
 
-
-
-		
-		
-		
-		
-		for (int i=0;i<data.size();i++) {
-			DataPoint d=data.get(i);
-			d.setPhase(phaseNames.get(d.getZone()-1));
-			
+		int dataSize = data.size();
+		if (dataSize > 0){
+			for (int i=0;i<data.size();i++) {
+				DataPoint d=data.get(i);
+				d.setPhase(phaseNames.get(d.getZone()-1));
+				
+			}
 		}
+		
 	}
 
 
