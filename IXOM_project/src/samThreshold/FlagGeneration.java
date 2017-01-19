@@ -54,7 +54,7 @@ public class FlagGeneration {
 	//measure of conductivity levels across wash phases
 	public void thresholds(ArrayList<Flag> flagList) {
 
-		applyPhase(data);
+		//applyPhase(data);
 		editBoundaries();
 		HashMap<Integer, Double> condAverages = new HashMap<Integer, Double>();
 		HashMap<Integer, Double> tempAverages = new HashMap<Integer, Double>();
