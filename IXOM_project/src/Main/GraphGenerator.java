@@ -48,7 +48,7 @@ public class GraphGenerator {
 
 	private TimeConverter timeConverter = new TimeConverter();
 	private ExportData exportData = new ExportData();
-	private ArrayList<AreaChart<Number, Number>> graphList;
+	private ArrayList<AreaChart<Number, Number>> graphList = new ArrayList<AreaChart<Number,Number>>();
 	
 	
 	
@@ -360,7 +360,12 @@ public class GraphGenerator {
 			double offset, String type) {
 
 		for (Flag f : flagList) {
+			
+			if(!(f.getType() == null)){
+			
 			if (f.getType().equals(type)) {
+				
+				
 				Polygon flagArea = new Polygon();
 			
 				double start = (timeConverter.HMSToDec(f.getStartTime()) * 86400) - offset;
@@ -402,7 +407,7 @@ public class GraphGenerator {
 			}
 
 		}
-
+		}
 	}
 
 	public static void hackTooltipStartTiming(Tooltip tooltip) {
