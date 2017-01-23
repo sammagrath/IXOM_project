@@ -1,34 +1,26 @@
 #grid{
-	-fx-padding: 10px;
+	-fx-translate-y: 35px;
 	-fx-alignment: center-right;
 }
 
 #pane{
-	-fx-background-image: url("ixomlayout2.jpg");
-	-fx-background-size: cover;
-	
+	-fx-background-image: url("ixomlayout3.jpg");
+	-fx-background-size: cover;	
 }
 
 #combobox{
-	  -fx-background-color: #48d1cc;
-     -fx-border-color: rgb(49, 89, 23);
-    -fx-border-radius: 5;
-    
+	     
      -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.5) , 10, 0.0 , 0 , 3 );
 }
 
 #btnRun{
-	-fx-font-weight: bold;
-	
+
 }
 
 .label{
 	-fx-font-weight: bold;
 }
 .button {
-    -fx-background-color: #48d1cc;
-     -fx-border-color: rgb(49, 89, 23);
-    -fx-border-radius: 5;
-    
-     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.5) , 10, 0.0 , 0 , 3 );
+      
+     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.3) , 10, 0.0 , 0 , 3 );
 }
