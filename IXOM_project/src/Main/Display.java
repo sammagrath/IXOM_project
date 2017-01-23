@@ -260,7 +260,7 @@ public class Display extends Application {
 
 		ArrayList<ArrayList<DataPoint>> LOC = a.splitByZones(data);
 
-		System.out.println("Results for Conductivity curve fitting");
+		
 		for (ArrayList<DataPoint> dp : LOC) {
 			DataPoint point = dp.get(0);
 			String zoneString = DataPoint.getMap().get(point).toString();
@@ -275,10 +275,7 @@ public class Display extends Application {
 				Flag analyticflag = new Flag(coords.get(0).getTime(), coords.get(coords.size() - 1).getTime(),
 						point.getZone(), zoneString, Message, null, 0);
 				flagList.add(analyticflag);
-				System.out.println("Curve for " + zoneString + " estimated as: y = " + quintuple.getA() + "exp("
-						+ quintuple.getB() + "x) with r^2 value of " + quintuple.getrSquared());
-				System.out.println(
-						"With start time: " + quintuple.getStartTime() + " and end time: " + quintuple.getEndTime());
+				
 			}
 		}
 	}
