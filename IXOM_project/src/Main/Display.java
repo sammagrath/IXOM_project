@@ -194,7 +194,7 @@ public class Display extends Application {
 		grid.add(btnFileChooser, 1, 1);
 
 		grid.add(combobox, 0, 2);
-		grid.add(btnRun, 0, 3);
+		grid.add(btnRun, 0, 4);
 		grid.setVgap(20);
 		root.getChildren().add(grid);
 		stage.setScene(scene);
