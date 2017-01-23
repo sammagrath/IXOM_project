@@ -14,6 +14,7 @@ import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Side;
@@ -24,6 +25,7 @@ import javafx.scene.chart.AreaChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Series;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -48,12 +50,10 @@ public class GraphGenerator {
 
 	private TimeConverter timeConverter = new TimeConverter();
 	private ExportData exportData = new ExportData();
-	private ArrayList<AreaChart<Number, Number>> graphList = new ArrayList<AreaChart<Number,Number>>();
-	
-	
-	
+	private ArrayList<AreaChart<Number, Number>> graphList = new ArrayList<AreaChart<Number, Number>>();
+
 	public void generateGraphs(ArrayList<DataPoint> data, String name, ArrayList<Flag> flagList,
-			ArrayList<String> phaseNames) {
+			ArrayList<String> phaseNames, Stage stage, File excelFile) {
 
 		Stage window = new Stage();
 		Group root = new Group();
@@ -75,13 +75,11 @@ public class GraphGenerator {
 		final Tab TempTab = new Tab();
 		setTempTab(TempTab, name, data, flagList, phaseNames);
 
-		//andrews addition
+		// andrews addition
 		final Tab FlagTab = new Tab();
-		setFlagTab(FlagTab, name, flagList);
-		
-		exportData.exportData(graphList, name);
+		setFlagTab(FlagTab, name, flagList, stage, excelFile);
 
-		tabPane.getTabs().addAll(FlagTab, CondTab, TempTab, TurbTab );
+		tabPane.getTabs().addAll(FlagTab, CondTab, TempTab, TurbTab);
 		borderPane.setCenter(tabPane);
 		root.getChildren().add(borderPane);
 
@@ -93,82 +91,82 @@ public class GraphGenerator {
 		window.show();
 
 	}
-	
 
-	//andrews addition
+	// andrews addition
 	@SuppressWarnings("unchecked")
-	private void setFlagTab(Tab FlagTab, String name, ArrayList<Flag> flagList){
-		
+	private void setFlagTab(Tab FlagTab, String name, ArrayList<Flag> flagList, Stage stage, File excelFile) {
+
 		TableView table = new TableView();
 		table.setId("flagTable");
-		
-			
 		ObservableList<Flag> data = FXCollections.observableArrayList(flagList);
-		
-		
+
 		Label label = new Label("Flags identified for: " + name);
-	    label.setFont(new Font("Arial", 20));
+		label.setFont(new Font("Arial", 20));
 
-	    
-	    TableColumn startCol = new TableColumn("Start Time");
-	    startCol.setCellValueFactory(
-	            new PropertyValueFactory<Flag, String>("startTime"));
-	    
-	    startCol.setSortable(false);
-	    startCol.prefWidthProperty().bind(table.widthProperty().multiply(0.1));
-	        
-	    TableColumn endCol = new TableColumn("End Time");
-	    endCol.setCellValueFactory(
-	            new PropertyValueFactory<Flag, String>("endTime"));
-	    
-	    endCol.setSortable(false);
-	    endCol.prefWidthProperty().bind(table.widthProperty().multiply(0.1));
-	    
-	    TableColumn phaseCol = new TableColumn("Phase");
-	    phaseCol.setCellValueFactory(
-	            new PropertyValueFactory<Flag, String>("phase"));
-	    
-	    phaseCol.setSortable(false);
-	    phaseCol.prefWidthProperty().bind(table.widthProperty().multiply(0.2));
-	    
-	    TableColumn messageCol = new TableColumn("Message");
-	    messageCol.setCellValueFactory(
-	            new PropertyValueFactory<Flag, String>("message"));
-	    
-	    messageCol.setSortable(false);
-	    //this one is multiplied by a weird number because the total has to be slightly less than 100 otherwise a scrollbar appears
-	    messageCol.prefWidthProperty().bind(table.widthProperty().multiply(0.33795));
-	   
-	    TableColumn targetCol = new TableColumn("Target");
-	    targetCol.setCellValueFactory(
-	            new PropertyValueFactory<Flag, String>("target"));
-	    
-	    targetCol.setSortable(false);
-	    targetCol.prefWidthProperty().bind(table.widthProperty().multiply(0.13));
-	    
-	    TableColumn actualCol = new TableColumn("Actual");
-	    actualCol.setCellValueFactory(
-	            new PropertyValueFactory<Flag, String>("actual"));
-	    
-	    actualCol.setSortable(false);
-	    actualCol.prefWidthProperty().bind(table.widthProperty().multiply(0.13));
-	    
-	   
-	    
-	    table.setItems(data);
-	    table.getColumns().addAll(startCol, endCol, phaseCol, messageCol, targetCol, actualCol);
-	    
+		TableColumn startCol = new TableColumn("Start Time");
+		startCol.setCellValueFactory(new PropertyValueFactory<Flag, String>("startTime"));
 
-	    
-	    VBox vbox = new VBox();
-	    vbox.setSpacing(5);
-	    vbox.setPadding(new Insets(10, 10, 10, 10));
-	    vbox.getChildren().addAll(label, table);
-	    
-	    
-			FlagTab.setText("Flags");
-			FlagTab.setContent(vbox);
-		}
+		startCol.setSortable(true);
+		startCol.prefWidthProperty().bind(table.widthProperty().multiply(0.1));
+
+		TableColumn endCol = new TableColumn("End Time");
+		endCol.setCellValueFactory(new PropertyValueFactory<Flag, String>("endTime"));
+
+		endCol.setSortable(true);
+		endCol.prefWidthProperty().bind(table.widthProperty().multiply(0.1));
+
+		TableColumn phaseCol = new TableColumn("Phase");
+		phaseCol.setCellValueFactory(new PropertyValueFactory<Flag, String>("phase"));
+
+		phaseCol.setSortable(true);
+		phaseCol.prefWidthProperty().bind(table.widthProperty().multiply(0.2));
+
+		TableColumn messageCol = new TableColumn("Message");
+		messageCol.setCellValueFactory(new PropertyValueFactory<Flag, String>("message"));
+
+		messageCol.setSortable(true);
+		// this one is multiplied by a weird number because the total has to be
+		// slightly less than 100 otherwise a scrollbar appears
+		messageCol.prefWidthProperty().bind(table.widthProperty().multiply(0.33795));
+
+		TableColumn targetCol = new TableColumn("Target");
+		targetCol.setCellValueFactory(new PropertyValueFactory<Flag, String>("target"));
+
+		targetCol.setSortable(true);
+		targetCol.prefWidthProperty().bind(table.widthProperty().multiply(0.13));
+
+		TableColumn actualCol = new TableColumn("Actual");
+		actualCol.setCellValueFactory(new PropertyValueFactory<Flag, String>("actual"));
+
+		actualCol.setSortable(true);
+		actualCol.prefWidthProperty().bind(table.widthProperty().multiply(0.13));
+
+		table.setItems(data);
+		table.getColumns().addAll(startCol, endCol, phaseCol, messageCol, targetCol, actualCol);
+
+		VBox vbox = new VBox();
+		vbox.setSpacing(30);
+		vbox.setPadding(new Insets(20, 20, 20, 20));
+		
+		Button print = new Button();
+		print.setText("Export to File");
+		
+		print.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent arg0) {
+
+				exportData.exportData(getGraphList(), excelFile.getName(), flagList,
+						excelFile, stage);
+
+			}
+
+		});
+		
+		vbox.getChildren().addAll(label, table, print);
+		FlagTab.setText("Flags");
+		FlagTab.setContent(vbox);
+	}
 
 	private void setCondTab(Tab CondTab, String name, ArrayList<DataPoint> data, ArrayList<Flag> flagList,
 			ArrayList<String> phaseNames) {
@@ -360,53 +358,50 @@ public class GraphGenerator {
 			double offset, String type) {
 
 		for (Flag f : flagList) {
-			
-			if(!(f.getType() == null)){
-			
-			if (f.getType().equals(type)) {
-				
-				
-				Polygon flagArea = new Polygon();
-			
-				double start = (timeConverter.HMSToDec(f.getStartTime()) * 86400) - offset;
-				double end = (timeConverter.HMSToDec(f.getEndTime()) * 86400) - offset;
 
-				double x1 = xAxis.getDisplayPosition(start);
-				double x2 = xAxis.getDisplayPosition(end);
+			if (!(f.getType() == null)) {
 
-				flagArea.opacityProperty().set(0.15);
-				flagArea.setFill(Color.RED);
+				if (f.getType().equals(type)) {
 
-				flagArea.getPoints().addAll(new Double[] { x1, 0.0, x1, 500.0, x2, 500.0, x2, 0.0 });
-				shapes.add(flagArea);
-				
-				
+					Polygon flagArea = new Polygon();
 
-				flagArea.setOnMouseMoved(new EventHandler<MouseEvent>() {
-					@Override
-					public void handle(MouseEvent event) {
-						flagArea.opacityProperty().set(0.28);
-					}
-				});
-				flagArea.setOnMouseExited(new EventHandler<MouseEvent>() {
-					@Override
-					public void handle(MouseEvent event) {
-						flagArea.opacityProperty().set(0.15);
-					}
-				});
+					double start = (timeConverter.HMSToDec(f.getStartTime()) * 86400) - offset;
+					double end = (timeConverter.HMSToDec(f.getEndTime()) * 86400) - offset;
 
-				Tooltip tooltip = new Tooltip();
-				Tooltip.install(flagArea, tooltip);
-				hackTooltipStartTiming(tooltip);
-				
-				//tooltip.setTextAlignment(TextAlignment.RIGHT);
-				
-				tooltip.setText(
-						f.getMessage() + "\n" + "\n" + f.getPhase() + "\n" + "Expected Range: " + f.getTarget()
-								+ "\n" + "Actual: " + f.getActual() + "\n" + "Duration: " + f.getDurationLabel());
+					double x1 = xAxis.getDisplayPosition(start);
+					double x2 = xAxis.getDisplayPosition(end);
+
+					flagArea.opacityProperty().set(0.15);
+					flagArea.setFill(Color.RED);
+
+					flagArea.getPoints().addAll(new Double[] { x1, 0.0, x1, 500.0, x2, 500.0, x2, 0.0 });
+					shapes.add(flagArea);
+
+					flagArea.setOnMouseMoved(new EventHandler<MouseEvent>() {
+						@Override
+						public void handle(MouseEvent event) {
+							flagArea.opacityProperty().set(0.28);
+						}
+					});
+					flagArea.setOnMouseExited(new EventHandler<MouseEvent>() {
+						@Override
+						public void handle(MouseEvent event) {
+							flagArea.opacityProperty().set(0.15);
+						}
+					});
+
+					Tooltip tooltip = new Tooltip();
+					Tooltip.install(flagArea, tooltip);
+					hackTooltipStartTiming(tooltip);
+
+					// tooltip.setTextAlignment(TextAlignment.RIGHT);
+
+					tooltip.setText(
+							f.getMessage() + "\n" + "\n" + f.getPhase() + "\n" + "Expected Range: " + f.getTarget()
+									+ "\n" + "Actual: " + f.getActual() + "\n" + "Duration: " + f.getDurationLabel());
+				}
+
 			}
-
-		}
 		}
 	}
 
@@ -426,7 +421,7 @@ public class GraphGenerator {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public ArrayList<AreaChart<Number, Number>> getGraphList() {
 		return graphList;
 	}
