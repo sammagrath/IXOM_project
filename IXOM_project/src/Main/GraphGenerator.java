@@ -127,7 +127,7 @@ public class GraphGenerator {
 		messageCol.setSortable(true);
 		// this one is multiplied by a weird number because the total has to be
 		// slightly less than 100 otherwise a scrollbar appears
-		messageCol.prefWidthProperty().bind(table.widthProperty().multiply(0.33795));
+		messageCol.prefWidthProperty().bind(table.widthProperty().multiply(0.3379));
 
 		TableColumn targetCol = new TableColumn("Target");
 		targetCol.setCellValueFactory(new PropertyValueFactory<Flag, String>("target"));

@@ -100,6 +100,18 @@ public class Display extends Application {
 
 					alertNoFlag.showAndWait();
 				}
+				
+				//this is for if someone clicks run and they havent selected a
+				//file
+				else if(combobox.getValue().equals("Select Process")){
+					Alert alertNoFlag = new Alert(AlertType.INFORMATION);
+					alertNoFlag.setTitle("Alert!");
+					alertNoFlag.setHeaderText("No process detected");
+					alertNoFlag.setContentText("Select a process before clicking run");
+
+					alertNoFlag.showAndWait();
+				}
+				
 
 				else {
 					// !!!! PATS ADDITION !!!!////
