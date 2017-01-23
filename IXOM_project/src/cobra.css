@@ -1,5 +1,6 @@
 #grid{
 	-fx-translate-y: 35px;
+	-fx-translate-x: -42px;
 	-fx-alignment: center-right;
 }
 

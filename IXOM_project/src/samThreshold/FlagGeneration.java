@@ -74,6 +74,31 @@ public class FlagGeneration {
 		// endFinalRinseVal = data.get(data.size() - 1).getConductivity();
 
 		// Caustic/Acid Prerinse chemical strength lower threshold
+		for(Phase p : metric.getPhases()) {
+			System.out.println(p.getName() + "- cond averages: " +p.getCondAverages());
+			ArrayList<DataPoint> temp = p.getPhaseData();
+			if(p.isPreRinse()) System.out.println("True dat");
+			if((p.isPreRinse()) && p.getCondAverages() < 1 /*Dummy threshold used to trigger flag- processInfo.get(processName).get(0).getCondLower()*/) {
+				
+				System.out.println("true");
+				Flag flag = new Flag(
+						"start",
+//						temp.get(p.getEffectiveStartIndex()).getTime(), 
+//						"endtime",
+						temp.get(temp.size()-1).getTime(),
+						0,
+						p.getName(),
+						"Chemical strength too low",
+						processInfo.get(processName).get(0).getCondLower() + " - " + processInfo.get(processName).get(0).getCondUpper(),
+						p.getCondAverages());
+
+						flag.setType("Conductivity");
+						flagList.add(flag);
+				
+			}
+		}
+		
+		
 //		if (condAverages.get(1) < processInfo.get(processName).get(0).getCondLower()) {
 //
 //			Flag flag = new Flag(
@@ -163,18 +188,8 @@ public class FlagGeneration {
 //			flagList.add(flag);
 //		}
 //
-//		// Zero conductivity test at end of intermediate rinse phase
-//		// if (endIntRinseVal != 0.0) {
-//		//
-//		// Flag flag = new Flag(null,
-//		// data.get(boundaries.get(3)).getTime(), 3, "Intermediate Rinse",
-//		// "Conductivity Non-Zero at Rinse End", "0.0", endIntRinseVal);
-//		//
-//		// flag.setType("Conductivity");
-//		//
-//		//
-//		// flagList.add(flag);
-//		// }
+
+		
 //
 //		// Acid Cycle chemical strength lower threshold
 //		if (condAverages.get(4) < processInfo.get(processName).get(3).getCondLower()) {
