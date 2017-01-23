@@ -52,14 +52,15 @@ public class MetricTaker2 {
 				phases.get(phasecount).setEndIndex(i-1);
 				phasecount++;
 				phases.get(phasecount).setStartIndex(i);
-				temp.clear();
+				temp = new ArrayList<DataPoint>(100);
 			}
 			else {
 				temp.add(d);
 			}
 			prevDataPoint = d;
 		}
-
+		
+		
 	}
 
 	
@@ -82,8 +83,7 @@ public class MetricTaker2 {
 				p.setIsRinse(false);
 				
 			}
-			System.out.println("we are at: "+p.getPhaseData().get(0).getTime() + "at index: "+i);
-			System.out.println("we are at: "+phases.get(i).getPhaseData().get(0).getTime() + "at index: "+i);
+			
 			setEffectivePeriodDetails(p);
 		}
 	}
