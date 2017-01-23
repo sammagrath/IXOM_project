@@ -52,6 +52,7 @@ public class MetricTaker2 {
 				phases.get(phasecount).setEndIndex(i-1);
 				phasecount++;
 				phases.get(phasecount).setStartIndex(i);
+				temp.clear();
 			}
 			else {
 				temp.add(d);
