@@ -16,7 +16,8 @@ public class Phase {
 	private double soilAverages;
 	private ArrayList<DataPoint> phaseData;
 	private ArrayList<DataPoint> effPeriodData;
-	private boolean isRinse;
+	private boolean isRinse=false;
+	private boolean isPreRinse=false;
 	
 	public Phase(String name){
 		this.name=name;
@@ -102,6 +103,14 @@ public class Phase {
 
 	public void setIsRinse(boolean isRinse) {
 		this.isRinse = isRinse;
+	}
+
+	public boolean isPreRinse() {
+		return isPreRinse;
+	}
+
+	public void setPreRinse(boolean isPreRinse) {
+		this.isPreRinse = isPreRinse;
 	}
 	
 	

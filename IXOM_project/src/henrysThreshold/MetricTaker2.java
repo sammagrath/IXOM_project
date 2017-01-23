@@ -67,7 +67,12 @@ public class MetricTaker2 {
 		
 		for(int i=0;i<phases.size();i++){
 			Phase p = phases.get(i);
-			if(p.getName().contains("RINSE")){
+			if(p.getName().contains("PRERINSE")){
+				p.setPreRinse(true);
+				p.setEffectiveStartIndex(p.getEffectiveStartIndex());
+				setEffectivePeriodDetails(p);
+			}
+			else if (p.getName().contains("RINSE")){
 				p.setIsRinse(true);
 				p.setEffectiveStartIndex(p.getEffectiveStartIndex());
 				setEffectivePeriodDetails(p);
@@ -88,10 +93,12 @@ public class MetricTaker2 {
 		int indexcount = p.getStartIndex();
 		int startIndex=-1;
 		ArrayList<DataPoint> temp = new ArrayList<DataPoint>(100);
+		
 		for(DataPoint d : p.getPhaseData()){
 			if(d.getConductivity()>minCond && d.getTemp()>minTemp){
 				if(startIndex==-1){
 					startIndex=indexcount;
+					
 				}
 				temp.add(d);
 			}
