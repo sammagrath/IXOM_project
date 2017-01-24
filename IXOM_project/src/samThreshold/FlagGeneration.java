@@ -397,17 +397,17 @@ public class FlagGeneration {
 						data.get(p.getEndIndex()).getTime(),
 						0,
 						p.getName(),
-						"Chemical strength too low",
+						"Average temperature too low",
 						processInfo.get(processName).get(3).getTempLower() + " - " + processInfo.get(processName).get(3).getTempUpper(),
-						p.getCondAverages());
+						p.getTempAverages());
 
-						flag.setType("Conductivity");
+						flag.setType("Temperature");
 						flagList.add(flag);
 				
 			}
 		}
 		
-//		//Acid Cycle chemical temperature upper threshold
+//		//Acid Cycle temperature upper threshold
 		for(Phase p : metric.getPhases()) {
 
 			ArrayList<DataPoint> temp = p.getPhaseData();
@@ -423,7 +423,7 @@ public class FlagGeneration {
 						processInfo.get(processName).get(3).getTempLower() + " - " + processInfo.get(processName).get(3).getTempUpper(),
 						p.getTempAverages());
 
-						flag.setType("Conductivity");
+						flag.setType("Temperature");
 						flagList.add(flag);
 				
 			}
