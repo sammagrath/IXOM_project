@@ -17,6 +17,7 @@ import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.geometry.Side;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -102,6 +103,8 @@ public class GraphGenerator {
 
 		Label label = new Label("Flags identified for: " + name);
 		label.setFont(new Font("Arial", 20));
+		
+		label.setId("titledickwad");
 
 		TableColumn startCol = new TableColumn("Start Time");
 		startCol.setCellValueFactory(new PropertyValueFactory<Flag, String>("startTime"));
@@ -132,6 +135,7 @@ public class GraphGenerator {
 		TableColumn targetCol = new TableColumn("Target");
 		targetCol.setCellValueFactory(new PropertyValueFactory<Flag, String>("target"));
 
+		
 		targetCol.setSortable(true);
 		targetCol.prefWidthProperty().bind(table.widthProperty().multiply(0.13));
 
@@ -147,8 +151,10 @@ public class GraphGenerator {
 		VBox vbox = new VBox();
 		vbox.setSpacing(30);
 		vbox.setPadding(new Insets(20, 20, 20, 20));
-		
+		vbox.setId("cheesefuck");
+		vbox.setAlignment(Pos.CENTER_RIGHT);
 		Button print = new Button();
+		print.setId("printbutton");
 		print.setText("Export to File");
 		
 		print.setOnAction(new EventHandler<ActionEvent>() {
