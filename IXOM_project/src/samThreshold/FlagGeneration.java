@@ -1,18 +1,12 @@
 package samThreshold;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import org.apache.commons.collections4.bag.SynchronizedSortedBag;
-
-import Read_Data.CSV2Array;
 import Read_Data.DataPoint;
 import henrysThreshold.MetricTaker2;
 import henrysThreshold.Phase;
-import henrysThreshold.metricTaker;
 
 /**
  * @author magratsam
@@ -22,10 +16,7 @@ import henrysThreshold.metricTaker;
 public class FlagGeneration {
 
 	private static ArrayList<DataPoint> data;
-	private static ArrayList<Flag> flagList;
-	private static ArrayList<Integer> boundaries;
 	private MetricTaker2 metric;
-	private static File input;
 	private String processName;
 	private HashMap<String, ArrayList<Threshold>> processInfo;
 
@@ -46,7 +37,6 @@ public class FlagGeneration {
 			e.printStackTrace();
 		}
 
-		flagList = new ArrayList<Flag>();
 		// metric = new metricTaker(data);
 		metric = new MetricTaker2(data, phaseNames, 0.5, 60);
 	}
@@ -66,21 +56,9 @@ public class FlagGeneration {
 			tempAverages.put(i + 1, metric.getPhase(i).getTempAverages());
 			condAverages.put(i + 1, metric.getPhase(i).getCondAverages());
 		}
-		//
-
-		// tempAverages = metric.getTempAverages();
-		// condAverages = metric.getCondAverages();
-
-		double endIntRinseVal;
-		double endFinalRinseVal;
-
-		// endIntRinseVal = data.get(boundaries.get(3)).getConductivity();
-		// endFinalRinseVal = data.get(data.size() - 1).getConductivity();
 
 		// Caustic Prerinse chemical strength lower threshold
 		for(Phase p : metric.getPhases()) {
-
-			ArrayList<DataPoint> temp = p.getPhaseData();
 
 			if((p.getName().contains("CAUSTIC PRERINSE")) && p.getCondAverages() < processInfo.get(processName).get(0).getCondLower()) {
 				
@@ -97,12 +75,9 @@ public class FlagGeneration {
 						flagList.add(flag);
 				
 			}
-		}
+		
 		
 		//Caustic Prerinse conductivity upper threshold
-		for(Phase p : metric.getPhases()) {
-
-			ArrayList<DataPoint> temp = p.getPhaseData();
 
 			if((p.getName().contains("CAUSTIC PRERINSE")) && p.getCondAverages() > processInfo.get(processName).get(0).getCondUpper()) {
 				
@@ -119,12 +94,9 @@ public class FlagGeneration {
 						flagList.add(flag);
 				
 			}
-		}
+		
 
-//		//Caustic Prerinse temperature lower threshold
-		for(Phase p : metric.getPhases()) {
-
-			ArrayList<DataPoint> temp = p.getPhaseData();
+		//Caustic Prerinse temperature lower threshold
 
 			if((p.getName().contains("CAUSTIC PRERINSE")) && p.getTempAverages() < processInfo.get(processName).get(0).getTempLower()) {
 				
@@ -141,12 +113,9 @@ public class FlagGeneration {
 						flagList.add(flag);
 				
 			}
-		}
 		
-//		//Caustic Prerinse temperature upper threshold
-		for(Phase p : metric.getPhases()) {
-
-			ArrayList<DataPoint> temp = p.getPhaseData();
+		
+		//Caustic Prerinse temperature upper threshold
 
 			if((p.getName().contains("CAUSTIC PRERINSE")) && p.getTempAverages() > processInfo.get(processName).get(0).getTempUpper()) {
 				
@@ -163,12 +132,9 @@ public class FlagGeneration {
 						flagList.add(flag);
 				
 			}
-		}
+		
 		
 		//Acid Prerinse chemical strength lower threshold
-		for(Phase p : metric.getPhases()) {
-
-			ArrayList<DataPoint> temp = p.getPhaseData();
 
 			if((p.getName().contains("ACID PRERINSE")) && p.getCondAverages() < processInfo.get(processName).get(1).getCondLower()) {
 				
@@ -185,12 +151,9 @@ public class FlagGeneration {
 						flagList.add(flag);
 				
 			}
-		}
+		
 		
 		//Acid Prerinse conductivity upper threshold
-		for(Phase p : metric.getPhases()) {
-
-			ArrayList<DataPoint> temp = p.getPhaseData();
 
 			if((p.getName().contains("ACID PRERINSE")) && p.getCondAverages() > processInfo.get(processName).get(1).getCondUpper()) {
 				
@@ -207,12 +170,9 @@ public class FlagGeneration {
 						flagList.add(flag);
 				
 			}
-		}
+		
 
 //		//Acid Prerinse temperature lower threshold
-		for(Phase p : metric.getPhases()) {
-
-			ArrayList<DataPoint> temp = p.getPhaseData();
 
 			if((p.getName().contains("CAUSTIC PRERINSE")) && p.getTempAverages() < processInfo.get(processName).get(1).getTempLower()) {
 				
@@ -229,12 +189,9 @@ public class FlagGeneration {
 						flagList.add(flag);
 				
 			}
-		}
+		
 		
 //		//Acid Prerinse temperature upper threshold
-		for(Phase p : metric.getPhases()) {
-
-			ArrayList<DataPoint> temp = p.getPhaseData();
 
 			if((p.getName().contains("ACID PRERINSE")) && p.getTempAverages() > processInfo.get(processName).get(1).getTempUpper()) {
 				
@@ -251,12 +208,9 @@ public class FlagGeneration {
 						flagList.add(flag);
 				
 			}
-		}
 		
-//		// Caustic Cycle chemical strength lower threshold
-		for(Phase p : metric.getPhases()) {
-
-			ArrayList<DataPoint> temp = p.getPhaseData();
+		
+		// Caustic Cycle chemical strength lower threshold
 
 			if((p.getName().contains("CAUSTIC CYCLE")) && p.getCondAverages() < processInfo.get(processName).get(2).getCondLower()) {
 				
@@ -273,12 +227,9 @@ public class FlagGeneration {
 						flagList.add(flag);
 				
 			}
-		}
 		
-//		// Caustic Cycle chemical strength upper threshold
-		for(Phase p : metric.getPhases()) {
-			System.out.println(p.getName() + p.getCondAverages());
-			ArrayList<DataPoint> temp = p.getPhaseData();
+		
+		// Caustic Cycle chemical strength upper threshold
 
 			if((p.getName().contains("CAUSTIC CYCLE")) && p.getCondAverages() > processInfo.get(processName).get(2).getCondUpper()) {
 				
@@ -295,12 +246,9 @@ public class FlagGeneration {
 						flagList.add(flag);
 				
 			}
-		}
 		
-//		//Caustic Cycle temperature lower threshold
-		for(Phase p : metric.getPhases()) {
-
-			ArrayList<DataPoint> temp = p.getPhaseData();
+		
+		//Caustic Cycle temperature lower threshold
 
 			if((p.getName().contains("CAUSTIC CYCLE")) && p.getTempAverages() < processInfo.get(processName).get(2).getTempLower()) {
 				
@@ -317,12 +265,9 @@ public class FlagGeneration {
 						flagList.add(flag);
 				
 			}
-		}
 		
-//		//Caustic Cycle temperature upper threshold
-		for(Phase p : metric.getPhases()) {
-
-			ArrayList<DataPoint> temp = p.getPhaseData();
+		
+		//Caustic Cycle temperature upper threshold
 
 			if((p.getName().contains("CAUSTIC CYCLE")) && p.getTempAverages() > processInfo.get(processName).get(2).getTempUpper()) {
 				
@@ -339,12 +284,9 @@ public class FlagGeneration {
 						flagList.add(flag);
 				
 			}
-		}
 		
-//		//Acid Cycle chemical strength lower threshold
-		for(Phase p : metric.getPhases()) {
-
-			ArrayList<DataPoint> temp = p.getPhaseData();
+		
+		//Acid Cycle chemical strength lower threshold
 
 			if((p.getName().contains("ACID CYCLE")) && p.getCondAverages() < processInfo.get(processName).get(3).getCondLower()) {
 				
@@ -361,12 +303,9 @@ public class FlagGeneration {
 						flagList.add(flag);
 				
 			}
-		}
 		
-//		//Acid Cycle chemical strength upper threshold
-		for(Phase p : metric.getPhases()) {
-
-			ArrayList<DataPoint> temp = p.getPhaseData();
+		
+		//Acid Cycle chemical strength upper threshold
 
 			if((p.getName().contains("ACID CYCLE")) && p.getCondAverages() > processInfo.get(processName).get(3).getCondUpper()) {
 				
@@ -383,12 +322,9 @@ public class FlagGeneration {
 						flagList.add(flag);
 				
 			}
-		}
 		
-//		//Acid Cycle temperature lower threshold
-		for(Phase p : metric.getPhases()) {
-
-			ArrayList<DataPoint> temp = p.getPhaseData();
+		
+		//Acid Cycle temperature lower threshold
 
 			if((p.getName().contains("ACID CYCLE")) && p.getTempAverages() < processInfo.get(processName).get(3).getTempLower()) {
 				
@@ -405,12 +341,9 @@ public class FlagGeneration {
 						flagList.add(flag);
 				
 			}
-		}
 		
-//		//Acid Cycle temperature upper threshold
-		for(Phase p : metric.getPhases()) {
-
-			ArrayList<DataPoint> temp = p.getPhaseData();
+		
+		//Acid Cycle temperature upper threshold
 
 			if((p.getName().contains("ACID CYCLE")) && p.getTempAverages() > processInfo.get(processName).get(3).getTempUpper()) {
 				
@@ -427,11 +360,9 @@ public class FlagGeneration {
 						flagList.add(flag);
 				
 			}
-		}
+		
 
 		// Zero conductivity test at end of rinse phase
-		for (Phase p : metric.getPhases()) {
-			ArrayList<DataPoint> temp = p.getPhaseData();
 			
 			if ((p.getName().contains("INTERMEDIATE RINSE") || p.getName().contains("FINAL RINSE")) && data.get(p.getEndIndex()).getConductivity()!=0) {
 
@@ -449,8 +380,8 @@ public class FlagGeneration {
 				flagList.add(flag);
 			}
 		}
-
-	}
+}
+	
 
 	
 
