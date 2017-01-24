@@ -37,6 +37,7 @@ public class MetricTaker2 {
 		int phasecount = 0;
 		ArrayList<DataPoint> temp = new ArrayList<DataPoint>(100);
 		phases.get(phasecount).setStartIndex(0);
+		System.out.println(phases.size());
 		
 		DataPoint prevDataPoint = data.get(0);
 		for (int i=0;i<data.size();i++) {
@@ -47,7 +48,7 @@ public class MetricTaker2 {
 				phases.get(phasecount).setPhaseData(temp);
 			}
 			
-			if (d.getZone() != prevDataPoint.getZone()) {
+			else if (d.getZone() != prevDataPoint.getZone()) {
 				phases.get(phasecount).setPhaseData(temp);
 				phases.get(phasecount).setEndIndex(i-1);
 				phasecount++;

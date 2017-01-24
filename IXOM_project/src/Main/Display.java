@@ -276,6 +276,7 @@ public class Display extends Application {
 						+ quintuple.getB() + "x) with r^2 value of " + quintuple.getrSquared();
 				Flag analyticflag = new Flag(coords.get(0).getTime(), coords.get(coords.size() - 1).getTime(),
 						point.getZone(), zoneString, Message, null, 0);
+				analyticflag.setType("Conductivity");
 				flagList.add(analyticflag);
 				
 			}
