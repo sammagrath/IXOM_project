@@ -1,11 +1,11 @@
 #grid{
 	-fx-translate-y: 35px;
-	-fx-translate-x: -42px;
+	-fx-translate-x: -23px;
 	-fx-alignment: center-right;
 }
 
 #pane{
-	-fx-background-image: url("ixomlayout3.jpg");
+	-fx-background-image: url("ixomlayout6.jpg");
 	-fx-background-size: cover;	
 }
 

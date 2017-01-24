@@ -62,7 +62,7 @@ public class Display extends Application {
 		// centre the grid later
 		StackPane root = new StackPane();
 		root.setId("pane");
-		Scene scene = new Scene(root, 470, 470);
+		Scene scene = new Scene(root, 430, 430);
 		scene.getStylesheets().add("cobra.css");
 
 		// Sam's Addition - Instantiation of drop-down menu for selecting CIP
