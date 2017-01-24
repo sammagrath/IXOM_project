@@ -16,7 +16,7 @@ public class MetricTaker2 {
 
 	public MetricTaker2(ArrayList<DataPoint> data, ArrayList<String> phaseNames, double minCond, double minTemp) {
 
-		System.out.println(phaseNames);
+		
 		for (String s : phaseNames) {
 			phases.add(new Phase(s));
 			
@@ -37,7 +37,7 @@ public class MetricTaker2 {
 		int phasecount = 0;
 		ArrayList<DataPoint> temp = new ArrayList<DataPoint>(100);
 		phases.get(phasecount).setStartIndex(0);
-		System.out.println(phases.size());
+		//System.out.println(System.getProperty("os.name"));
 		
 		DataPoint prevDataPoint = data.get(0);
 		for (int i=0;i<data.size();i++) {
@@ -112,11 +112,11 @@ public class MetricTaker2 {
 		if(startIndex==-1){
 			p.setEffectiveStartIndex(p.getStartIndex());
 			p.setEffPeriodData(p.getPhaseData());
-			System.out.println("phase: "+p.getName()+" has effective data: " +p.getEffPeriodData().size());
+			
 		}else{
 			p.setEffectiveStartIndex(startIndex);
 			p.setEffPeriodData(temp);
-			System.out.println("phaze: "+p.getName()+" has effective data: " +p.getEffPeriodData().size());
+			
 		}
 		
 		
