@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.apache.commons.collections4.bag.SynchronizedSortedBag;
+
 import Read_Data.CSV2Array;
 import Read_Data.DataPoint;
 import henrysThreshold.MetricTaker2;
@@ -33,6 +35,7 @@ public class FlagGeneration {
 
 		FlagGeneration.data = data;
 		this.processName = processName;
+		
 
 		FetchThresholds ft = new FetchThresholds();
 
@@ -50,10 +53,11 @@ public class FlagGeneration {
 
 	// measure of conductivity levels across wash phases
 	public void thresholds(ArrayList<Flag> flagList) {
-
+		
 		// applyPhase(data);
 		HashMap<Integer, Double> condAverages = new HashMap<Integer, Double>();
 		HashMap<Integer, Double> tempAverages = new HashMap<Integer, Double>();
+		
 
 		// henry's taint
 		// this populates the condAverages and tempAverages, so it can be used
@@ -73,19 +77,18 @@ public class FlagGeneration {
 		// endIntRinseVal = data.get(boundaries.get(3)).getConductivity();
 		// endFinalRinseVal = data.get(data.size() - 1).getConductivity();
 
-		// Caustic/Acid Prerinse chemical strength lower threshold
+		// Caustic Prerinse chemical strength lower threshold
 		for(Phase p : metric.getPhases()) {
-			System.out.println(p.getName() + "- cond averages: " +p.getCondAverages());
+
 			ArrayList<DataPoint> temp = p.getPhaseData();
-			if(p.isPreRinse()) System.out.println("True dat");
-			if((p.isPreRinse()) && p.getCondAverages() < 1 /*Dummy threshold used to trigger flag- processInfo.get(processName).get(0).getCondLower()*/) {
+
+			if((p.getName().contains("CAUSTIC PRERINSE")) && p.getCondAverages() < processInfo.get(processName).get(0).getCondLower()) {
 				
-				System.out.println("true");
 				Flag flag = new Flag(
-						"start",
-//						temp.get(p.getEffectiveStartIndex()).getTime(), 
-//						"endtime",
-						temp.get(temp.size()-1).getTime(),
+					
+						temp.get(p.getEffectiveStartIndex()).getTime(), 
+
+						temp.get(p.getEndIndex()).getTime(),
 						0,
 						p.getName(),
 						"Chemical strength too low",
@@ -98,67 +101,223 @@ public class FlagGeneration {
 			}
 		}
 		
+		//Caustic Prerinse conductivity upper threshold
+		for(Phase p : metric.getPhases()) {
+
+			ArrayList<DataPoint> temp = p.getPhaseData();
+
+			if((p.getName().contains("CAUSTIC PRERINSE")) && p.getCondAverages() > processInfo.get(processName).get(0).getCondUpper()) {
+				
+				Flag flag = new Flag(
+					
+						temp.get(p.getEffectiveStartIndex()).getTime(), 
+
+						temp.get(p.getEndIndex()).getTime(),
+						0,
+						p.getName(),
+						"Chemical strength too high",
+						processInfo.get(processName).get(0).getCondLower() + " - " + processInfo.get(processName).get(0).getCondUpper(),
+						p.getCondAverages());
+
+						flag.setType("Conductivity");
+						flagList.add(flag);
+				
+			}
+		}
+
+		//Acid Prerinse chemical strength lower threshold
+		for(Phase p : metric.getPhases()) {
+
+			ArrayList<DataPoint> temp = p.getPhaseData();
+
+			if((p.getName().contains("ACID PRERINSE")) && p.getCondAverages() < processInfo.get(processName).get(1).getCondLower()) {
+				
+				Flag flag = new Flag(
+					
+						temp.get(p.getEffectiveStartIndex()).getTime(), 
+
+						temp.get(p.getEndIndex()).getTime(),
+						0,
+						p.getName(),
+						"Chemical strength too low",
+						processInfo.get(processName).get(1).getCondLower() + " - " + processInfo.get(processName).get(1).getCondUpper(),
+						p.getCondAverages());
+
+						flag.setType("Conductivity");
+						flagList.add(flag);
+				
+			}
+		}
 		
-//		if (condAverages.get(1) < processInfo.get(processName).get(0).getCondLower()) {
-//
-//			Flag flag = new Flag(
-//					data.get(metric.getIndexOfEffectivePeriod(processInfo.get(processName).get(0).getPhase()))
-//							.getTime(),
-//					data.get(boundaries.get(1)).getTime(), 1, data.get(boundaries.get(1)).getPhase(),
-//					"Chemical strength too low", "0.5 - 0.8", condAverages.get(1));
-//
-//			flag.setType("Conductivity");
-//
-//			flagList.add(flag);
-//		}
-//
-//		// Caustic/Acid Prerinse chemical strength upper threshold
-//		System.out.println("actual cond av: " + condAverages.get(1));
-//		if (condAverages.get(1) > processInfo.get(processName).get(0).getCondUpper()) {
-//			// System.out.println("start: " +
-//			// data.get(metric.getIndexOfEffectivePeriod(processInfo.get(processName).get(0).getPhase())).getTime());
-//			// System.out.println("finish: " +
-//			// data.get(boundaries.get(1)).getTime());
-//			System.out.println("phase: " + data.get(boundaries.get(1)).getPhase());
-//			System.out.println("condAverages: " + condAverages.get(1));
-//			Flag flag = new Flag(
-//					data.get(metric.getIndexOfEffectivePeriod(processInfo.get(processName).get(0).getPhase()))
-//							.getTime(),
-//					data.get(boundaries.get(1)).getTime(), 1, data.get(boundaries.get(1)).getPhase(),
-//					"Chemical strength too high", "0.5 - 0.8", condAverages.get(1));
-//
-//			flag.setType("Conductivity");
-//
-//			flagList.add(flag);
-//		}
-//
+		//Acid Prerinse conductivity upper threshold
+		for(Phase p : metric.getPhases()) {
+
+			ArrayList<DataPoint> temp = p.getPhaseData();
+
+			if((p.getName().contains("ACID PRERINSE")) && p.getCondAverages() > processInfo.get(processName).get(1).getCondUpper()) {
+				
+				Flag flag = new Flag(
+					
+						temp.get(p.getEffectiveStartIndex()).getTime(), 
+
+						temp.get(p.getEndIndex()).getTime(),
+						0,
+						p.getName(),
+						"Chemical strength too high",
+						processInfo.get(processName).get(1).getCondLower() + " - " + processInfo.get(processName).get(1).getCondUpper(),
+						p.getCondAverages());
+
+						flag.setType("Conductivity");
+						flagList.add(flag);
+				
+			}
+		}
+
 //		// Caustic Cycle chemical strength lower threshold
-//		if (condAverages.get(2) < processInfo.get(processName).get(2).getCondLower()) {
-//
-//			Flag flag = new Flag(
-//					data.get(metric.getIndexOfEffectivePeriod(processInfo.get(processName).get(2).getPhase()))
-//							.getTime(),
-//					data.get(boundaries.get(2)).getTime(), 2, data.get(boundaries.get(2)).getPhase(),
-//					"Chemical strength too low", "1.0 - 1.2", condAverages.get(2));
-//
-//			flag.setType("Conductivity");
-//
-//			flagList.add(flag);
-//		}
-//
+		for(Phase p : metric.getPhases()) {
+
+			ArrayList<DataPoint> temp = p.getPhaseData();
+
+			if((p.getName().contains("CAUSTIC CYCLE")) && p.getCondAverages() < processInfo.get(processName).get(2).getCondLower()) {
+				
+				Flag flag = new Flag(
+						"start",
+//						temp.get(p.getEffectiveStartIndex()).getTime(), 
+						"end",
+//						temp.get(p.getEndIndex()).getTime(),
+						0,
+						p.getName(),
+						"Chemical strength too low",
+						processInfo.get(processName).get(2).getCondLower() + " - " + processInfo.get(processName).get(2).getCondUpper(),
+						p.getCondAverages());
+
+						flag.setType("Conductivity");
+						flagList.add(flag);
+				
+			}
+		}
+		
 //		// Caustic Cycle chemical strength upper threshold
-//		if (condAverages.get(2) > processInfo.get(processName).get(2).getCondUpper()) {
-//
-//			Flag flag = new Flag(
-//					data.get(metric.getIndexOfEffectivePeriod(processInfo.get(processName).get(2).getPhase()))
-//							.getTime(),
-//					data.get(boundaries.get(2)).getTime(), 2, data.get(boundaries.get(2)).getPhase(),
-//					"Chemical strength too high", "1.0 - 1.2", condAverages.get(2));
-//
-//			flag.setType("Conductivity");
-//
-//			flagList.add(flag);
-//		}
+		for(Phase p : metric.getPhases()) {
+			System.out.println(p.getName() + p.getCondAverages());
+			ArrayList<DataPoint> temp = p.getPhaseData();
+
+			if((p.getName().contains("CAUSTIC CYCLE")) && (p.getCondAverages() > 0)/*processInfo.get(processName).get(2).getCondUpper()*/) {
+				
+				Flag flag = new Flag(
+						"start",
+//						temp.get(p.getEffectiveStartIndex()).getTime(), 
+						"end",
+//						temp.get(p.getEndIndex()).getTime(),
+						0,
+						p.getName(),
+						"Chemical strength too high",
+						processInfo.get(processName).get(2).getCondLower() + " - " + processInfo.get(processName).get(2).getCondUpper(),
+						p.getCondAverages());
+
+						flag.setType("Conductivity");
+						flagList.add(flag);
+				
+			}
+		}
+		
+//		//Acid Cycle chemical strength lower threshold
+		for(Phase p : metric.getPhases()) {
+
+			ArrayList<DataPoint> temp = p.getPhaseData();
+
+			if((p.getName().contains("ACID CYCLE")) && p.getCondAverages() < processInfo.get(processName).get(3).getCondLower()) {
+				
+				Flag flag = new Flag(
+						"start",
+//						temp.get(p.getEffectiveStartIndex()).getTime(), 
+						"end",
+//						temp.get(p.getEndIndex()).getTime(),
+						0,
+						p.getName(),
+						"Chemical strength too low",
+						processInfo.get(processName).get(3).getCondLower() + " - " + processInfo.get(processName).get(3).getCondUpper(),
+						p.getCondAverages());
+
+						flag.setType("Conductivity");
+						flagList.add(flag);
+				
+			}
+		}
+		
+//		//Acid Cycle chemical strength upper threshold
+		for(Phase p : metric.getPhases()) {
+
+			ArrayList<DataPoint> temp = p.getPhaseData();
+
+			if((p.getName().contains("ACID CYCLE")) && p.getCondAverages() > processInfo.get(processName).get(3).getCondUpper()) {
+				
+				Flag flag = new Flag(
+						"start",
+//						temp.get(p.getEffectiveStartIndex()).getTime(), 
+						"end",
+//						temp.get(p.getEndIndex()).getTime(),
+						0,
+						p.getName(),
+						"Chemical strength too high",
+						processInfo.get(processName).get(3).getCondLower() + " - " + processInfo.get(processName).get(3).getCondUpper(),
+						p.getCondAverages());
+
+						flag.setType("Conductivity");
+						flagList.add(flag);
+				
+			}
+		}
+		
+//		//Acid Cycle temperature lower threshold
+		for(Phase p : metric.getPhases()) {
+
+			ArrayList<DataPoint> temp = p.getPhaseData();
+
+			if((p.getName().contains("ACID CYCLE")) && p.getTempAverages() < processInfo.get(processName).get(3).getTempLower()) {
+				
+				Flag flag = new Flag(
+						"start",
+//						temp.get(p.getEffectiveStartIndex()).getTime(), 
+						"end",
+//						temp.get(p.getEndIndex()).getTime(),
+						0,
+						p.getName(),
+						"Chemical strength too low",
+						processInfo.get(processName).get(3).getTempLower() + " - " + processInfo.get(processName).get(3).getTempUpper(),
+						p.getCondAverages());
+
+						flag.setType("Conductivity");
+						flagList.add(flag);
+				
+			}
+		}
+		
+//		//Acid Cycle chemical temperature upper threshold
+		for(Phase p : metric.getPhases()) {
+
+			ArrayList<DataPoint> temp = p.getPhaseData();
+
+			if((p.getName().contains("ACID CYCLE")) && p.getTempAverages() > processInfo.get(processName).get(3).getTempUpper()) {
+				
+				Flag flag = new Flag(
+						"start",
+//						temp.get(p.getEffectiveStartIndex()).getTime(), 
+						"end",
+//						temp.get(p.getEndIndex()).getTime(),
+						0,
+						p.getName(),
+						"Average temperature too high",
+						processInfo.get(processName).get(3).getCondLower() + " - " + processInfo.get(processName).get(3).getCondUpper(),
+						p.getCondAverages());
+
+						flag.setType("Conductivity");
+						flagList.add(flag);
+				
+			}
+		}
+		
+
 //
 //		// Caustic Cycle temperature lower threshold
 //		if (tempAverages.get(2) < processInfo.get(processName).get(2).getTempLower()) {
@@ -191,33 +350,8 @@ public class FlagGeneration {
 
 		
 //
-//		// Acid Cycle chemical strength lower threshold
-//		if (condAverages.get(4) < processInfo.get(processName).get(3).getCondLower()) {
-//
-//			Flag flag = new Flag(
-//					data.get(metric.getIndexOfEffectivePeriod(processInfo.get(processName).get(3).getPhase()))
-//							.getTime(),
-//					data.get(boundaries.get(4)).getTime(), 4, data.get(boundaries.get(4)).getPhase(),
-//					"Chemical strength too low", "0.8 - 1.0", condAverages.get(4));
-//
-//			flag.setType("Conductivity");
-//
-//			flagList.add(flag);
-//		}
-//
-//		// Acid cycle chemical strength upper threshold
-//		if (condAverages.get(4) > processInfo.get(processName).get(3).getCondUpper()) {
-//
-//			Flag flag = new Flag(
-//					data.get(metric.getIndexOfEffectivePeriod(processInfo.get(processName).get(3).getPhase()))
-//							.getTime(),
-//					data.get(boundaries.get(4)).getTime(), 4, data.get(boundaries.get(4)).getPhase(),
-//					"Chemical strength too high", "0.8 - 1.0", condAverages.get(4));
-//
-//			flag.setType("Conductivity");
-//
-//			flagList.add(flag);
-//		}
+
+
 //
 //		// Acid Cycle temperature lower threshold
 //		if (tempAverages.get(4) < processInfo.get(processName).get(3).getTempLower()) {
@@ -247,7 +381,7 @@ public class FlagGeneration {
 //			flagList.add(flag);
 //		}
 
-		// Zero conductivity test at end of final rinse phase
+		// Zero conductivity test at end of rinse phase
 		for (Phase p : metric.getPhases()) {
 			ArrayList<DataPoint> temp = p.getPhaseData();
 			
