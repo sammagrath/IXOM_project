@@ -88,7 +88,7 @@ public class Display extends Application {
 			@Override
 			public void handle(ActionEvent arg0) {
 				String filename = textField.getText();
-				System.out.println(selection);
+				
 
 				// this is for if someone clicks run and they havent selected a
 				// file
@@ -156,7 +156,7 @@ public class Display extends Application {
 						f.thresholds(flagList);
 						analyseData(data);
 
-						String shortname = excelFile.getName().substring(0, excelFile.getName().lastIndexOf('.'));
+						String shortname = (excelFile.getName().substring(0, excelFile.getName().lastIndexOf('.')) + " - " + selection);
 						graphGenerator = new GraphGenerator();
 						graphGenerator.generateGraphs(data, shortname, flagList, phaseNames, stage, excelFile);
 
