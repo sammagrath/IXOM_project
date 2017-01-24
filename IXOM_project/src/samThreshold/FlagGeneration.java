@@ -125,6 +125,54 @@ public class FlagGeneration {
 			}
 		}
 
+//		//Caustic Prerinse temperature lower threshold
+		for(Phase p : metric.getPhases()) {
+
+			ArrayList<DataPoint> temp = p.getPhaseData();
+
+			if((p.getName().contains("CAUSTIC PRERINSE")) && p.getTempAverages() < processInfo.get(processName).get(0).getTempLower()) {
+				
+				Flag flag = new Flag(
+						"start",
+//						temp.get(p.getEffectiveStartIndex()).getTime(), 
+						"end",
+//						temp.get(p.getEndIndex()).getTime(),
+						0,
+						p.getName(),
+						"Average temperature too low",
+						processInfo.get(processName).get(0).getTempLower() + " - " + processInfo.get(processName).get(0).getTempUpper(),
+						p.getTempAverages());
+
+						flag.setType("Temperature");
+						flagList.add(flag);
+				
+			}
+		}
+		
+//		//Caustic Prerinse temperature upper threshold
+		for(Phase p : metric.getPhases()) {
+
+			ArrayList<DataPoint> temp = p.getPhaseData();
+
+			if((p.getName().contains("CAUSTIC PRERINSE")) && p.getTempAverages() > processInfo.get(processName).get(0).getTempUpper()) {
+				
+				Flag flag = new Flag(
+						"start",
+//						temp.get(p.getEffectiveStartIndex()).getTime(), 
+						"end",
+//						temp.get(p.getEndIndex()).getTime(),
+						0,
+						p.getName(),
+						"Average temperature too high",
+						processInfo.get(processName).get(0).getTempLower() + " - " + processInfo.get(processName).get(0).getTempUpper(),
+						p.getTempAverages());
+
+						flag.setType("Temperature");
+						flagList.add(flag);
+				
+			}
+		}
+		
 		//Acid Prerinse chemical strength lower threshold
 		for(Phase p : metric.getPhases()) {
 
@@ -173,6 +221,54 @@ public class FlagGeneration {
 			}
 		}
 
+//		//Acid Prerinse temperature lower threshold
+		for(Phase p : metric.getPhases()) {
+
+			ArrayList<DataPoint> temp = p.getPhaseData();
+
+			if((p.getName().contains("CAUSTIC PRERINSE")) && p.getTempAverages() < processInfo.get(processName).get(1).getTempLower()) {
+				
+				Flag flag = new Flag(
+						"start",
+//						temp.get(p.getEffectiveStartIndex()).getTime(), 
+						"end",
+//						temp.get(p.getEndIndex()).getTime(),
+						0,
+						p.getName(),
+						"Average temperature too low",
+						processInfo.get(processName).get(1).getTempLower() + " - " + processInfo.get(processName).get(1).getTempUpper(),
+						p.getTempAverages());
+
+						flag.setType("Temperature");
+						flagList.add(flag);
+				
+			}
+		}
+		
+//		//Acid Prerinse temperature upper threshold
+		for(Phase p : metric.getPhases()) {
+
+			ArrayList<DataPoint> temp = p.getPhaseData();
+
+			if((p.getName().contains("ACID PRERINSE")) && p.getTempAverages() > processInfo.get(processName).get(1).getTempUpper()) {
+				
+				Flag flag = new Flag(
+						"start",
+//						temp.get(p.getEffectiveStartIndex()).getTime(), 
+						"end",
+//						temp.get(p.getEndIndex()).getTime(),
+						0,
+						p.getName(),
+						"Average temperature too high",
+						processInfo.get(processName).get(1).getTempLower() + " - " + processInfo.get(processName).get(1).getTempUpper(),
+						p.getTempAverages());
+
+						flag.setType("Temperature");
+						flagList.add(flag);
+				
+			}
+		}
+		
 //		// Caustic Cycle chemical strength lower threshold
 		for(Phase p : metric.getPhases()) {
 
@@ -202,7 +298,7 @@ public class FlagGeneration {
 			System.out.println(p.getName() + p.getCondAverages());
 			ArrayList<DataPoint> temp = p.getPhaseData();
 
-			if((p.getName().contains("CAUSTIC CYCLE")) && (p.getCondAverages() > 0)/*processInfo.get(processName).get(2).getCondUpper()*/) {
+			if((p.getName().contains("CAUSTIC CYCLE")) && p.getCondAverages() > processInfo.get(processName).get(2).getCondUpper()) {
 				
 				Flag flag = new Flag(
 						"start",
@@ -216,6 +312,54 @@ public class FlagGeneration {
 						p.getCondAverages());
 
 						flag.setType("Conductivity");
+						flagList.add(flag);
+				
+			}
+		}
+		
+//		//Caustic Cycle temperature lower threshold
+		for(Phase p : metric.getPhases()) {
+
+			ArrayList<DataPoint> temp = p.getPhaseData();
+
+			if((p.getName().contains("CAUSTIC CYCLE")) && p.getTempAverages() < processInfo.get(processName).get(2).getTempLower()) {
+				
+				Flag flag = new Flag(
+						"start",
+//						temp.get(p.getEffectiveStartIndex()).getTime(), 
+						"end",
+//						temp.get(p.getEndIndex()).getTime(),
+						0,
+						p.getName(),
+						"Average temperature too low",
+						processInfo.get(processName).get(2).getTempLower() + " - " + processInfo.get(processName).get(2).getTempUpper(),
+						p.getTempAverages());
+
+						flag.setType("Temperature");
+						flagList.add(flag);
+				
+			}
+		}
+		
+//		//Caustic Cycle temperature upper threshold
+		for(Phase p : metric.getPhases()) {
+
+			ArrayList<DataPoint> temp = p.getPhaseData();
+
+			if((p.getName().contains("CAUSTIC CYCLE")) && p.getTempAverages() > processInfo.get(processName).get(2).getTempUpper()) {
+				
+				Flag flag = new Flag(
+						"start",
+//						temp.get(p.getEffectiveStartIndex()).getTime(), 
+						"end",
+//						temp.get(p.getEndIndex()).getTime(),
+						0,
+						p.getName(),
+						"Average temperature too high",
+						processInfo.get(processName).get(2).getTempLower() + " - " + processInfo.get(processName).get(2).getTempUpper(),
+						p.getTempAverages());
+
+						flag.setType("Temperature");
 						flagList.add(flag);
 				
 			}
@@ -308,78 +452,14 @@ public class FlagGeneration {
 						0,
 						p.getName(),
 						"Average temperature too high",
-						processInfo.get(processName).get(3).getCondLower() + " - " + processInfo.get(processName).get(3).getCondUpper(),
-						p.getCondAverages());
+						processInfo.get(processName).get(3).getTempLower() + " - " + processInfo.get(processName).get(3).getTempUpper(),
+						p.getTempAverages());
 
 						flag.setType("Conductivity");
 						flagList.add(flag);
 				
 			}
 		}
-		
-
-//
-//		// Caustic Cycle temperature lower threshold
-//		if (tempAverages.get(2) < processInfo.get(processName).get(2).getTempLower()) {
-//
-//			Flag flag = new Flag(
-//					data.get(metric.getIndexOfEffectivePeriod(processInfo.get(processName).get(2).getPhase()))
-//							.getTime(),
-//					data.get(boundaries.get(2)).getTime(), 2, data.get(boundaries.get(2)).getPhase(),
-//					"Average Temperature too low", "70.0 - 85.0", tempAverages.get(2));
-//
-//			flag.setType("Temperature");
-//
-//			flagList.add(flag);
-//		}
-//
-//		// Caustic Cycle temperature upper threshold
-//		if (tempAverages.get(2) > processInfo.get(processName).get(2).getTempUpper()) {
-//
-//			Flag flag = new Flag(
-//					data.get(metric.getIndexOfEffectivePeriod(processInfo.get(processName).get(2).getPhase()))
-//							.getTime(),
-//					data.get(boundaries.get(2)).getTime(), 2, data.get(boundaries.get(2)).getPhase(),
-//					"Average Temperature too high", "70.0 - 85.0", tempAverages.get(2));
-//
-//			flag.setType("Temperature");
-//
-//			flagList.add(flag);
-//		}
-//
-
-		
-//
-
-
-//
-//		// Acid Cycle temperature lower threshold
-//		if (tempAverages.get(4) < processInfo.get(processName).get(3).getTempLower()) {
-//
-//			Flag flag = new Flag(
-//					data.get(metric.getIndexOfEffectivePeriod(processInfo.get(processName).get(3).getPhase()))
-//							.getTime(),
-//					data.get(boundaries.get(4)).getTime(), 4, data.get(boundaries.get(4)).getPhase(),
-//					"Average Temperature too low", "60.0 - 70.0", tempAverages.get(4));
-//
-//			flag.setType("Temperature");
-//
-//			flagList.add(flag);
-//		}
-//
-//		// Acid Cycle temperature upper threshold
-//		if (tempAverages.get(4) > processInfo.get(processName).get(3).getTempUpper()) {
-//
-//			Flag flag = new Flag(
-//					data.get(metric.getIndexOfEffectivePeriod(processInfo.get(processName).get(3).getPhase()))
-//							.getTime(),
-//					data.get(boundaries.get(4)).getTime(), 4, data.get(boundaries.get(4)).getPhase(),
-//					"Average Temperature too high", "60.0 - 70.0", tempAverages.get(4));
-//
-//			flag.setType("Temperature");
-//
-//			flagList.add(flag);
-//		}
 
 		// Zero conductivity test at end of rinse phase
 		for (Phase p : metric.getPhases()) {
@@ -414,37 +494,7 @@ public class FlagGeneration {
 
 	}
 
-	// local main for testing flag methods
 
-	// local main for testing flag methods
-
-	public static void main(String[] args) throws FileNotFoundException {
-
-		// User must change directory to local in order to test
-		input = new File("/home/magratsam/git/cleanfile5.csv");
-		CSV2Array c = new CSV2Array();
-
-		data = c.populateData(input, data);
-
-		// FlagGeneration f = new FlagGeneration(data);
-		// f.applyPhase(data);
-		// f.editBoundaries();
-		// f.condThresholds(flagList);
-		// f.endRinseCond(flagList);
-		// f.tempThresholds(flagList);
-		// f.thresholds(flagList);
-
-		// Console print of flags
-		// for (Flag flag : flagList) {
-		// System.out.println();
-		// System.out.println(flag.print());
-		// }
-		//
-		// // console print of data
-		// for (DataPoint d : data) {
-		// System.out.println(d.getPhase());
-		// }
-	}
 
 	public void setPhaseNames(ArrayList<String> phaseNames) {
 		this.phaseNames = phaseNames;
