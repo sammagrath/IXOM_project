@@ -273,8 +273,8 @@ public class Display extends Application {
 
 				RegressionAndParameters reg = new RegressionAndParameters(coords);
 				Quintuple quintuple = reg.leastSquaresFitting(coords);
-				String Message = "Curve for " + zoneString + " estimated as: y = " + quintuple.getA() + "exp("
-						+ quintuple.getB() + "x) with r^2 value of " + quintuple.getrSquared();
+				String Message = "Conductivity: y = " + round3dp(quintuple.getA()) + "exp("
+						+ round3dp(quintuple.getB()) + "x), R^2: " + round3dp(quintuple.getrSquared());
 				Flag analyticflag = new Flag(coords.get(0).getTime(), coords.get(coords.size() - 1).getTime(),
 						point.getZone(), zoneString, Message, "NA", 0);
 				analyticflag.setType("Conductivity");
@@ -311,6 +311,12 @@ public class Display extends Application {
 		grid.add(new Label(flag.getMessage()), 3, counter);
 		grid.add(new Label(String.valueOf(flag.getTarget())), 4, counter);
 		grid.add(new Label(String.valueOf(flag.getActual())), 5, counter);
+	}
+	
+	public double round3dp(double unrounded){
+		unrounded = Math.round(unrounded*1000)*0.001;
+		
+		return unrounded;
 	}
 
 }
