@@ -85,10 +85,8 @@ public class FlagGeneration {
 			if((p.getName().contains("CAUSTIC PRERINSE")) && p.getCondAverages() < processInfo.get(processName).get(0).getCondLower()) {
 				
 				Flag flag = new Flag(
-					
-						temp.get(p.getEffectiveStartIndex()).getTime(), 
-
-						temp.get(p.getEndIndex()).getTime(),
+						data.get(p.getEffectiveStartIndex()).getTime(), 
+						data.get(p.getEndIndex()).getTime(),
 						0,
 						p.getName(),
 						"Chemical strength too low",
@@ -109,10 +107,8 @@ public class FlagGeneration {
 			if((p.getName().contains("CAUSTIC PRERINSE")) && p.getCondAverages() > processInfo.get(processName).get(0).getCondUpper()) {
 				
 				Flag flag = new Flag(
-					
-						temp.get(p.getEffectiveStartIndex()).getTime(), 
-
-						temp.get(p.getEndIndex()).getTime(),
+						data.get(p.getEffectiveStartIndex()).getTime(), 
+						data.get(p.getEndIndex()).getTime(),
 						0,
 						p.getName(),
 						"Chemical strength too high",
@@ -133,10 +129,8 @@ public class FlagGeneration {
 			if((p.getName().contains("CAUSTIC PRERINSE")) && p.getTempAverages() < processInfo.get(processName).get(0).getTempLower()) {
 				
 				Flag flag = new Flag(
-						"start",
-//						temp.get(p.getEffectiveStartIndex()).getTime(), 
-						"end",
-//						temp.get(p.getEndIndex()).getTime(),
+						data.get(p.getEffectiveStartIndex()).getTime(), 
+						data.get(p.getEndIndex()).getTime(),
 						0,
 						p.getName(),
 						"Average temperature too low",
@@ -157,10 +151,8 @@ public class FlagGeneration {
 			if((p.getName().contains("CAUSTIC PRERINSE")) && p.getTempAverages() > processInfo.get(processName).get(0).getTempUpper()) {
 				
 				Flag flag = new Flag(
-						"start",
-//						temp.get(p.getEffectiveStartIndex()).getTime(), 
-						"end",
-//						temp.get(p.getEndIndex()).getTime(),
+						data.get(p.getEffectiveStartIndex()).getTime(), 
+						data.get(p.getEndIndex()).getTime(),
 						0,
 						p.getName(),
 						"Average temperature too high",
@@ -181,10 +173,8 @@ public class FlagGeneration {
 			if((p.getName().contains("ACID PRERINSE")) && p.getCondAverages() < processInfo.get(processName).get(1).getCondLower()) {
 				
 				Flag flag = new Flag(
-					
-						temp.get(p.getEffectiveStartIndex()).getTime(), 
-
-						temp.get(p.getEndIndex()).getTime(),
+						data.get(p.getEffectiveStartIndex()).getTime(), 
+						data.get(p.getEndIndex()).getTime(),
 						0,
 						p.getName(),
 						"Chemical strength too low",
@@ -205,10 +195,8 @@ public class FlagGeneration {
 			if((p.getName().contains("ACID PRERINSE")) && p.getCondAverages() > processInfo.get(processName).get(1).getCondUpper()) {
 				
 				Flag flag = new Flag(
-					
-						temp.get(p.getEffectiveStartIndex()).getTime(), 
-
-						temp.get(p.getEndIndex()).getTime(),
+						data.get(p.getEffectiveStartIndex()).getTime(), 
+						data.get(p.getEndIndex()).getTime(),
 						0,
 						p.getName(),
 						"Chemical strength too high",
@@ -229,10 +217,8 @@ public class FlagGeneration {
 			if((p.getName().contains("CAUSTIC PRERINSE")) && p.getTempAverages() < processInfo.get(processName).get(1).getTempLower()) {
 				
 				Flag flag = new Flag(
-						"start",
-//						temp.get(p.getEffectiveStartIndex()).getTime(), 
-						"end",
-//						temp.get(p.getEndIndex()).getTime(),
+						data.get(p.getEffectiveStartIndex()).getTime(), 
+						data.get(p.getEndIndex()).getTime(),
 						0,
 						p.getName(),
 						"Average temperature too low",
@@ -253,10 +239,8 @@ public class FlagGeneration {
 			if((p.getName().contains("ACID PRERINSE")) && p.getTempAverages() > processInfo.get(processName).get(1).getTempUpper()) {
 				
 				Flag flag = new Flag(
-						"start",
-//						temp.get(p.getEffectiveStartIndex()).getTime(), 
-						"end",
-//						temp.get(p.getEndIndex()).getTime(),
+						data.get(p.getEffectiveStartIndex()).getTime(), 
+						data.get(p.getEndIndex()).getTime(),
 						0,
 						p.getName(),
 						"Average temperature too high",
@@ -277,10 +261,8 @@ public class FlagGeneration {
 			if((p.getName().contains("CAUSTIC CYCLE")) && p.getCondAverages() < processInfo.get(processName).get(2).getCondLower()) {
 				
 				Flag flag = new Flag(
-						"start",
-//						temp.get(p.getEffectiveStartIndex()).getTime(), 
-						"end",
-//						temp.get(p.getEndIndex()).getTime(),
+						data.get(p.getEffectiveStartIndex()).getTime(), 
+						data.get(p.getEndIndex()).getTime(),
 						0,
 						p.getName(),
 						"Chemical strength too low",
@@ -301,10 +283,8 @@ public class FlagGeneration {
 			if((p.getName().contains("CAUSTIC CYCLE")) && p.getCondAverages() > processInfo.get(processName).get(2).getCondUpper()) {
 				
 				Flag flag = new Flag(
-						"start",
-//						temp.get(p.getEffectiveStartIndex()).getTime(), 
-						"end",
-//						temp.get(p.getEndIndex()).getTime(),
+						data.get(p.getEffectiveStartIndex()).getTime(), 
+						data.get(p.getEndIndex()).getTime(),
 						0,
 						p.getName(),
 						"Chemical strength too high",
@@ -325,10 +305,8 @@ public class FlagGeneration {
 			if((p.getName().contains("CAUSTIC CYCLE")) && p.getTempAverages() < processInfo.get(processName).get(2).getTempLower()) {
 				
 				Flag flag = new Flag(
-						"start",
-//						temp.get(p.getEffectiveStartIndex()).getTime(), 
-						"end",
-//						temp.get(p.getEndIndex()).getTime(),
+						data.get(p.getEffectiveStartIndex()).getTime(), 
+						data.get(p.getEndIndex()).getTime(),
 						0,
 						p.getName(),
 						"Average temperature too low",
@@ -349,10 +327,8 @@ public class FlagGeneration {
 			if((p.getName().contains("CAUSTIC CYCLE")) && p.getTempAverages() > processInfo.get(processName).get(2).getTempUpper()) {
 				
 				Flag flag = new Flag(
-						"start",
-//						temp.get(p.getEffectiveStartIndex()).getTime(), 
-						"end",
-//						temp.get(p.getEndIndex()).getTime(),
+						data.get(p.getEffectiveStartIndex()).getTime(), 
+						data.get(p.getEndIndex()).getTime(),
 						0,
 						p.getName(),
 						"Average temperature too high",
@@ -373,10 +349,8 @@ public class FlagGeneration {
 			if((p.getName().contains("ACID CYCLE")) && p.getCondAverages() < processInfo.get(processName).get(3).getCondLower()) {
 				
 				Flag flag = new Flag(
-						"start",
-//						temp.get(p.getEffectiveStartIndex()).getTime(), 
-						"end",
-//						temp.get(p.getEndIndex()).getTime(),
+						data.get(p.getEffectiveStartIndex()).getTime(), 
+						data.get(p.getEndIndex()).getTime(),
 						0,
 						p.getName(),
 						"Chemical strength too low",
@@ -397,10 +371,8 @@ public class FlagGeneration {
 			if((p.getName().contains("ACID CYCLE")) && p.getCondAverages() > processInfo.get(processName).get(3).getCondUpper()) {
 				
 				Flag flag = new Flag(
-						"start",
-//						temp.get(p.getEffectiveStartIndex()).getTime(), 
-						"end",
-//						temp.get(p.getEndIndex()).getTime(),
+						data.get(p.getEffectiveStartIndex()).getTime(), 
+						data.get(p.getEndIndex()).getTime(),
 						0,
 						p.getName(),
 						"Chemical strength too high",
@@ -421,10 +393,8 @@ public class FlagGeneration {
 			if((p.getName().contains("ACID CYCLE")) && p.getTempAverages() < processInfo.get(processName).get(3).getTempLower()) {
 				
 				Flag flag = new Flag(
-						"start",
-//						temp.get(p.getEffectiveStartIndex()).getTime(), 
-						"end",
-//						temp.get(p.getEndIndex()).getTime(),
+						data.get(p.getEffectiveStartIndex()).getTime(), 
+						data.get(p.getEndIndex()).getTime(),
 						0,
 						p.getName(),
 						"Chemical strength too low",
@@ -445,10 +415,8 @@ public class FlagGeneration {
 			if((p.getName().contains("ACID CYCLE")) && p.getTempAverages() > processInfo.get(processName).get(3).getTempUpper()) {
 				
 				Flag flag = new Flag(
-						"start",
-//						temp.get(p.getEffectiveStartIndex()).getTime(), 
-						"end",
-//						temp.get(p.getEndIndex()).getTime(),
+						data.get(p.getEffectiveStartIndex()).getTime(), 
+						data.get(p.getEndIndex()).getTime(),
 						0,
 						p.getName(),
 						"Average temperature too high",
@@ -465,10 +433,16 @@ public class FlagGeneration {
 		for (Phase p : metric.getPhases()) {
 			ArrayList<DataPoint> temp = p.getPhaseData();
 			
-			if (p.getIsRinse() && temp.get(temp.size()-1).getConductivity()!=0) {
+			if ((p.getName().contains("INTERMEDIATE RINSE") || p.getName().contains("FINAL RINSE")) && data.get(p.getEndIndex()).getConductivity()!=0) {
 
-				Flag flag = new Flag(temp.get(temp.size()- 1).getTime(), temp.get(temp.size()- 1).getTime(), 5, temp.get(temp.size() - 1).getPhase(),
-						"Conductivity Non-Zero at Rinse End", "0.0", temp.get(temp.size()-1).getConductivity());
+				Flag flag = new Flag(
+						data.get(p.getEffectiveStartIndex()).getTime(), 
+						data.get(p.getEndIndex()).getTime(),
+						0,
+						p.getName(),
+						"Conductivity Non-Zero at Rinse End", 
+						"0.0", 
+						data.get(p.getEndIndex()).getConductivity());
 
 				flag.setType("Conductivity");
 				
