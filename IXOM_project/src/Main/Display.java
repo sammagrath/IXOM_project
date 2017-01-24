@@ -151,9 +151,10 @@ public class Display extends Application {
 						FlagGeneration f = new FlagGeneration(data, selection, phaseNames);
 
 						// Print results of curve fitting, remove later
-						analyseData(data);
+						
 
 						f.thresholds(flagList);
+						analyseData(data);
 
 						String shortname = excelFile.getName().substring(0, excelFile.getName().lastIndexOf('.'));
 						graphGenerator = new GraphGenerator();
