@@ -52,7 +52,7 @@ public class Flag {
 		this.phase = phase;
 		this.message = message;
 		this.target = target;
-		this.actual = Math.round(actual*100.0)/100.0;
+		this.actual = Math.round(actual*1000.0)/1000.0;
 		setDurationSeconds();
 		setDurationLabel();
 	}
@@ -64,7 +64,7 @@ public class Flag {
 		this.phase = phase;
 		this.message = message;
 		this.target = target;
-		this.actual = Math.round(actual*100.0)/100.0;
+		this.actual = Math.round(actual*1000.0)/1000.0;
 		setDurationSeconds();
 		setDurationLabel();
 	}

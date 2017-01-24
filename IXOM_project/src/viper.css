@@ -21,6 +21,7 @@
  
 .axis-label {
   -fx-text-fill: #4682b4;
+  -fx-font-size: 1.6em;
 }
  
 .chart-legend {
