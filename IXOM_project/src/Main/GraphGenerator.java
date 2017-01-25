@@ -377,7 +377,7 @@ public class GraphGenerator {
 					double x1 = xAxis.getDisplayPosition(start);
 					double x2 = xAxis.getDisplayPosition(end);
 
-					flagArea.opacityProperty().set(0.15);
+					flagArea.opacityProperty().set(0.05);
 					flagArea.setFill(Color.RED);
 
 					flagArea.getPoints().addAll(new Double[] { x1, 0.0, x1, 500.0, x2, 500.0, x2, 0.0 });
@@ -392,7 +392,7 @@ public class GraphGenerator {
 					flagArea.setOnMouseExited(new EventHandler<MouseEvent>() {
 						@Override
 						public void handle(MouseEvent event) {
-							flagArea.opacityProperty().set(0.15);
+							flagArea.opacityProperty().set(0.05);
 						}
 					});
 
