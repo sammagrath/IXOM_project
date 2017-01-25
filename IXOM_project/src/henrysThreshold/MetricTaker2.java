@@ -38,6 +38,7 @@ public class MetricTaker2 {
 		ArrayList<DataPoint> temp = new ArrayList<DataPoint>(100);
 		phases.get(phasecount).setStartIndex(0);
 		//System.out.println(System.getProperty("os.name"));
+		//
 		
 		DataPoint prevDataPoint = data.get(0);
 		for (int i=0;i<data.size();i++) {
