@@ -51,18 +51,26 @@ public class Display extends Application {
 	private TextField textField = new TextField();
 
 	private String selection;
+	private Scene scene;
 
 	@Override
 	public void start(Stage stage) throws Exception {
 
-		stage.setTitle("IXOM Analysis Tool");
+		stage.setTitle("IXOM CIP Diagnostic Tool");
 		stage.setResizable(false);
 
 		// Wrapping everything in this StackPane called 'root' was necessary to
 		// centre the grid later
 		StackPane root = new StackPane();
 		root.setId("pane");
-		Scene scene = new Scene(root, 430, 430);
+		
+		if(System.getProperty("os.name").equals("Linux")){
+			scene = new Scene(root, 520, 520);
+	}
+	else{
+    scene = new Scene(root, 430, 430);
+	}
+		
 		scene.getStylesheets().add("cobra.css");
 
 		// Sam's Addition - Instantiation of drop-down menu for selecting CIP
